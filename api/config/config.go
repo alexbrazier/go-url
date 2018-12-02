@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/kelseyhightower/envconfig"
@@ -75,7 +74,6 @@ func Init() {
 		User:      spec.MongoUser,
 		Pass:      spec.MongoPass,
 	}
-	fmt.Println(config.Auth)
 }
 
 // GetConfig returns the config
