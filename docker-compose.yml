@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  app:
+    container_name: goapp
+    build: .
+    ports:
+      - 8080:1323
+    depends_on:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo:3.2.17
+    volumes:
+      - ./data:/data
+    ports:
+      - 27017:27017

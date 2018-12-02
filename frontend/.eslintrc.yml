@@ -1,0 +1,35 @@
+root: true
+
+parser: babel-eslint
+
+settings:
+  react:
+    version: 16.6.3
+
+parserOptions:
+  ecmaVersion: 6
+  ecmaFeatures:
+    jsx: true
+    modules: true
+    experimentalObjectRestSpread: true
+
+extends:
+  - airbnb
+
+env:
+  browser: true
+
+rules:
+  arrow-parens: 0
+  implicit-arrow-linebreak: 0
+  no-shadow: 0
+  no-underscore-dangle: 0
+  object-curly-newline: 0
+  operator-linebreak: 0
+  react/jsx-filename-extension: 0
+  react/jsx-one-expression-per-line: 0
+  react/jsx-wrap-multilines: 0
+  react/no-unescaped-entities: 0
+  react/prop-types: 0
+  react/require-default-props: 0
+  
