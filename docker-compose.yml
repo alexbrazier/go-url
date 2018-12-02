@@ -8,6 +8,8 @@ services:
       - 8080:1323
     depends_on:
       - mongo
+    environment:
+      - MONGO_ADDRESSES=mongo
   mongo:
     container_name: mongo
     image: mongo:3.2.17
