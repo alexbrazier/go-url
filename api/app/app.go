@@ -35,6 +35,13 @@ func Init(e *echo.Echo) {
 		return c.Redirect(http.StatusTemporaryRedirect, "/go")
 	})
 
+	// Health route for shipcat
+	e.GET("/health", func(c echo.Context) error {
+		return c.JSON(http.StatusOK, map[string]interface{}{
+			"UP": true,
+		})
+	})
+
 	// Setup routes
 	e.GET("/:key", h.Url)
 	e.POST("/:key", h.CreateUrl)
