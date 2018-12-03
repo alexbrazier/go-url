@@ -47,7 +47,7 @@ tag-master: build
 
 tag-semver: build
 	@if docker run -e DOCKER_REPO=babylonhealth/$(APP_NAME) -e DOCKER_TAG=$(SEMVER_VERSION) quay.io/babylonhealth/tag-exists; \
-	  then echo "Tag $(SEMVER_VERSION) already exists!" && exit 1 ; \
+	  then echo "Tag $(SEMVER_VERSION) already exists!" && exit 0 ; \
 	else \
 	  docker tag $(REPO)/$(APP_NAME):$(COMMIT_ID) $(REPO)/$(APP_NAME):$(SEMVER_VERSION); \
 	  docker push $(REPO)/$(APP_NAME):$(SEMVER_VERSION); \
