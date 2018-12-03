@@ -1,6 +1,6 @@
 # Go URL
 
-A simple URL shortener written in Go with a React frontend and MongoDB database
+A simple URL shortener written in Go with a React frontend and Postgres database
 
 # Features
 
@@ -41,9 +41,8 @@ SESSION_TOKEN=
 PORT=1323
 DEBUG=false
 JSON_LOGS=false
-# List of addresses for mongo to connect to, e.g. localhost:27017,other
-MONGO_ADDRESSES=localhost
-MONGO_DATABASE=go
-MONGO_USER=
-MONGO_PASS=
+POSTGRES_ADDR=localhost:5432
+POSTGRES_DATABASE=go
+POSTGRES_USER=
+POSTGRES_PASS=
 ```

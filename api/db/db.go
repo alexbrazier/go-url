@@ -1,44 +1,53 @@
 package db
 
 import (
+	"log"
+
 	"github.com/Babylonpartners/go-url/api/config"
-	"github.com/globalsign/mgo"
-	"github.com/labstack/gommon/log"
+
+	"github.com/go-pg/pg"
+	"github.com/go-pg/pg/orm"
 )
 
-var database *mgo.Database
+var database *pg.DB
+
+// URL ...
+type URL struct {
+	Key   string `sql:",pk"`
+	URL   string
+	Alias []string
+	Views int `sql:"default:0"`
+}
 
 // Init sets up DB connection
 func Init() {
-	c := config.GetConfig()
+	appConfig := config.GetConfig()
 
-	dialInfo := &mgo.DialInfo{
-		Addrs:    c.Database.Addresses,
-		Database: c.Database.Database,
-		Username: c.Database.User,
-		Password: c.Database.Pass,
-	}
+	db := pg.Connect(&pg.Options{
+		Addr:     appConfig.Database.Addr,
+		User:     appConfig.Database.User,
+		Password: appConfig.Database.Pass,
+		Database: appConfig.Database.Database,
+	})
 
-	session, err := mgo.DialWithInfo(dialInfo)
-	if err != nil {
-		log.Fatal(err)
-	}
+	database = db
 
-	database = session.DB("")
-	setupTables()
+	createSchema()
+
 }
 
 // GetDB will return the active database connection
-func GetDB() *mgo.Database {
+func GetDB() *pg.DB {
 	return database
 }
 
 // setupTables creates the required tables and sets up indexes
-func setupTables() {
-	if err := database.C("urls").EnsureIndex(mgo.Index{
-		Key:    []string{"key"},
-		Unique: true,
-	}); err != nil {
+func createSchema() {
+	url := URL{}
+	err := database.CreateTable(&url, &orm.CreateTableOptions{
+		IfNotExists: true,
+	})
+	if err != nil {
 		log.Fatal(err)
 	}
 }

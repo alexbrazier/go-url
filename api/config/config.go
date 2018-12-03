@@ -8,18 +8,18 @@ import (
 
 // Specification definition in env
 type Specification struct {
-	Debug          bool
-	JSONLogs       bool     `envconfig:"JSON_LOGS"`
-	Port           int      `default:"1323"`
-	EnableAuth     bool     `envconfig:"ENABLE_AUTH"`
-	ADTenantID     string   `envconfig:"AD_TENANT_ID"`
-	ADClientID     string   `envconfig:"AD_CLIENT_ID"`
-	ADClientSecret string   `envconfig:"AD_CLIENT_SECRET"`
-	SessionToken   string   `envconfig:"SESSION_TOKEN"`
-	MongoAddresses []string `envconfig:"MONGO_ADDRESSES" default:"localhost"`
-	MongoDatabase  string   `envconfig:"MONGO_DATABASE" default:"go"`
-	MongoUser      string   `envconfig:"MONGO_USER"`
-	MongoPass      string   `envconfig:"MONGO_PASS"`
+	Debug            bool
+	JSONLogs         bool   `envconfig:"JSON_LOGS"`
+	Port             int    `default:"1323"`
+	EnableAuth       bool   `envconfig:"ENABLE_AUTH"`
+	ADTenantID       string `envconfig:"AD_TENANT_ID"`
+	ADClientID       string `envconfig:"AD_CLIENT_ID"`
+	ADClientSecret   string `envconfig:"AD_CLIENT_SECRET"`
+	SessionToken     string `envconfig:"SESSION_TOKEN"`
+	PostgresAddr     string `envconfig:"POSTGRES_ADDR" default:"localhost"`
+	PostgresDatabase string `envconfig:"POSTGRES_DATABASE" default:"go"`
+	PostgresUser     string `envconfig:"POSTGRES_USER"`
+	PostgresPass     string `envconfig:"POSTGRES_PASS"`
 }
 
 // Auth config
@@ -33,10 +33,10 @@ type Auth struct {
 
 // Database config
 type Database struct {
-	Addresses []string
-	Database  string
-	User      string
-	Pass      string
+	Addr     string
+	Database string
+	User     string
+	Pass     string
 }
 
 // Config definition
@@ -69,10 +69,10 @@ func Init() {
 		SessionToken:   spec.SessionToken,
 	}
 	config.Database = Database{
-		Addresses: spec.MongoAddresses,
-		Database:  spec.MongoDatabase,
-		User:      spec.MongoUser,
-		Pass:      spec.MongoPass,
+		Addr:     spec.PostgresAddr,
+		Database: spec.PostgresDatabase,
+		User:     spec.PostgresUser,
+		Pass:     spec.PostgresPass,
 	}
 }
 

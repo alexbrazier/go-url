@@ -27,7 +27,7 @@ const Results = ({
       <Modal
         edit
         urlKey={selected.key}
-        url={selected.url}
+        url={selected.url || selected.alias.join(',')}
         onClose={closeEditModal}
       />
     )}

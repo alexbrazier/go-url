@@ -15,7 +15,7 @@ func main() {
 	config.Init()
 	appConfig := config.GetConfig()
 	e.Pre(middleware.RemoveTrailingSlash())
-	logFormat := "${time_rfc3339}\t|${status}|\t${latency_human}| ${remote_ip} | ${method} | ${path}\n"
+	logFormat := "${time_rfc3339}\t|${status}|\t${latency_human}| ${remote_ip} | ${method} | ${path} ${error}\n"
 	if appConfig.JSONLogs {
 		logFormat = ""
 	}

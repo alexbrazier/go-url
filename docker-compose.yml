@@ -7,13 +7,20 @@ services:
     ports:
       - 8080:1323
     depends_on:
-      - mongo
+      - postgres
     environment:
-      - MONGO_ADDRESSES=mongo
-  mongo:
-    container_name: mongo
-    image: mongo:3.2.17
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=go
+  postgres:
+    container_name: postgres
+    image: postgres:11.1
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=go
     volumes:
-      - ./data:/data
+      - ./data/postgres:/var/lib/postgresql/data
     ports:
-      - 27017:27017
+      - 5432:5432
