@@ -11,7 +11,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/alexbrazier/go-url/api/config"
+	"github.com/Babylonpartners/go-url/api/config"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo"
 	"golang.org/x/oauth2"

@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/alexbrazier/go-url/api/model"
+	"github.com/Babylonpartners/go-url/api/model"
 	"github.com/labstack/echo"
 )
 

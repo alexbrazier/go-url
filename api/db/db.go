@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/alexbrazier/go-url/api/config"
+	"github.com/Babylonpartners/go-url/api/config"
 	"github.com/globalsign/mgo"
 	"github.com/labstack/gommon/log"
 )

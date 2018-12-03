@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/alexbrazier/go-url/api/db"
+	"github.com/Babylonpartners/go-url/api/db"
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
 	"github.com/labstack/gommon/log"

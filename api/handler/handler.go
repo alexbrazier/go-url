@@ -1,6 +1,6 @@
 package handler
 
-import "github.com/alexbrazier/go-url/api/model"
+import "github.com/Babylonpartners/go-url/api/model"
 
 // Handler ...
 type Handler struct{}

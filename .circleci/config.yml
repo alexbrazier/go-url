@@ -1,0 +1,41 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.14.0
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - setup_remote_docker
+      - type: shell
+        name: Docker
+        command: |
+          echo "$CIRCLE_SHA1" > .commit-id
+          docker --version
+          docker-compose --version
+          docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" quay.io
+      - type: shell
+        name: Build docker container
+        command: make build
+      - type: shell
+        name: Test docker container runs successfully
+        command: make test
+      - type: deploy
+        name: Deploy to dev
+        command: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            make deploy-dev;
+          fi
+      - type: deploy
+        name: Deploy to staging
+        command: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            make tag-semver deploy-staging;
+          fi
+
+workflows:
+  version: 2
+  build-deploy:
+    jobs:
+      - build:
+          context: babylon
