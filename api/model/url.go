@@ -61,6 +61,6 @@ func (u *URL) Search(query string, limit int) ([]*URL, error) {
 // GetMostPopular gets the urls sorted by views
 func (u *URL) GetMostPopular(limit int) ([]*URL, error) {
 	urls := []*URL{}
-	err := db.GetDB().Model(&urls).Order("views DESC").Select()
+	err := db.GetDB().Model(&urls).Order("views DESC").Limit(limit).Select()
 	return urls, err
 }

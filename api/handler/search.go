@@ -8,6 +8,7 @@ import (
 )
 
 const defaultLimit = 15
+
 // Search finds urls that are similar to the search query param q
 func (h *Handler) Search(c echo.Context) error {
 	query := strings.ToLower(c.QueryParam("q"))
@@ -40,7 +41,8 @@ func (h *Handler) SearchSuggestions(c echo.Context) error {
 
 // Popular finds URLs with the most views
 func (h *Handler) Popular(c echo.Context) error {
-	u, err := urlModel.GetMostPopular(defaultLimit)
+	limit := 30
+	u, err := urlModel.GetMostPopular(limit)
 	if err != nil {
 		return err
 	}

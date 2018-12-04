@@ -80,6 +80,8 @@ func (h *Handler) Url(c echo.Context) (err error) {
 		}
 	}
 
+	// Increment the view count in the background as we don't want to delay the user
+	// and even if it fails, it shouldn't stop the redirect
 	go urlModel.IncrementViewCount(keys)
 
 	if len(resolvedUrls) > 1 {
