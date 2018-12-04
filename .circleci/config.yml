@@ -26,12 +26,12 @@ jobs:
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
             make deploy-dev;
           fi
-      - type: deploy
-        name: Deploy to staging
-        command: |
-          if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            make tag-semver deploy-staging;
-          fi
+      # - type: deploy
+      #   name: Deploy to staging
+      #   command: |
+      #     if [ "${CIRCLE_BRANCH}" == "master" ]; then
+      #       make deploy-staging;
+      #     fi
 
 workflows:
   version: 2

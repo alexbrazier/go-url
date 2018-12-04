@@ -7,8 +7,8 @@ CWD=${shell pwd}/
 API_DIR=$(CWD)/api
 FRONTEND_DIR=$(CWD)/frontend
 REPO=quay.io/babylonhealth
-DEPLOY_DEV_URL=http://dev-ai-deploy.babylontech.co.uk:5199/job/kube-deploy-dev/buildWithParameters
-DEPLOY_STAGING_URL=http://dev-ai-deploy.babylontech.co.uk:5199/job/kube-deploy-staging/buildWithParameters
+DEPLOY_DEV_URL=http://dev-ai-deploy.babylontech.co.uk:5199/job/AI-deploy-dev/buildWithParameters
+DEPLOY_STAGING_URL=http://dev-ai-deploy.babylontech.co.uk:5199/job/AI-deploy-staging/buildWithParameters
 
 install:
 	cd $(API_DIR) && \
@@ -45,19 +45,17 @@ tag-master: build
 	docker push $(REPO)/$(APP_NAME):master
 	docker push $(REPO)/$(APP_NAME):$(COMMIT_ID)
 
-tag-semver: build
-	@if docker run -e DOCKER_REPO=babylonhealth/$(APP_NAME) -e DOCKER_TAG=$(SEMVER_VERSION) quay.io/babylonhealth/tag-exists; \
-	  then echo "Tag $(SEMVER_VERSION) already exists!" && exit 0 ; \
-	else \
-	  docker tag $(REPO)/$(APP_NAME):$(COMMIT_ID) $(REPO)/$(APP_NAME):$(SEMVER_VERSION); \
-	  docker push $(REPO)/$(APP_NAME):$(SEMVER_VERSION); \
-	fi
-
 test: tag-master
 	docker run -d -t $(REPO)/$(APP_NAME):$(COMMIT_ID)
 
 deploy-dev:
 	@curl -vvv --fail -XPOST "${DEPLOY_DEV_URL}?token=${JENKINS_DEV_TOKEN}&APP=${APP_NAME}&VERSION=${COMMIT_ID}"
 
-deploy-staging:
-	@curl -vvv --fail -XPOST "${DEPLOY_STAGING_URL}?token=${JENKINS_STAGING_TOKEN}&APP=${APP_NAME}&VERSION=${SEMVER_VERSION}"
+# deploy-staging:
+# 	@if docker run -e DOCKER_REPO=babylonhealth/$(APP_NAME) -e DOCKER_TAG=$(SEMVER_VERSION) quay.io/babylonhealth/tag-exists; \
+# 	  then echo "Tag $(SEMVER_VERSION) already exists!" && exit 0 ; \
+# 	else \
+# 	  docker tag $(REPO)/$(APP_NAME):$(COMMIT_ID) $(REPO)/$(APP_NAME):$(SEMVER_VERSION); \
+# 	  docker push $(REPO)/$(APP_NAME):$(SEMVER_VERSION); \
+# 		@curl -vvv --fail -XPOST "${DEPLOY_STAGING_URL}?token=${JENKINS_STAGING_TOKEN}&APP=${APP_NAME}&VERSION=${SEMVER_VERSION}"; \
+# 	fi
