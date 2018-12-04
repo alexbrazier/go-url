@@ -50,7 +50,7 @@ const Results = ({
             {data.map(r => (
               <TableRow key={r.key} className={classes.tableRow}>
                 <TableCell>{r.key}</TableCell>
-                <TableCell>
+                <TableCell className={classes.urlCell}>
                   {r.alias && r.alias.length ? (
                     r.alias.map(alias => (
                       <a key={alias} className={classes.url} href={`/${alias}`}>
@@ -83,9 +83,10 @@ const Results = ({
   </div>
 );
 
-const styles = {
+const styles = theme => ({
   paper: {
     padding: 15,
+    overflowX: 'auto',
   },
   url: {
     color: 'grey',
@@ -106,7 +107,15 @@ const styles = {
   tableRow: {
     height: 'initial',
   },
-};
+  urlCell: {
+    overflowWrap: 'break-word',
+    wordWrap: 'break-word',
+    maxWidth: 300,
+    [theme.breakpoints.down('xs')]: {
+      maxWidth: 100,
+    },
+  },
+});
 
 const enhance = compose(
   withStateHandlers(
