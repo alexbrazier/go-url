@@ -32,7 +32,7 @@ const Header = ({ classes, onSearchResults, onSearch, name }) => (
           Go
         </Typography>
       </a>
-      <a className={classes.link} href="/go/help">
+      <a className={classes.link} href="/help">
         Help
       </a>
       <div className={classes.grow} />
