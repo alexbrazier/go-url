@@ -24,6 +24,21 @@ Before starting the app for the first time run `make install`, then:
 
 ## Enviroment Configuration
 
+```bash
+# List of comma separated hosts that the server will be able to be access from
+HOSTS=go.com,go.test.com
+# List of hosts you want to block from being linked - HOSTS are already included to stop
+# recursive calls
+BLOCKED_HOSTS
+PORT=1323
+DEBUG=false
+JSON_LOGS=false
+POSTGRES_ADDR=localhost:5432
+POSTGRES_DATABASE=go
+POSTGRES_USER=
+POSTGRES_PASS=
+```
+
 ### Authentication
 ```bash
 # Enable Azure auth or not - if enabled, all other fields must be filled in
@@ -34,15 +49,4 @@ AD_CLIENT_ID=
 AD_CLIENT_SECRET=
 # Secret session token to store the user sessions
 SESSION_TOKEN=
-```
-
-### Other
-```bash
-PORT=1323
-DEBUG=false
-JSON_LOGS=false
-POSTGRES_ADDR=localhost:5432
-POSTGRES_DATABASE=go
-POSTGRES_USER=
-POSTGRES_PASS=
 ```

@@ -4,12 +4,12 @@ import (
 	"net/http"
 
 	"fmt"
-	"net/url"
-
 	"regexp"
 	"strings"
 
+	"github.com/Babylonpartners/go-url/api/config"
 	"github.com/Babylonpartners/go-url/api/model"
+	"github.com/Babylonpartners/go-url/api/utils"
 	"github.com/labstack/echo"
 )
 
@@ -144,7 +144,7 @@ func (h *Handler) validateUrl(c echo.Context) (*model.URL, error) {
 		message := "url or alias is required"
 		return nil, echo.NewHTTPError(http.StatusBadRequest, message)
 	}
-	_, err := url.ParseRequestURI(u.URL)
+	_, err := utils.ValidateURL(u.URL)
 	if err != nil {
 		// Not a URL, let's check if it's an alias
 		alias, err := h.isAlias(u.URL)
@@ -159,6 +159,15 @@ func (h *Handler) validateUrl(c echo.Context) (*model.URL, error) {
 		}
 
 		return nil, echo.NewHTTPError(http.StatusBadRequest, "Invalid url or alias provided")
+	}
+	for _, host := range config.GetConfig().BlockedHosts {
+		same, err := utils.SameHost(host, u.URL)
+		if err != nil {
+			return nil, echo.NewHTTPError(http.StatusInternalServerError, "Error parsing URL")
+		}
+		if same {
+			return nil, echo.NewHTTPError(http.StatusBadRequest, "You cannot add a URL with this hostname")
+		}
 	}
 
 	return u, nil

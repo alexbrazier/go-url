@@ -9,17 +9,19 @@ import (
 // Specification definition in env
 type Specification struct {
 	Debug            bool
-	JSONLogs         bool   `envconfig:"JSON_LOGS"`
-	Port             int    `default:"1323"`
-	EnableAuth       bool   `envconfig:"ENABLE_AUTH"`
-	ADTenantID       string `envconfig:"AD_TENANT_ID"`
-	ADClientID       string `envconfig:"AD_CLIENT_ID"`
-	ADClientSecret   string `envconfig:"AD_CLIENT_SECRET"`
-	SessionToken     string `envconfig:"SESSION_TOKEN"`
-	PostgresAddr     string `envconfig:"POSTGRES_ADDR" default:"localhost"`
-	PostgresDatabase string `envconfig:"POSTGRES_DATABASE" default:"go"`
-	PostgresUser     string `envconfig:"POSTGRES_USER"`
-	PostgresPass     string `envconfig:"POSTGRES_PASS"`
+	JSONLogs         bool     `envconfig:"JSON_LOGS"`
+	Port             int      `default:"1323"`
+	EnableAuth       bool     `envconfig:"ENABLE_AUTH"`
+	ADTenantID       string   `envconfig:"AD_TENANT_ID"`
+	ADClientID       string   `envconfig:"AD_CLIENT_ID"`
+	ADClientSecret   string   `envconfig:"AD_CLIENT_SECRET"`
+	SessionToken     string   `envconfig:"SESSION_TOKEN"`
+	PostgresAddr     string   `envconfig:"POSTGRES_ADDR" default:"localhost:5432"`
+	PostgresDatabase string   `envconfig:"POSTGRES_DATABASE" default:"go"`
+	PostgresUser     string   `envconfig:"POSTGRES_USER" default:"postgres"`
+	PostgresPass     string   `envconfig:"POSTGRES_PASS" required:"true"`
+	Hosts            []string `required:"true"`
+	BlockedHosts     []string `envconfig:"BLOCKED_HOSTS"`
 }
 
 // Auth config
@@ -41,11 +43,12 @@ type Database struct {
 
 // Config definition
 type Config struct {
-	Debug    bool
-	JSONLogs bool
-	Port     int
-	Auth     Auth
-	Database Database
+	Debug        bool
+	JSONLogs     bool
+	Port         int
+	Auth         Auth
+	Database     Database
+	BlockedHosts []string
 }
 
 var config = Config{}
@@ -74,6 +77,8 @@ func Init() {
 		User:     spec.PostgresUser,
 		Pass:     spec.PostgresPass,
 	}
+
+	config.BlockedHosts = append(spec.BlockedHosts, spec.Hosts...)
 }
 
 // GetConfig returns the config
