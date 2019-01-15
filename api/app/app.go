@@ -9,6 +9,7 @@ import (
 
 	"github.com/Babylonpartners/go-url/api/config"
 	"github.com/Babylonpartners/go-url/api/handler"
+	"github.com/Babylonpartners/go-url/api/slackbot"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -50,8 +51,18 @@ func Init(e *echo.Echo) {
 	e.GET("/api/search", h.Search)
 	e.GET("/api/search/suggest", h.SearchSuggestions)
 	e.GET("/api/popular", h.Popular)
+	e.GET("/api/url/:key", h.GetURL)
+
+	if appConfig.Slack.SigningSecret != "" {
+		e.POST("/api/slack", h.SlackCommand)
+	}
 
 	setupTemplates(e)
+
+	if appConfig.Slack.Token != "" {
+		s := &slackbot.SlackBot{}
+		go s.Init()
+	}
 }
 
 // setupTempletes adds the html templates required for the app, currently only one

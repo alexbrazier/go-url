@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"fmt"
-	"regexp"
 	"strings"
 
 	"github.com/Babylonpartners/go-url/api/config"
@@ -12,11 +11,6 @@ import (
 	"github.com/Babylonpartners/go-url/api/utils"
 	"github.com/labstack/echo"
 )
-
-func validateKey(key string) bool {
-	r, _ := regexp.Compile("^[\\w-]+$")
-	return r.MatchString(key)
-}
 
 func remove(s []string, r string) []string {
 	for i, v := range s {
@@ -30,10 +24,8 @@ func remove(s []string, r string) []string {
 func (h *Handler) getSetDifference(keys []string, found []*model.URL) []string {
 	newKeys := keys
 	for _, item := range found {
-		fmt.Println(item.Key)
 		newKeys = remove(newKeys, item.Key)
 	}
-	fmt.Println(newKeys)
 	return newKeys
 }
 
@@ -126,7 +118,7 @@ func (h *Handler) isAlias(alias string) (bool, error) {
 
 func (h *Handler) validateUrl(c echo.Context) (*model.URL, error) {
 	key := strings.ToLower(c.Param("key"))
-	if valid := validateKey(key); !valid {
+	if valid := ValidateKey(key); !valid {
 		message := fmt.Sprint("The key provided is not valid. It can only contain letters, numbers, _ and -")
 		return nil, echo.NewHTTPError(http.StatusBadRequest, message)
 	}

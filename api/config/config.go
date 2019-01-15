@@ -8,20 +8,23 @@ import (
 
 // Specification definition in env
 type Specification struct {
-	Debug            bool
-	JSONLogs         bool     `envconfig:"JSON_LOGS"`
-	Port             int      `default:"1323"`
-	EnableAuth       bool     `envconfig:"ENABLE_AUTH"`
-	ADTenantID       string   `envconfig:"AD_TENANT_ID"`
-	ADClientID       string   `envconfig:"AD_CLIENT_ID"`
-	ADClientSecret   string   `envconfig:"AD_CLIENT_SECRET"`
-	SessionToken     string   `envconfig:"SESSION_TOKEN"`
-	PostgresAddr     string   `envconfig:"POSTGRES_ADDR" default:"localhost:5432"`
-	PostgresDatabase string   `envconfig:"POSTGRES_DATABASE" default:"go"`
-	PostgresUser     string   `envconfig:"POSTGRES_USER" default:"postgres"`
-	PostgresPass     string   `envconfig:"POSTGRES_PASS" required:"true"`
-	Hosts            []string `required:"true"`
-	BlockedHosts     []string `envconfig:"BLOCKED_HOSTS"`
+	Debug              bool
+	JSONLogs           bool     `envconfig:"JSON_LOGS"`
+	Port               int      `default:"1323"`
+	EnableAuth         bool     `envconfig:"ENABLE_AUTH"`
+	ADTenantID         string   `envconfig:"AD_TENANT_ID"`
+	ADClientID         string   `envconfig:"AD_CLIENT_ID"`
+	ADClientSecret     string   `envconfig:"AD_CLIENT_SECRET"`
+	SessionToken       string   `envconfig:"SESSION_TOKEN"`
+	PostgresAddr       string   `envconfig:"POSTGRES_ADDR" default:"localhost:5432"`
+	PostgresDatabase   string   `envconfig:"POSTGRES_DATABASE" default:"go"`
+	PostgresUser       string   `envconfig:"POSTGRES_USER" default:"postgres"`
+	PostgresPass       string   `envconfig:"POSTGRES_PASS" required:"true"`
+	Hosts              []string `required:"true"`
+	BlockedHosts       []string `envconfig:"BLOCKED_HOSTS"`
+	AppURI             string   `envconfig:"APP_URI" required:"true"`
+	SlackToken         string   `envconfig:"SLACK_TOKEN"`
+	SlackSigningSecret string   `envconfig:"SLACK_SIGNING_SECRET"`
 }
 
 // Auth config
@@ -41,6 +44,12 @@ type Database struct {
 	Pass     string
 }
 
+// Slack config
+type Slack struct {
+	Token         string
+	SigningSecret string
+}
+
 // Config definition
 type Config struct {
 	Debug        bool
@@ -48,7 +57,9 @@ type Config struct {
 	Port         int
 	Auth         Auth
 	Database     Database
+	AppURI       string
 	BlockedHosts []string
+	Slack        Slack
 }
 
 var config = Config{}
@@ -76,6 +87,12 @@ func Init() {
 		Database: spec.PostgresDatabase,
 		User:     spec.PostgresUser,
 		Pass:     spec.PostgresPass,
+	}
+	config.AppURI = spec.AppURI
+
+	config.Slack = Slack{
+		Token:         spec.SlackToken,
+		SigningSecret: spec.SlackSigningSecret,
 	}
 
 	config.BlockedHosts = append(spec.BlockedHosts, spec.Hosts...)

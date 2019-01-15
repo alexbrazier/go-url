@@ -27,6 +27,8 @@ RUN yarn --frozen-lockfile && \
 # Build actual image
 ############################
 FROM alpine:3.8
+# Need to get updated certificates to connect to Slack API
+RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 # Copy our static executable.
 COPY --from=apibuilder /go/bin/server /go/bin/server
 COPY --from=frontendbuilder /app/build /go/bin/public

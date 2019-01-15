@@ -48,3 +48,13 @@ func (h *Handler) Popular(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, u)
 }
+
+// GetURL finds an exact matching url if it exists
+func (h *Handler) GetURL(c echo.Context) error {
+	key := strings.ToLower(c.Param("key"))
+	u, err := urlModel.Find(key)
+	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, u)
+}

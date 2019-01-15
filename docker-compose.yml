@@ -9,10 +9,14 @@ services:
     depends_on:
       - postgres
     environment:
-      - POSTGRES_HOST=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_ADDR=postgres:5432
+      - POSTGRES_PASS=password
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=go
+      - POSTGRES_DATABASE=go
+      - HOSTS=go,localhost
+      - APP_URI=http://localhost:8080
+      - DEBUG=false
+    restart: on-failure
   postgres:
     container_name: postgres
     image: postgres:11.1

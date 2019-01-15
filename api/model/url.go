@@ -16,6 +16,16 @@ type URL struct {
 	Views int      `json:"views" sql:"default:0"`
 }
 
+// Find returns matching URL
+func (u *URL) Find(key string) (*URL, error) {
+	url := new(URL)
+	err := db.GetDB().Model(url).Where("key = ?", key).First()
+	if err == pg.ErrNoRows {
+		return nil, nil
+	}
+	return url, err
+}
+
 // Update sets the new url and alias fields in the db
 func (u *URL) Update() error {
 	url := URL{
@@ -29,7 +39,6 @@ func (u *URL) Update() error {
 
 // Save adds a new url to the db
 func (u *URL) Save() error {
-	fmt.Println("hello")
 	err := db.GetDB().Insert(u)
 	return err
 }
