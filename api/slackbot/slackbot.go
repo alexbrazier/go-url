@@ -155,6 +155,7 @@ func (s *SlackBot) Init() {
 				_, timestamp, err := s.RTM.PostMessage(ev.Channel, messageText, message)
 				if err != nil {
 					fmt.Println(err)
+					break
 				}
 				s.Cache.Set(ev.Timestamp, timestamp, cache.DefaultExpiration)
 				if ev.PreviousMessage != nil {
@@ -163,11 +164,11 @@ func (s *SlackBot) Init() {
 			}
 
 		case *slack.RTMError:
-			fmt.Printf("Error: %s\n", ev.Error())
+			fmt.Printf("Slackbot Error: %s\n", ev.Error())
 
 		case *slack.InvalidAuthEvent:
 			fmt.Println("Invalid slack credentials")
-			return
+			break
 
 		default:
 			// Do nothing
