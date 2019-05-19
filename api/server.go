@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 
-	"github.com/Babylonpartners/go-url/api/app"
-	"github.com/Babylonpartners/go-url/api/config"
-	"github.com/Babylonpartners/go-url/api/db"
+	"github.com/alexbrazier/go-url/api/app"
+	"github.com/alexbrazier/go-url/api/config"
+	"github.com/alexbrazier/go-url/api/db"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )

@@ -3,7 +3,7 @@ package model
 import (
 	"fmt"
 
-	"github.com/Babylonpartners/go-url/api/db"
+	"github.com/alexbrazier/go-url/api/db"
 	"github.com/go-pg/pg"
 	"github.com/labstack/gommon/log"
 )

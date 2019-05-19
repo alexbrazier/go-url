@@ -3,7 +3,7 @@ package db
 import (
 	"log"
 
-	"github.com/Babylonpartners/go-url/api/config"
+	"github.com/alexbrazier/go-url/api/config"
 
 	"github.com/go-pg/pg"
 	"github.com/go-pg/pg/orm"

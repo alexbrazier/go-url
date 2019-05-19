@@ -7,9 +7,9 @@ import (
 
 	"net/http"
 
-	"github.com/Babylonpartners/go-url/api/config"
-	"github.com/Babylonpartners/go-url/api/handler"
-	"github.com/Babylonpartners/go-url/api/slackbot"
+	"github.com/alexbrazier/go-url/api/config"
+	"github.com/alexbrazier/go-url/api/handler"
+	"github.com/alexbrazier/go-url/api/slackbot"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )

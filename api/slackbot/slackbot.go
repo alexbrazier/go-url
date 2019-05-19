@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Babylonpartners/go-url/api/config"
-	"github.com/Babylonpartners/go-url/api/model"
+	"github.com/alexbrazier/go-url/api/config"
+	"github.com/alexbrazier/go-url/api/model"
 	"github.com/alexbrazier/slack"
 	cache "github.com/patrickmn/go-cache"
 )

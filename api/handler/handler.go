@@ -3,7 +3,7 @@ package handler
 import (
 	"regexp"
 
-	"github.com/Babylonpartners/go-url/api/model"
+	"github.com/alexbrazier/go-url/api/model"
 )
 
 // Handler ...

@@ -3,8 +3,8 @@
 ############################
 FROM golang:1.11.2-alpine3.8 AS apibuilder
 RUN apk update && apk add --no-cache git dep
-COPY api $GOPATH/src/github.com/Babylonpartners/go-url/api
-WORKDIR $GOPATH/src/github.com/Babylonpartners/go-url/api
+COPY api $GOPATH/src/github.com/alexbrazier/go-url/api
+WORKDIR $GOPATH/src/github.com/alexbrazier/go-url/api
 
 # install the dependencies without checking for go code
 RUN dep ensure -vendor-only
