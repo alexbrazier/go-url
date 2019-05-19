@@ -1,5 +1,4 @@
-import React from 'react';
-import { compose, withStateHandlers } from 'recompose';
+import React, { useState } from 'react';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import InputBase from '@material-ui/core/InputBase';
 import { withStyles } from '@material-ui/core/styles';
@@ -49,30 +48,25 @@ const styles = theme => ({
   },
 });
 
-const Search = ({ classes, onSearch, onUpdateSearch, query }) => (
-  <div className={classes.search}>
-    <div className={classes.searchIcon}>
-      <SearchIcon />
+const Search = ({ classes, onSearch }) => {
+  const [query, setQuery] = useState('');
+  return (
+    <div className={classes.search}>
+      <div className={classes.searchIcon}>
+        <SearchIcon />
+      </div>
+      <InputBase
+        placeholder="Search…"
+        onChange={e => setQuery(e.target.value)}
+        value={query}
+        onKeyPress={({ key }) => key === 'Enter' && onSearch(query)}
+        classes={{
+          root: classes.inputRoot,
+          input: classes.inputInput,
+        }}
+      />
     </div>
-    <InputBase
-      placeholder="Search…"
-      onChange={onUpdateSearch}
-      value={query}
-      onKeyPress={({ key }) => key === 'Enter' && onSearch(query)}
-      classes={{
-        root: classes.inputRoot,
-        input: classes.inputInput,
-      }}
-    />
-  </div>
-);
+  );
+};
 
-export default compose(
-  withStateHandlers(
-    { query: '' },
-    {
-      onUpdateSearch: () => event => ({ query: event.target.value }),
-    },
-  ),
-  withStyles(styles),
-)(Search);
+export default withStyles(styles)(Search);

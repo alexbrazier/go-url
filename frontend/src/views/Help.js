@@ -76,6 +76,4 @@ const Help = ({ classes }) => {
   );
 };
 
-const enhance = withStyles(styles);
-
-export default enhance(Help);
+export default withStyles(styles)(Help);

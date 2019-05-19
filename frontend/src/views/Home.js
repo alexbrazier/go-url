@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import qs from 'qs';
-import { bindActionCreators } from 'redux';
-import { compose, lifecycle, withState } from 'recompose';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
@@ -16,48 +15,54 @@ const styles = {
   },
 };
 
-const Home = ({ search, querySearchResults, popular, classes }) => (
-  <div>
-    {(search.results || querySearchResults) && (
-      <div className={classes.container}>
-        <Results
-          data={search.results || querySearchResults}
-          title="Search Results"
-        />
-      </div>
-    )}
-    {popular && (
-      <div className={classes.container}>
-        <Results data={popular} title="Most Popular" />
-      </div>
-    )}
-  </div>
-);
+const Home = ({ search, classes, match, location, displayFlashError }) => {
+  const [querySearchResults, setQuerySearchResults] = useState('');
+  const [popular, setPopular] = useState();
+
+  useEffect(() => {
+    axios.get('/api/popular').then(({ data }) => setPopular(data));
+    const { search } = location;
+    const { message } = qs.parse(search.slice(1));
+    if (message) {
+      displayFlashError(message);
+    }
+    const { query } = match.params;
+    if (query) {
+      axios
+        .get('/api/search', { params: { q: query } })
+        .then(({ data }) => setQuerySearchResults(data));
+    }
+  }, []);
+  return (
+    <div>
+      {(search.results || querySearchResults) && (
+        <div className={classes.container}>
+          <Results
+            data={search.results || querySearchResults}
+            title="Search Results"
+          />
+        </div>
+      )}
+      {popular && (
+        <div className={classes.container}>
+          <Results data={popular} title="Most Popular" />
+        </div>
+      )}
+    </div>
+  );
+};
+
+const mapState = ({ flash, search }) => ({ flash, search });
+
+const mapDispatch = {
+  displayFlashError,
+};
 
 export default compose(
   connect(
-    ({ flash, search }) => ({ flash, search }),
-    dispatch => bindActionCreators({ displayFlashError }, dispatch),
+    mapState,
+    mapDispatch,
   ),
-  withState('querySearchResults', 'onSearchResults', null),
-  lifecycle({
-    componentDidMount() {
-      axios
-        .get('/api/popular')
-        .then(({ data }) => this.setState({ popular: data }));
-      const { search } = this.props.location;
-      const { message } = qs.parse(search.slice(1));
-      if (message) {
-        this.props.displayFlashError(message);
-      }
-      const { query } = this.props.match.params;
-      if (query) {
-        axios
-          .get('/api/search', { params: { q: query } })
-          .then(({ data }) => this.props.onSearchResults(data));
-      }
-    },
-  }),
   withStyles(styles),
   withRouter,
 )(Home);

@@ -1,7 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { compose, withHandlers } from 'recompose';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
@@ -82,43 +80,37 @@ const CustomSnackbarContent = props => {
 
 const SnackbarContentWrapper = withStyles(styles)(CustomSnackbarContent);
 
-const Alert = ({ variant, message, onClose }) => (
-  <Snackbar
-    anchorOrigin={{
-      vertical: 'top',
-      horizontal: 'center',
-    }}
-    open
-    autoHideDuration={6000}
-    onClose={onClose}
-  >
-    <SnackbarContentWrapper
+const Alert = ({ variant, message, clearFlash }) => {
+  const onClose = (e, reason) => reason === 'clickaway' && clearFlash();
+  return (
+    <Snackbar
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'center',
+      }}
+      open
+      autoHideDuration={6000}
       onClose={onClose}
-      variant={variant}
-      message={message}
-    />
-  </Snackbar>
-);
+    >
+      <SnackbarContentWrapper
+        onClose={onClose}
+        variant={variant}
+        message={message}
+      />
+    </Snackbar>
+  );
+};
 
 Alert.propTypes = {
   message: PropTypes.node,
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
 };
 
-const enhance = compose(
-  connect(
-    null,
-    dispatch => bindActionCreators({ clearFlash }, dispatch),
-  ),
-  withHandlers({
-    onClose: ({ clearFlash }) => (e, reason) => {
-      if (reason === 'clickaway') {
-        return;
-      }
+const mapDispatch = {
+  clearFlash,
+};
 
-      clearFlash();
-    },
-  }),
-);
-
-export default enhance(Alert);
+export default connect(
+  null,
+  mapDispatch,
+)(Alert);

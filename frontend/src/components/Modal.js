@@ -21,12 +21,13 @@ const styles = {
   },
 };
 
-const Modal = ({ edit, onClose, classes }) => {
+const Modal = ({ edit, onClose, classes, displayFlashSuccess, displayFlashError }) => {
   const [urlKey, setKey] = useState('');
   const [url, setUrl] = useState('');
-  const [query, submit] = useState({ urlKey, url });
+  const [query, submit] = useState();
 
   useEffect(() => {
+    if (!query) return;
     axios({
       method: edit ? 'put' : 'post',
       url: `/${query.urlKey}`,
@@ -38,7 +39,7 @@ const Modal = ({ edit, onClose, classes }) => {
         );
         onClose();
       })
-      .catch(err => displayFlashError(err.response.data.message));
+      .catch(err => displayFlashError(err.response.data.message || err.response.data));
   }, [query]);
   return (
     <Dialog open onClose={onClose}>
