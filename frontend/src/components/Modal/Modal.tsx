@@ -9,21 +9,33 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles';
-import { displayFlashError, displayFlashSuccess } from '../redux/flash/actions';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
+import {
+  displayFlashError,
+  displayFlashSuccess,
+} from '../../redux/flash/actions';
+import styles from './styles';
 
-const styles = {
-  textField: {
-    marginTop: 10,
-  },
-  actions: {
-    marginTop: 15,
-  },
-};
+interface ModalProps extends WithStyles<typeof styles> {
+  edit: Boolean;
+  urlKey?: string;
+  url?: string;
+  onClose: () => void;
+  displayFlashSuccess: (message: string) => void;
+  displayFlashError: (message: string) => void;
+}
 
-const Modal = ({ edit, onClose, classes, displayFlashSuccess, displayFlashError }) => {
-  const [urlKey, setKey] = useState('');
-  const [url, setUrl] = useState('');
+const Modal: React.FC<ModalProps> = ({
+  edit,
+  urlKey: initialKey = '',
+  url: initialUrl = '',
+  onClose,
+  classes,
+  displayFlashSuccess,
+  displayFlashError,
+}) => {
+  const [urlKey, setKey] = useState(initialKey);
+  const [url, setUrl] = useState(initialUrl);
   const [query, submit] = useState();
 
   useEffect(() => {
@@ -39,7 +51,9 @@ const Modal = ({ edit, onClose, classes, displayFlashSuccess, displayFlashError 
         );
         onClose();
       })
-      .catch(err => displayFlashError(err.response.data.message || err.response.data));
+      .catch(err =>
+        displayFlashError(err.response.data.message || err.response.data),
+      );
   }, [query]);
   return (
     <Dialog open onClose={onClose}>
@@ -91,11 +105,11 @@ const mapDispatch = {
 };
 
 const enhance = compose(
+  withStyles(styles),
   connect(
     null,
     mapDispatch,
   ),
-  withStyles(styles),
 );
 
 export default enhance(Modal);

@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CloseIcon from '@material-ui/icons/Close';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -20,17 +20,14 @@ const variantIcon = {
 
 export type Variant = 'success' | 'warning' | 'error' | 'info';
 
-interface SnackbarContentWrapperProps {
-  classes: any;
+interface SnackbarContentWrapperProps extends WithStyles<typeof styles> {
   className?: string;
   message: React.ReactNode;
   onClose: (e: any, reason: string) => void;
   variant: Variant;
 }
 
-const SnackbarContentWrapper: React.SFC<
-  SnackbarContentWrapperProps
-> = props => {
+const SnackbarContentWrapper: React.FC<SnackbarContentWrapperProps> = props => {
   const { classes, className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
 
@@ -49,7 +46,7 @@ const SnackbarContentWrapper: React.SFC<
           key="close"
           aria-label="Close"
           color="inherit"
-          className={classes.close}
+          // className={classes.close}
           // @ts-ignore
           onClick={onClose}
         >

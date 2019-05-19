@@ -10,7 +10,7 @@ interface AlertProps {
   clearFlash: () => void;
 }
 
-const Alert: React.SFC<AlertProps> = ({ variant, message, clearFlash }) => {
+const Alert = ({ variant, message, clearFlash }: AlertProps) => {
   const onClose = (_: any, reason: string) =>
     reason === 'clickaway' && clearFlash();
   return (

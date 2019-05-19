@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import LaunchIcon from '@material-ui/icons/Launch';
@@ -10,10 +10,23 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
-import Modal from './Modal';
+import Modal from '../Modal';
+import styles from './styles';
 
-const Results = ({ data, title, classes }) => {
-  const [selected, setSelected] = useState(null);
+interface IResult {
+  key: string;
+  url: string;
+  alias: string[];
+  views: number;
+}
+
+interface ResultsProps extends WithStyles<typeof styles> {
+  data: IResult[];
+  title: StringConstructor;
+}
+
+const Results: React.FC<ResultsProps> = ({ data, title, classes }) => {
+  const [selected, setSelected] = useState<IResult | null>(null);
   return (
     <div>
       {selected && (
@@ -80,39 +93,5 @@ const Results = ({ data, title, classes }) => {
     </div>
   );
 };
-
-const styles = theme => ({
-  paper: {
-    padding: 15,
-    overflowX: 'auto',
-  },
-  url: {
-    color: 'grey',
-    textDecoration: 'none',
-    '&:hover': {
-      textDecoration: 'underline',
-    },
-  },
-  launchIcon: {
-    width: 10,
-  },
-  edit: {
-    color: 'grey',
-  },
-  editIcon: {
-    padding: 3,
-  },
-  tableRow: {
-    height: 'initial',
-  },
-  urlCell: {
-    overflowWrap: 'break-word',
-    wordWrap: 'break-word',
-    maxWidth: 300,
-    [theme.breakpoints.down('xs')]: {
-      maxWidth: 100,
-    },
-  },
-});
 
 export default withStyles(styles)(Results);

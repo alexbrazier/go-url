@@ -1,29 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Search from './Search';
+import Search from '../Search';
+import styles from './styles';
 
-const styles = {
-  grow: {
-    flexGrow: 1,
-  },
-  name: {
-    marginLeft: 20,
-    fontWeight: 500,
-  },
-  link: {
-    textDecoration: 'none',
-    padding: 10,
-    color: 'white',
-    marginLeft: 30,
-    fontWeight: '600',
-  },
-};
+interface HeaderProps extends WithStyles<typeof styles> {
+  onSearch: (query: string) => void;
+}
 
-const Header = ({ classes, onSearchResults, onSearch }) => {
+const Header: React.FC<HeaderProps> = ({ classes, onSearch }) => {
   const [name, setName] = useState('');
   useEffect(() => {
     const name = Cookies.get('user');
@@ -44,7 +32,7 @@ const Header = ({ classes, onSearchResults, onSearch }) => {
           Help
         </a>
         <div className={classes.grow} />
-        <Search onResults={onSearchResults} onSearch={onSearch} />
+        <Search onSearch={onSearch} />
 
         {name && <span className={classes.name}>{name}</span>}
       </Toolbar>

@@ -1,8 +1,8 @@
-import { StyleRulesCallback } from '@material-ui/core/styles';
+import { Theme, createStyles } from '@material-ui/core/styles';
 import amber from '@material-ui/core/colors/amber';
 import green from '@material-ui/core/colors/green';
 
-const styles: StyleRulesCallback = theme => ({
+const styles = (theme: Theme) => createStyles({
   success: {
     backgroundColor: green[600],
   },
