@@ -1,13 +1,7 @@
-import React from 'react';
-import axios from 'axios';
-import { bindActionCreators } from 'redux';
-import {
-  compose,
-  defaultProps,
-  withHandlers,
-  withStateHandlers,
-} from 'recompose';
+import React, { useState, useEffect } from 'react';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -27,95 +21,79 @@ const styles = {
   },
 };
 
-const Modal = ({
-  edit,
-  onChangeKey,
-  onChangeUrl,
-  urlKey,
-  url,
-  onClose,
-  onSubmitForm,
-  classes,
-}) => (
-  <Dialog open onClose={onClose}>
-    <DialogTitle>{edit ? `Edit ${urlKey}` : 'Add new url'}</DialogTitle>
-    <DialogContent>
-      <DialogContentText>
-        {edit
-          ? `You are editing the link for "${urlKey}". Please remember that this will change the url for everyone, so only do so if the url is wrong.`
-          : 'Enter key and url to add new link'}
-      </DialogContentText>
-      {!edit && (
+const Modal = ({ edit, onClose, classes }) => {
+  const [urlKey, setKey] = useState('');
+  const [url, setUrl] = useState('');
+  const [query, submit] = useState({ urlKey, url });
+
+  useEffect(() => {
+    axios({
+      method: edit ? 'put' : 'post',
+      url: `/${query.urlKey}`,
+      data: { url: query.url },
+    })
+      .then(({ data }) => {
+        displayFlashSuccess(
+          `Successfully set ${data.key} to ${data.url || data.alias}`,
+        );
+        onClose();
+      })
+      .catch(err => displayFlashError(err.response.data.message));
+  }, [query]);
+  return (
+    <Dialog open onClose={onClose}>
+      <DialogTitle>{edit ? `Edit ${urlKey}` : 'Add new url'}</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          {edit
+            ? `You are editing the link for "${urlKey}". Please remember that this will change the url for everyone, so only do so if the url is wrong.`
+            : 'Enter key and url to add new link'}
+        </DialogContentText>
+        {!edit && (
+          <TextField
+            id="key"
+            label="Key"
+            type="text"
+            className={classes.textField}
+            fullWidth
+            autoComplete="off"
+            onChange={e => setKey(e.target.value)}
+            value={urlKey}
+          />
+        )}
         <TextField
-          id="key"
-          label="Key"
+          id="url"
+          label="Url"
           type="text"
           className={classes.textField}
           fullWidth
           autoComplete="off"
-          onChange={onChangeKey}
-          value={urlKey}
+          onChange={e => setUrl(e.target.value)}
+          value={url}
         />
-      )}
-      <TextField
-        id="url"
-        label="Url"
-        type="text"
-        className={classes.textField}
-        fullWidth
-        autoComplete="off"
-        onChange={onChangeUrl}
-        value={url}
-      />
-    </DialogContent>
-    <DialogActions className={classes.actions}>
-      <Button onClick={onClose} color="secondary">
-        Cancel
-      </Button>
-      <Button onClick={onSubmitForm} color="primary">
-        {edit ? 'Update' : 'Add'}
-      </Button>
-    </DialogActions>
-  </Dialog>
-);
+      </DialogContent>
+      <DialogActions className={classes.actions}>
+        <Button onClick={onClose} color="secondary">
+          Cancel
+        </Button>
+        <Button onClick={() => submit({ urlKey, url })} color="primary">
+          {edit ? 'Update' : 'Add'}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+};
+
+const mapDispatch = {
+  displayFlashSuccess,
+  displayFlashError,
+};
 
 const enhance = compose(
   connect(
     null,
-    dispatch =>
-      bindActionCreators({ displayFlashSuccess, displayFlashError }, dispatch),
+    mapDispatch,
   ),
-  withStateHandlers(({ urlKey, url }) => ({ urlKey, url }), {
-    onChangeKey: () => event => ({ urlKey: event.target.value }),
-    onChangeUrl: () => event => ({ url: event.target.value }),
-  }),
-  withHandlers({
-    onSubmitForm: ({
-      edit,
-      urlKey,
-      url,
-      onClose,
-      displayFlashSuccess,
-      displayFlashError,
-    }) => () => {
-      axios({
-        method: edit ? 'put' : 'post',
-        url: `/${urlKey}`,
-        data: { url },
-      })
-        .then(({ data }) => {
-          displayFlashSuccess(
-            `Successfully set ${data.key} to ${data.url || data.alias}`,
-          );
-          onClose();
-        })
-        .catch(err => displayFlashError(err.response.data.message));
-    },
-  }),
-  defaultProps({
-    urlKey: '',
-    url: '',
-  }),
   withStyles(styles),
 );
 

@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
-import { compose, lifecycle } from 'recompose';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -24,33 +23,33 @@ const styles = {
   },
 };
 
-const Header = ({ classes, onSearchResults, onSearch, name }) => (
-  <AppBar position="static">
-    <Toolbar>
-      <a className={classes.link} href="/go">
-        <Typography variant="h6" color="inherit">
-          Go
-        </Typography>
-      </a>
-      <a className={classes.link} href="/help">
-        Help
-      </a>
-      <div className={classes.grow} />
-      <Search onResults={onSearchResults} onSearch={onSearch} />
+const Header = ({ classes, onSearchResults, onSearch }) => {
+  const [name, setName] = useState('');
+  useEffect(() => {
+    const name = Cookies.get('user');
+    if (name) {
+      setName(name);
+    }
+  }, []);
 
-      {name && <span className={classes.name}>{name}</span>}
-    </Toolbar>
-  </AppBar>
-);
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <a className={classes.link} href="/go">
+          <Typography variant="h6" color="inherit">
+            Go
+          </Typography>
+        </a>
+        <a className={classes.link} href="/help">
+          Help
+        </a>
+        <div className={classes.grow} />
+        <Search onResults={onSearchResults} onSearch={onSearch} />
 
-export default compose(
-  lifecycle({
-    componentDidMount() {
-      const name = Cookies.get('user');
-      if (name) {
-        this.setState({ name });
-      }
-    },
-  }),
-  withStyles(styles),
-)(Header);
+        {name && <span className={classes.name}>{name}</span>}
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default withStyles(styles)(Header);

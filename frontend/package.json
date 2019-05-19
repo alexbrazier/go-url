@@ -8,7 +8,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prettier": "prettier --write --single-quote --trailing-comma all \"src/**/*.js\"",
+    "prettier1": "prettier --write \"src/**/*.js\"",
     "lint": "eslint src"
   },
   "dependencies": {
