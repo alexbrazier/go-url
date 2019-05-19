@@ -26,7 +26,6 @@
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
-    "recompose": "^0.30.0",
     "redux": "^4.0.1",
     "typeface-roboto": "^0.0.54"
   },
