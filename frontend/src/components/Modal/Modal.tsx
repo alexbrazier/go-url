@@ -54,7 +54,7 @@ const Modal: React.FC<ModalProps> = ({
       .catch(err =>
         displayFlashError(err.response.data.message || err.response.data),
       );
-  }, [query]);
+  }, [query, edit, displayFlashSuccess, displayFlashError, onClose]);
   return (
     <Dialog open onClose={onClose}>
       <DialogTitle>{edit ? `Edit ${urlKey}` : 'Add new url'}</DialogTitle>

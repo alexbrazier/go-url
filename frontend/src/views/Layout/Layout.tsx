@@ -1,36 +1,37 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, WithStyles } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import Tooltip from '@material-ui/core/Tooltip';
-import Modal from '../components/Modal';
-import Header from '../components/Header';
-import Alert from '../components/Alert';
-import { searchResults } from '../redux/search/actions';
+import Modal from '../../components/Modal';
+import Header from '../../components/Header';
+import Alert from '../../components/Alert';
+import styles from './styles';
 
-const styles = {
-  button: {
-    position: 'fixed',
-    right: 23,
-    bottom: 23,
-  },
-};
+interface LayoutProps extends WithStyles<typeof styles> {
+  history: string[];
+  flash: {
+    message: string;
+    variant: string;
+  };
+}
 
-const Layout = ({ children, history, searchResults, flash, classes }) => {
+const Layout: React.FC<LayoutProps> = ({
+  children,
+  history,
+  flash,
+  classes,
+}) => {
   const [addOpen, showAdd] = useState(false);
   const [query, onSearch] = useState();
 
   useEffect(() => {
     if (query === undefined) return;
     history.push(`/${query}`);
-    axios
-      .get('/api/search', { params: { q: query } })
-      .then(({ data }) => searchResults(data));
-  }, [query]);
+  }, [query, history]);
 
   return (
     <div>
@@ -55,15 +56,8 @@ const Layout = ({ children, history, searchResults, flash, classes }) => {
 };
 
 const mapState = ({ flash }) => ({ flash });
-const mapDispatch = {
-  searchResults,
-};
-
 export default compose(
-  connect(
-    mapState,
-    mapDispatch,
-  ),
+  connect(mapState),
   withRouter,
   withStyles(styles),
 )(Layout);
