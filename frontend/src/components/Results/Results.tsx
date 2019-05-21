@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import LaunchIcon from '@material-ui/icons/Launch';
@@ -20,13 +19,14 @@ interface IResult {
   views: number;
 }
 
-interface ResultsProps extends WithStyles<typeof styles> {
+interface ResultsProps {
   data: IResult[];
-  title: StringConstructor;
+  title: string;
 }
 
-const Results: React.FC<ResultsProps> = ({ data, title, classes }) => {
+const Results: React.FC<ResultsProps> = ({ data, title }) => {
   const [selected, setSelected] = useState<IResult | null>(null);
+  const classes = styles();
   return (
     <div>
       {selected && (
@@ -94,4 +94,4 @@ const Results: React.FC<ResultsProps> = ({ data, title, classes }) => {
   );
 };
 
-export default withStyles(styles)(Results);
+export default Results;

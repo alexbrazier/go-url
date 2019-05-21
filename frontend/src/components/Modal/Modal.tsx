@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { compose } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
@@ -9,14 +8,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import {
   displayFlashError,
   displayFlashSuccess,
 } from '../../redux/flash/actions';
 import styles from './styles';
 
-interface ModalProps extends WithStyles<typeof styles> {
+interface ModalProps {
   edit: Boolean;
   urlKey?: string;
   url?: string;
@@ -30,13 +28,13 @@ const Modal: React.FC<ModalProps> = ({
   urlKey: initialKey = '',
   url: initialUrl = '',
   onClose,
-  classes,
   displayFlashSuccess,
   displayFlashError,
 }) => {
   const [urlKey, setKey] = useState(initialKey);
   const [url, setUrl] = useState(initialUrl);
   const [query, submit] = useState();
+  const classes = styles();
 
   useEffect(() => {
     if (!query) return;
@@ -54,7 +52,7 @@ const Modal: React.FC<ModalProps> = ({
       .catch(err =>
         displayFlashError(err.response.data.message || err.response.data),
       );
-  }, [query, edit, displayFlashSuccess, displayFlashError, onClose]);
+  }, [query, displayFlashSuccess, displayFlashError, onClose, edit]);
   return (
     <Dialog open onClose={onClose}>
       <DialogTitle>{edit ? `Edit ${urlKey}` : 'Add new url'}</DialogTitle>
@@ -104,12 +102,8 @@ const mapDispatch = {
   displayFlashError,
 };
 
-const enhance = compose(
-  withStyles(styles),
-  connect(
-    null,
-    mapDispatch,
-  ),
-);
-
-export default enhance(Modal);
+export default connect(
+  null,
+  mapDispatch,
+  // @ts-ignore
+)(Modal);

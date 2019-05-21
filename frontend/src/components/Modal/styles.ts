@@ -1,6 +1,6 @@
-import { createStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 
-const styles = createStyles({
+const styles = makeStyles({
   textField: {
     marginTop: 10,
   },

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import qs from 'qs';
-import { compose } from 'redux';
+import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
@@ -53,7 +53,7 @@ const Home: React.FC<HomeProps> = ({
         .get('/api/search', { params: { q: query } })
         .then(({ data }) => setQuerySearchResults(data));
     }
-  }, [displayFlashError, match.params.query]);
+  }, [match.params.query]);
 
   return (
     <div>

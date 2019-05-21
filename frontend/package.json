@@ -14,6 +14,7 @@
   "dependencies": {
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
+    "@material-ui/styles": "^3.0.0-alpha.10",
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "http-proxy-middleware": "^0.19.1",
@@ -26,16 +27,19 @@
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
+    "recompose": "^0.30.0",
     "redux": "^4.0.1",
     "typeface-roboto": "^0.0.54"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.7",
     "@types/js-cookie": "^2.2.2",
+    "@types/qs": "^6.5.3",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.0.9",
     "@types/react-router-dom": "^4.3.3",
+    "@types/recompose": "^0.30.6",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",

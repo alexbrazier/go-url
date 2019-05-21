@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { compose } from 'redux';
+import { compose } from 'recompose'
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withStyles, WithStyles } from '@material-ui/core/styles';
@@ -10,12 +10,13 @@ import Modal from '../../components/Modal';
 import Header from '../../components/Header';
 import Alert from '../../components/Alert';
 import styles from './styles';
+import { Variant } from '../../components/Alert/SnackbarContentWrapper';
 
 interface LayoutProps extends WithStyles<typeof styles> {
   history: string[];
   flash: {
     message: string;
-    variant: string;
+    variant: Variant;
   };
 }
 
@@ -58,6 +59,6 @@ const Layout: React.FC<LayoutProps> = ({
 const mapState = ({ flash }) => ({ flash });
 export default compose(
   connect(mapState),
-  withRouter,
   withStyles(styles),
+  withRouter,
 )(Layout);
