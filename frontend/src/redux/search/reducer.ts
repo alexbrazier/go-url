@@ -2,7 +2,12 @@ import { SEARCH } from './constants';
 
 const initialState = {};
 
-const reducer = (state = { ...initialState }, action) => {
+interface IAction {
+  type: string
+  data?: any
+}
+
+const reducer = (state = { ...initialState }, action: IAction) => {
   switch (action.type) {
     case SEARCH:
       return {

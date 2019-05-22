@@ -2,7 +2,13 @@ import { FLASH_CLEAR, FLASH_MESSAGE } from './constants';
 
 const initialState = {};
 
-const reducer = (state = { ...initialState }, action) => {
+interface IAction {
+  type: string
+  variant?: string
+  message?: string
+}
+
+const reducer = (state = { ...initialState }, action: IAction) => {
   switch (action.type) {
     case FLASH_MESSAGE:
       return {
