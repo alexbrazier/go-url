@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { compose } from 'recompose'
+import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { withStyles, WithStyles } from '@material-ui/core/styles';

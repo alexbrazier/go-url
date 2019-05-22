@@ -12,8 +12,8 @@ import styles from './styles';
 interface HomeProps extends WithStyles<typeof styles> {
   displayFlashError: (message: string) => void;
   search: {
-    results?: any
-  }
+    results?: any;
+  };
   location: {
     search: string;
   };
@@ -36,7 +36,7 @@ const Home: React.FC<HomeProps> = ({
 
   useEffect(() => {
     axios.get('/api/popular').then(({ data }) => setPopular(data));
-  }, [])
+  }, []);
 
   useEffect(() => {
     const search = location.search;
@@ -44,7 +44,7 @@ const Home: React.FC<HomeProps> = ({
     if (message) {
       displayFlashError(message);
     }
-  }, [location.search, displayFlashError])
+  }, [location.search, displayFlashError]);
 
   useEffect(() => {
     const query = match.params.query;
