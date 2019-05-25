@@ -3,23 +3,15 @@ import axios from 'axios';
 import qs from 'qs';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import Results from '../../components/Results';
 import { displayFlashError } from '../../redux/flash/actions';
 import useStyles from './useStyles';
 
-interface HomeProps {
+interface HomeProps extends RouteComponentProps<{query: string}> {
   displayFlashError: (message: string) => void;
   search: {
     results?: any;
-  };
-  location: {
-    search: string;
-  };
-  match: {
-    params: {
-      query: string;
-    };
   };
 }
 
