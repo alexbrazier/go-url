@@ -17,11 +17,11 @@ A simple URL shortener written in Go with a React frontend and Postgres database
 
 # Getting Started
 
-The app uses Makefiles. To build the docker image run `make build`.
+Install Docker and Docker Compose, and run:
 
-Before starting the app for the first time run `make install`, then:
-- To start the api run `make start-api`.
-- To start the frontend run `make start-frontend`
+```sh
+docker-compose up
+```
 
 
 ## Enviroment Configuration
