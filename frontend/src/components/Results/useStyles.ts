@@ -1,6 +1,7 @@
+import { Theme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/styles';
 
-const styles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: Theme) => ({
   paper: {
     padding: 15,
     overflowX: 'auto',
@@ -34,4 +35,4 @@ const styles = makeStyles(theme => ({
   },
 }));
 
-export default styles;
+export default useStyles;

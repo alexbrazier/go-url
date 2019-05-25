@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CloseIcon from '@material-ui/icons/Close';
 import ErrorIcon from '@material-ui/icons/Error';
@@ -9,7 +8,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 
-import styles from './SnackbarContentWrapper.styles';
+import useStyles from './useStyles';
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -20,7 +19,7 @@ const variantIcon = {
 
 export type Variant = 'success' | 'warning' | 'error' | 'info';
 
-interface SnackbarContentWrapperProps extends WithStyles<typeof styles> {
+interface SnackbarContentWrapperProps {
   className?: string;
   message: React.ReactNode;
   onClose: (e: any, reason: string) => void;
@@ -28,8 +27,9 @@ interface SnackbarContentWrapperProps extends WithStyles<typeof styles> {
 }
 
 const SnackbarContentWrapper: React.FC<SnackbarContentWrapperProps> = props => {
-  const { classes, className, message, onClose, variant, ...other } = props;
+  const { className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
+  const classes = useStyles();
 
   return (
     <SnackbarContent
@@ -58,4 +58,4 @@ const SnackbarContentWrapper: React.FC<SnackbarContentWrapperProps> = props => {
   );
 };
 
-export default withStyles(styles)(SnackbarContentWrapper);
+export default SnackbarContentWrapper;

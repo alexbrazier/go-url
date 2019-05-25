@@ -1,8 +1,9 @@
-import { Theme, createStyles } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/styles';
 import amber from '@material-ui/core/colors/amber';
 import green from '@material-ui/core/colors/green';
 
-const styles = (theme: Theme) => createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   success: {
     backgroundColor: green[600],
   },
@@ -20,12 +21,12 @@ const styles = (theme: Theme) => createStyles({
   },
   iconVariant: {
     opacity: 0.9,
-    marginRight: theme.spacing.unit,
+    marginRight: theme.spacing(1),
   },
   message: {
     display: 'flex',
     alignItems: 'center',
   },
-});
+}));
 
-export default styles;
+export default useStyles;

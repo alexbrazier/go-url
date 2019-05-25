@@ -23,6 +23,35 @@ Install Docker and Docker Compose, and run:
 docker-compose up
 ```
 
+Open http://localhost:8080/go
+
+## Development
+
+Run Postgres manually or with Docker
+
+```sh
+docker-compose up postgres
+```
+
+Install node (via nvm), yarn & go
+```sh
+brew install nvm yarn go
+nvm install
+```
+
+### Start frontend
+```sh
+cd frontend
+yarn
+yarn start
+```
+
+### Start API
+```sh
+cd api
+dep ensure
+POSTGRES_PASS=password HOSTS=localhost APP_URI=http://localhost:3000 go run server.go
+```
 
 ## Enviroment Configuration
 

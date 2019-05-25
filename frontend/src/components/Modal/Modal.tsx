@@ -12,7 +12,7 @@ import {
   displayFlashError,
   displayFlashSuccess,
 } from '../../redux/flash/actions';
-import styles from './styles';
+import useStyles from './useStyles';
 
 interface ModalProps {
   edit: Boolean;
@@ -34,7 +34,7 @@ const Modal: React.FC<ModalProps> = ({
   const [urlKey, setKey] = useState(initialKey);
   const [url, setUrl] = useState(initialUrl);
   const [query, submit] = useState();
-  const classes = styles();
+  const classes = useStyles();
 
   useEffect(() => {
     if (!query) return;

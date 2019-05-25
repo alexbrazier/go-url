@@ -4,12 +4,11 @@ import qs from 'qs';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import Results from '../../components/Results';
 import { displayFlashError } from '../../redux/flash/actions';
-import styles from './styles';
+import useStyles from './useStyles';
 
-interface HomeProps extends WithStyles<typeof styles> {
+interface HomeProps {
   displayFlashError: (message: string) => void;
   search: {
     results?: any;
@@ -26,13 +25,13 @@ interface HomeProps extends WithStyles<typeof styles> {
 
 const Home: React.FC<HomeProps> = ({
   search,
-  classes,
   match,
   location,
   displayFlashError,
 }) => {
   const [querySearchResults, setQuerySearchResults] = useState('');
   const [popular, setPopular] = useState();
+  const classes = useStyles();
 
   useEffect(() => {
     axios.get('/api/popular').then(({ data }) => setPopular(data));
@@ -85,6 +84,5 @@ export default compose(
     mapState,
     mapDispatch,
   ),
-  withStyles(styles),
   withRouter,
 )(Home);

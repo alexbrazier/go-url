@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Search from '../Search';
-import styles from './styles';
+import useStyles from './useStyles';
 
-interface HeaderProps extends WithStyles<typeof styles> {
+interface HeaderProps {
   onSearch: (query: string) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ classes, onSearch }) => {
+const Header: React.FC<HeaderProps> = ({ onSearch }) => {
   const [name, setName] = useState('');
   useEffect(() => {
     const name = Cookies.get('user');
@@ -19,6 +18,7 @@ const Header: React.FC<HeaderProps> = ({ classes, onSearch }) => {
       setName(name);
     }
   }, []);
+  const classes = useStyles();
 
   return (
     <AppBar position="static">
@@ -40,4 +40,4 @@ const Header: React.FC<HeaderProps> = ({ classes, onSearch }) => {
   );
 };
 
-export default withStyles(styles)(Header);
+export default Header;

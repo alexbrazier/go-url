@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
 import LaunchIcon from '@material-ui/icons/Launch';
@@ -10,7 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 
 import Modal from '../Modal';
-import styles from './styles';
+import useStyles from './useStyles';
 
 interface IResult {
   key: string;
@@ -26,7 +26,8 @@ interface ResultsProps {
 
 const Results: React.FC<ResultsProps> = ({ data, title }) => {
   const [selected, setSelected] = useState<IResult | null>(null);
-  const classes = styles();
+  const clearSelected = useCallback(() => setSelected(null), []);
+  const classes = useStyles();
   return (
     <div>
       {selected && (
@@ -34,7 +35,7 @@ const Results: React.FC<ResultsProps> = ({ data, title }) => {
           edit
           urlKey={selected.key}
           url={selected.url || selected.alias.join(',')}
-          onClose={() => setSelected(null)}
+          onClose={clearSelected}
         />
       )}
 
@@ -43,13 +44,13 @@ const Results: React.FC<ResultsProps> = ({ data, title }) => {
         {!data.length ? (
           <p>No results found. Help others by adding it.</p>
         ) : (
-          <Table padding="dense">
+          <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell>Key</TableCell>
                 <TableCell>Url</TableCell>
-                <TableCell numeric>Views</TableCell>
-                <TableCell numeric>Edit</TableCell>
+                <TableCell align="right">Views</TableCell>
+                <TableCell align="right">Edit</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -75,8 +76,8 @@ const Results: React.FC<ResultsProps> = ({ data, title }) => {
                       </a>
                     )}
                   </TableCell>
-                  <TableCell numeric>{r.views}</TableCell>
-                  <TableCell numeric>
+                  <TableCell align="right">{r.views}</TableCell>
+                  <TableCell align="right">
                     <IconButton
                       className={classes.editIcon}
                       onClick={() => setSelected(r)}

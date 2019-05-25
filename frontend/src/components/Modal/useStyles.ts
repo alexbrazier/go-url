@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 
-const styles = makeStyles({
+const useStyles = makeStyles({
   textField: {
     marginTop: 10,
   },
@@ -9,4 +9,4 @@ const styles = makeStyles({
   },
 });
 
-export default styles;
+export default useStyles;

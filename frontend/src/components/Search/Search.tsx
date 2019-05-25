@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import InputBase from '@material-ui/core/InputBase';
-import { withStyles, WithStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import styles from './styles';
+import useStyles from './useStyles';
 
-interface SearchProps extends WithStyles<typeof styles> {
+interface SearchProps {
   onSearch: (query: string) => void;
 }
 
-const Search: React.FC<SearchProps> = ({ classes, onSearch }) => {
+const Search: React.FC<SearchProps> = ({ onSearch }) => {
   const [query, setQuery] = useState('');
+  const classes = useStyles();
   return (
     <div className={classes.search}>
       <div className={classes.searchIcon}>
@@ -29,4 +29,4 @@ const Search: React.FC<SearchProps> = ({ classes, onSearch }) => {
   );
 };
 
-export default withStyles(styles)(Search);
+export default Search;
