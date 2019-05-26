@@ -54,7 +54,7 @@ const Modal: React.FC<ModalProps> = ({
       );
   }, [query, displayFlashSuccess, displayFlashError, onClose, edit]);
   return (
-    <Dialog open onClose={onClose}>
+    <Dialog open onClose={onClose} data-e2e="modal">
       <DialogTitle>{edit ? `Edit ${urlKey}` : 'Add new url'}</DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -86,10 +86,14 @@ const Modal: React.FC<ModalProps> = ({
         />
       </DialogContent>
       <DialogActions className={classes.actions}>
-        <Button onClick={onClose} color="secondary">
+        <Button onClick={onClose} color="secondary" data-e2e="cancel">
           Cancel
         </Button>
-        <Button onClick={() => submit({ urlKey, url })} color="primary">
+        <Button
+          onClick={() => submit({ urlKey, url })}
+          color="primary"
+          data-e2e="submit"
+        >
           {edit ? 'Update' : 'Add'}
         </Button>
       </DialogActions>

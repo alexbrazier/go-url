@@ -39,7 +39,7 @@ const Results: React.FC<ResultsProps> = ({ data, title }) => {
         />
       )}
 
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} data-e2e="main-table">
         <h3>{title}</h3>
         {!data.length ? (
           <p>No results found. Help others by adding it.</p>

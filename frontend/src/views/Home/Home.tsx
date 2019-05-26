@@ -8,7 +8,7 @@ import Results from '../../components/Results';
 import { displayFlashError } from '../../redux/flash/actions';
 import useStyles from './useStyles';
 
-interface HomeProps extends RouteComponentProps<{query: string}> {
+interface HomeProps extends RouteComponentProps<{ query: string }> {
   displayFlashError: (message: string) => void;
   search: {
     results?: any;

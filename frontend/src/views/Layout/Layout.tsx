@@ -18,13 +18,19 @@ interface LayoutProps extends RouteComponentProps {
   };
 }
 
-const Layout: React.FC<LayoutProps> = ({ children, history, flash, location }) => {
+const Layout: React.FC<LayoutProps> = ({
+  children,
+  history,
+  flash,
+  location,
+}) => {
   const [addOpen, setAddOpen] = useState(false);
   const [query, onSearch] = useState();
   const classes = useStyles();
   const hideAdd = useCallback(() => setAddOpen(false), []);
   // Pre-populate field if not found
-  const urlQuery = (location.search.includes('message=') && location.pathname.slice(1))
+  const urlQuery =
+    location.search.includes('message=') && location.pathname.slice(1);
 
   useEffect(() => {
     if (query === undefined) return;
@@ -41,6 +47,7 @@ const Layout: React.FC<LayoutProps> = ({ children, history, flash, location }) =
       {children}
       <Tooltip title="Add New URL">
         <Fab
+          data-e2e="add-button"
           color="secondary"
           aria-label="Add"
           className={classes.button}

@@ -15,6 +15,7 @@ const Alert = ({ variant, message, clearFlash }: AlertProps) => {
     reason === 'clickaway' && clearFlash();
   return (
     <Snackbar
+      data-e2e="alert"
       anchorOrigin={{
         vertical: 'top',
         horizontal: 'center',
