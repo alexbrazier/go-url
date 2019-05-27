@@ -52,7 +52,7 @@ func (h *Handler) Opensearch(c echo.Context) error {
 
 // Popular finds URLs with the most views
 func (h *Handler) Popular(c echo.Context) error {
-	limit := 30
+	limit := 100
 	u, err := urlModel.GetMostPopular(limit)
 	if err != nil {
 		return err

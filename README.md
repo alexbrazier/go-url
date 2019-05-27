@@ -1,6 +1,7 @@
 # Go URL
 [![CircleCI](https://circleci.com/gh/alexbrazier/go-url.svg?style=svg)](https://circleci.com/gh/alexbrazier/go-url)
 [![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-brightgreen.svg)](https://dashboard.cypress.io/#/projects/7dct13/runs)
+[![dependencies](https://img.shields.io/david/alexbrazier/go-url.svg?path=frontend)](https://david-dm.org/alexbrazier/go-url?path=frontend)
 
 A simple URL shortener written in Go with a React frontend and Postgres database
 
@@ -76,3 +77,9 @@ POSTGRES_PASS=password HOSTS=localhost APP_URI=http://localhost:3000 go run serv
 | `AD_CLIENT_ID`         |          |                |                              | Azure AD client ID                                                                                     |
 | `AD_CLIENT_SECRET`     |          |                |                              | Azure AD client secret                                                                                 |
 | `SESSION_TOKEN`        |          |                |                              | Secret session token to store the user sessions                                                        |
+
+
+## TODO
+
+- Currently does not work in load balancer if running Slackbot
+  - If load balancing is required, then you could run a single instance with Slackbot enabled, then the rest without.
