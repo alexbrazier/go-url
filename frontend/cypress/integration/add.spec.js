@@ -4,10 +4,10 @@ import faker from 'faker';
 
 context('Add', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:3000');
+    cy.visit('/');
   });
 
-  it('should add modal when add button clicked and not allow invalid urls', () => {
+  it('should open modal when add button clicked and not allow invalid urls', () => {
     cy.openAddModal();
 
     cy.enterUrlDetails({ url: faker.random.uuid() });

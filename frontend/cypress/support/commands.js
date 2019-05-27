@@ -18,12 +18,33 @@ Cypress.Commands.add(
     cy.get('input#url').type(url);
   },
 );
-Cypress.Commands.add('submitModal', (expectedAlert) => {
-  cy.getHandle('submit')
-    .contains('span', 'Add')
-    .click();
+Cypress.Commands.add('submitModal', expectedAlert => {
+  cy.getHandle('submit').click();
 
   if (expectedAlert) {
     cy.getHandle('alert').contains(expectedAlert);
   }
+});
+
+Cypress.Commands.add('addUrl', ({ key, url } = {}) => {
+  cy.openAddModal();
+
+  cy.enterUrlDetails({ key, url });
+
+  cy.submitModal('Successfully set');
+});
+
+Cypress.Commands.add('getResult', key => {
+  cy.visit(`/go/${key}`);
+  return cy
+    .getHandle('Search Results')
+    .contains('td', key)
+    .parent();
+});
+
+Cypress.Commands.add('openEdit', key => {
+  cy.getResult(key)
+    .find('button')
+    .click();
+  cy.get('h6').contains(`Edit ${key}`);
 });
