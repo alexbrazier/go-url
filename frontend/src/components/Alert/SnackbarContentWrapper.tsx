@@ -46,7 +46,6 @@ const SnackbarContentWrapper: React.FC<SnackbarContentWrapperProps> = props => {
           key="close"
           aria-label="Close"
           color="inherit"
-          // className={classes.close}
           // @ts-ignore
           onClick={onClose}
         >

@@ -13,9 +13,9 @@ Cypress.Commands.add('openAddModal', () => {
 Cypress.Commands.add(
   'enterUrlDetails',
   ({ key = faker.random.uuid(), url = faker.internet.url() } = {}) => {
-    cy.get('input#key').type(key);
+    cy.get('input#key').clear().type(key);
 
-    cy.get('input#url').type(url);
+    cy.get('input#url').clear().type(url);
   },
 );
 Cypress.Commands.add('submitModal', expectedAlert => {
