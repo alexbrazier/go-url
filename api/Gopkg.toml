@@ -24,11 +24,6 @@
 #   go-tests = true
 #   unused-packages = true
 
-
-[[constraint]]
-  branch = "master"
-  name = "github.com/globalsign/mgo"
-
 [[constraint]]
   name = "github.com/labstack/echo"
   version = "3.3.8"
@@ -52,3 +47,15 @@
 [[constraint]]
   name = "github.com/kelseyhightower/envconfig"
   version = "1.3.0"
+
+[[constraint]]
+  name = "github.com/go-pg/pg"
+  version = "6.15.1"
+
+[[constraint]]
+  name = "github.com/alexbrazier/slack"
+  version = "0.4.1"
+
+[[constraint]]
+  name = "github.com/patrickmn/go-cache"
+  version = "2.1.0"

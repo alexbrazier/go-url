@@ -12,16 +12,24 @@ parserOptions:
     jsx: true
     modules: true
     experimentalObjectRestSpread: true
+plugins:
+  - cypress
 
 extends:
   - airbnb
 
 env:
   browser: true
+  cypress/globals: true
 
 rules:
   arrow-parens: 0
   implicit-arrow-linebreak: 0
+  import/no-extraneous-dependencies:
+    - error
+    - devDependencies:
+      - "**/*.spec.js"
+      - "frontend/cypress/**"
   no-shadow: 0
   no-underscore-dangle: 0
   object-curly-newline: 0
@@ -32,4 +40,9 @@ rules:
   react/no-unescaped-entities: 0
   react/prop-types: 0
   react/require-default-props: 0
+  spaced-comment:
+    - error
+    - always
+    - markers:
+        - "/"
   

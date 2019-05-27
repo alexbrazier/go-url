@@ -69,8 +69,9 @@ func (h *Handler) auth(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		appConfig := config.GetConfig()
 		session, _ := store.Get(c.Request(), "session")
+		path := c.Request().URL.Path
 
-		if c.Request().URL.Path == "/callback" || session.Values["user"] != nil {
+		if path == "/callback" || path == "/health" || session.Values["user"] != nil {
 			fmt.Println("skipping auth")
 			if strings.HasPrefix(c.Request().URL.Path, "/go") {
 				existingCookie, err := c.Cookie("user")

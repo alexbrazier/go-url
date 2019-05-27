@@ -2,6 +2,14 @@
 
 
 [[projects]]
+  digest = "1:6f6c3f610b3898899deee904a388fd95a930dda85f6ef9feb7d1bbfe2848828e"
+  name = "github.com/alexbrazier/slack"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "c6f8e5098587f24e8c5909011d9d797376962c67"
+  version = "v0.4.1"
+
+[[projects]]
   digest = "1:76dc72490af7174349349838f2fe118996381b31ea83243812a97e5a0fd5ed55"
   name = "github.com/dgrijalva/jwt-go"
   packages = ["."]
@@ -10,18 +18,19 @@
   version = "v3.2.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:78102ee4d536347316bc42e818340cc50902e45dbd7fdd524c5a1fc0cb07b588"
-  name = "github.com/globalsign/mgo"
+  digest = "1:0a2260bcfa15237979ef496f03fb6af215c247ad998881a4d039992228876ae3"
+  name = "github.com/go-pg/pg"
   packages = [
     ".",
-    "bson",
-    "internal/json",
-    "internal/sasl",
-    "internal/scram",
+    "internal",
+    "internal/parser",
+    "internal/pool",
+    "orm",
+    "types",
   ]
   pruneopts = "UT"
-  revision = "eeefdecb41b842af6dc652aaea4026e8403e62df"
+  revision = "ae5d5e7df4b2e598390e10b66b849c6af94f092b"
+  version = "v6.15.1"
 
 [[projects]]
   digest = "1:97df918963298c287643883209a2c3f642e6593379f97ab400c2a2e219ab647d"
@@ -54,6 +63,22 @@
   pruneopts = "UT"
   revision = "f57b7e2d29c6211d16ffa52a0998272f75799030"
   version = "v1.1.3"
+
+[[projects]]
+  digest = "1:7b5c6e2eeaa9ae5907c391a91c132abfd5c9e8a784a341b5625e750c67e6825d"
+  name = "github.com/gorilla/websocket"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "66b9c49e59c6c48f0ffce28c2d8b8a5678502c6d"
+  version = "v1.4.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:fd97437fbb6b7dce04132cf06775bd258cce305c44add58eb55ca86c6c325160"
+  name = "github.com/jinzhu/inflection"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "04140366298a54a039076d798123ffa108fff46c"
 
 [[projects]]
   digest = "1:edbef42561faa44c19129b68d1e109fbc1647f63239250391eadc8d0e7c9f669"
@@ -104,6 +129,30 @@
   version = "v0.0.4"
 
 [[projects]]
+  digest = "1:2487a7d6c9623edd9d79edada3a1e5c14b076e540ce0266321827cdd3a4837bd"
+  name = "github.com/nlopes/slack"
+  packages = ["slackutilsx"]
+  pruneopts = "UT"
+  revision = "b9033a72a20bf84563485e86a2adbea4bf265804"
+  version = "v0.4.0"
+
+[[projects]]
+  digest = "1:808cdddf087fb64baeae67b8dfaee2069034d9704923a3cb8bd96a995421a625"
+  name = "github.com/patrickmn/go-cache"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "a3647f8e31d79543b2d0f0ae2fe5c379d72cedc0"
+  version = "v2.1.0"
+
+[[projects]]
+  digest = "1:cf31692c14422fa27c83a05292eb5cbe0fb2775972e8f1f8446a71549bd8980b"
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "ba968bfe8b2f7e042a574c888954fccecfa385b4"
+  version = "v0.8.1"
+
+[[projects]]
   digest = "1:c468422f334a6b46a19448ad59aaffdfc0a36b08fdcc1c749a0b29b6453d7e59"
   name = "github.com/valyala/bytebufferpool"
   packages = ["."]
@@ -121,11 +170,12 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:e3d2db9bc633f4635e6418caf0b0734c43821ecd59105d1798458c6ae4d227fd"
+  digest = "1:5d0d5714f6082a5f7f12d313037390d06f557d71255fda0133855298c3b14b07"
   name = "golang.org/x/crypto"
   packages = [
     "acme",
     "acme/autocert",
+    "pbkdf2",
   ]
   pruneopts = "UT"
   revision = "eb0de9b17e854e9b1ccd9963efafc79862359959"
@@ -176,17 +226,27 @@
   revision = "4a4468ece617fc8205e99368fa2200e9d1fad421"
   version = "v1.3.0"
 
+[[projects]]
+  digest = "1:999d566ad1ae4303c456af5a155f7b42401cca4fd33552567ed9dd997b107a08"
+  name = "mellium.im/sasl"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "e58e780e1378aa4df5dc705364ff5ae9a4dd1e04"
+  version = "v0.2.1"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/globalsign/mgo",
-    "github.com/globalsign/mgo/bson",
+    "github.com/alexbrazier/slack",
+    "github.com/go-pg/pg",
+    "github.com/go-pg/pg/orm",
     "github.com/gorilla/sessions",
     "github.com/kelseyhightower/envconfig",
     "github.com/labstack/echo",
     "github.com/labstack/echo/middleware",
     "github.com/labstack/gommon/log",
+    "github.com/patrickmn/go-cache",
     "golang.org/x/oauth2",
   ]
   solver-name = "gps-cdcl"

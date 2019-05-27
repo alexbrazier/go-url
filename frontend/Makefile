@@ -1,1 +1,0 @@
-build: yarn build

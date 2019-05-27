@@ -1,0 +1,108 @@
+version: 2.1
+
+executors:
+  default:
+    working_directory: /go/src/github.com/alexbrazier/go-url
+    docker:
+      - image: circleci/golang:1.11-node
+
+  browsers:
+    working_directory: /go/src/github.com/alexbrazier/go-url
+    docker:
+      - image: circleci/golang:1.11-node-browsers
+      - image: circleci/postgres:9.6.2-alpine
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_DB: go
+
+jobs:
+  setup:
+    executor: default
+    steps:
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-v1-{{ checksum "frontend/yarn.lock" }}
+            - yarn-packages-v1-
+      - run:
+          name: Install Frontend Dependencies
+          command: cd /go/src/github.com/alexbrazier/go-url/frontend && yarn install --frozen-lockfile
+      - run:
+          name: Install API Dependencies
+          command: cd /go/src/github.com/alexbrazier/go-url/api && dep ensure
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-v1-{{ checksum "frontend/yarn.lock" }}
+          paths:
+            - ~/.cache
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - ./.cache/Cypress
+      - persist_to_workspace:
+          root: /go/src/github.com/alexbrazier
+          paths:
+            - ./go-url
+            - ./.cache/Cypress
+
+  lint:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: /go/src/github.com/alexbrazier
+      - run:
+          name: Prettier Frontend
+          command: cd frontend && yarn prettier:check && echo -e "\033[0;32mPrettier passed"
+      - run:
+          name: ESLint
+          command: |
+            cd frontend && yarn lint && echo -e "\033[0;32mESLint passed"
+
+  e2e-test:
+    executor: browsers
+    parallelism: 1
+    steps:
+      - attach_workspace:
+          at: /go/src/github.com/alexbrazier
+      - attach_workspace:
+          at: ~/
+      - setup_remote_docker
+      - run:
+          name: E2E frontend background
+          command: cd frontend && yarn start
+          background: true
+      - run:
+          name: E2E api background
+          environment:
+            POSTGRES_PASS: ""
+            HOSTS: localhost
+            APP_URI: "http://localhost:3000"
+          command: cd /go/src/github.com/alexbrazier/go-url/api && go run server.go
+          background: true
+      - run:
+          name: Waiting for Postgres to be ready
+          command: |
+            for i in `seq 1 10`;
+            do
+              nc -z localhost 5432 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for Postgres && exit 1
+      - run:
+          name: 'Run E2E tests'
+          command: cd frontend && yarn wait && yarn test:e2e --record --key $CYPRESS_KEY
+
+
+workflows:
+  version: 2
+  main-workflow:
+    jobs:
+      - setup
+      - lint:
+          requires:
+            - setup
+      - e2e-test:
+          requires:
+            - setup

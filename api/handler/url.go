@@ -4,19 +4,13 @@ import (
 	"net/http"
 
 	"fmt"
-	"net/url"
-
-	"regexp"
 	"strings"
 
+	"github.com/alexbrazier/go-url/api/config"
 	"github.com/alexbrazier/go-url/api/model"
+	"github.com/alexbrazier/go-url/api/utils"
 	"github.com/labstack/echo"
 )
-
-func validateKey(key string) bool {
-	r, _ := regexp.Compile("^[\\w-]+$")
-	return r.MatchString(key)
-}
 
 func remove(s []string, r string) []string {
 	for i, v := range s {
@@ -30,10 +24,8 @@ func remove(s []string, r string) []string {
 func (h *Handler) getSetDifference(keys []string, found []*model.URL) []string {
 	newKeys := keys
 	for _, item := range found {
-		fmt.Println(item.Key)
 		newKeys = remove(newKeys, item.Key)
 	}
-	fmt.Println(newKeys)
 	return newKeys
 }
 
@@ -80,6 +72,8 @@ func (h *Handler) Url(c echo.Context) (err error) {
 		}
 	}
 
+	// Increment the view count in the background as we don't want to delay the user
+	// and even if it fails, it shouldn't stop the redirect
 	go urlModel.IncrementViewCount(keys)
 
 	if len(resolvedUrls) > 1 {
@@ -94,7 +88,7 @@ func (h *Handler) Url(c echo.Context) (err error) {
 			"urls":      remaining,
 		}
 
-		return c.Render(http.StatusOK, "multiple", data)
+		return c.Render(http.StatusOK, "multiple.html", data)
 	}
 
 	return c.Redirect(http.StatusTemporaryRedirect, resolvedUrls[0])
@@ -124,7 +118,7 @@ func (h *Handler) isAlias(alias string) (bool, error) {
 
 func (h *Handler) validateUrl(c echo.Context) (*model.URL, error) {
 	key := strings.ToLower(c.Param("key"))
-	if valid := validateKey(key); !valid {
+	if valid := ValidateKey(key); !valid {
 		message := fmt.Sprint("The key provided is not valid. It can only contain letters, numbers, _ and -")
 		return nil, echo.NewHTTPError(http.StatusBadRequest, message)
 	}
@@ -142,7 +136,7 @@ func (h *Handler) validateUrl(c echo.Context) (*model.URL, error) {
 		message := "url or alias is required"
 		return nil, echo.NewHTTPError(http.StatusBadRequest, message)
 	}
-	_, err := url.ParseRequestURI(u.URL)
+	_, err := utils.ValidateURL(u.URL)
 	if err != nil {
 		// Not a URL, let's check if it's an alias
 		alias, err := h.isAlias(u.URL)
@@ -157,6 +151,15 @@ func (h *Handler) validateUrl(c echo.Context) (*model.URL, error) {
 		}
 
 		return nil, echo.NewHTTPError(http.StatusBadRequest, "Invalid url or alias provided")
+	}
+	for _, host := range config.GetConfig().BlockedHosts {
+		same, err := utils.SameHost(host, u.URL)
+		if err != nil {
+			return nil, echo.NewHTTPError(http.StatusInternalServerError, "Error parsing URL")
+		}
+		if same {
+			return nil, echo.NewHTTPError(http.StatusBadRequest, "You cannot add a URL with this hostname")
+		}
 	}
 
 	return u, nil
