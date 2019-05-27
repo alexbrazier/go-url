@@ -1,6 +1,7 @@
 package app
 
 import (
+	"errors"
 	"io"
 
 	"text/template"
@@ -44,6 +45,7 @@ func Init(e *echo.Echo) {
 	})
 
 	// Setup routes
+	e.GET("/opensearch.xml", h.Opensearch)
 	e.GET("/:key", h.Url)
 	e.POST("/:key", h.CreateUrl)
 	e.PUT("/:key", h.UpdateUrl)
@@ -65,13 +67,19 @@ func Init(e *echo.Echo) {
 	}
 }
 
+// TemplateRegistry ...
+type TemplateRegistry struct {
+	templates map[string]*template.Template
+}
+
 // setupTempletes adds the html templates required for the app, currently only one
 func setupTemplates(e *echo.Echo) {
+	templates := make(map[string]*template.Template)
 	// This template is used to open multiple urls at the same time in different tabs
 	// It works by using JavaScript window.open for all extra urls, then redirecting
 	// the page to the current url
 	// It will also detect a popup blocker and give instructions to allow popups for the site
-	multiple := template.Must(template.New("multiple").Parse(`
+	templates["multiple.html"] = template.Must(template.New("multiple.html").Parse(`
 		<html><head><script>
 			window.onload = function() {
 				var popUp;
@@ -90,9 +98,25 @@ func setupTemplates(e *echo.Echo) {
 			};
 		</script></head><body></body></html>
 	`))
+	templates["opensearch.xml"] = template.Must(template.New("opensearch.xml").Parse(
+		`<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+	<ShortName>Go</ShortName>
+	<Description>Search Go</Description>
+	<InputEncoding>UTF-8</InputEncoding>
+	<OutputEncoding>UTF-8</OutputEncoding>
+	<Image width="16" height="16" type="image/x-icon">{{.domain}}/favicon.ico</Image>
+	<Image width="64" height="64" type="image/png">{{.domain}}/logo-64x64.png</Image>
+	<Url type="application/x-suggestions+json" method="GET" template="{{.domain}}/api/search/suggest">
+		<Param name="q" value="{searchTerms}" />
+	</Url>
+	<Url type="text/html" method="GET" template="{{.domain}}/{searchTerms}"></Url>
+	<Url type="application/opensearchdescription+xml" rel="self" template="{{.domain}}/opensearch.xml" />
+	<moz:SearchForm>{{.domain}}/go</moz:SearchForm>
+</OpenSearchDescription>`,
+	))
 
-	t := &Template{
-		templates: multiple,
+	t := &TemplateRegistry{
+		templates: templates,
 	}
 	e.Renderer = t
 }
@@ -103,6 +127,12 @@ type Template struct {
 }
 
 // Render renders the specified template
-func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-	return t.templates.ExecuteTemplate(w, name, data)
+func (t *TemplateRegistry) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+	tmpl, ok := t.templates[name]
+	if !ok {
+		err := errors.New("Template not found -> " + name)
+		return err
+	}
+
+	return tmpl.ExecuteTemplate(w, name, data)
 }

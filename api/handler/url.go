@@ -88,7 +88,7 @@ func (h *Handler) Url(c echo.Context) (err error) {
 			"urls":      remaining,
 		}
 
-		return c.Render(http.StatusOK, "multiple", data)
+		return c.Render(http.StatusOK, "multiple.html", data)
 	}
 
 	return c.Redirect(http.StatusTemporaryRedirect, resolvedUrls[0])

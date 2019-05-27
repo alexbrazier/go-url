@@ -1,4 +1,6 @@
 # Go URL
+[![CircleCI](https://circleci.com/gh/alexbrazier/go-url.svg?style=svg)](https://circleci.com/gh/alexbrazier/go-url)
+[![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-brightgreen.svg)](https://dashboard.cypress.io/#/projects/7dct13/runs)
 
 A simple URL shortener written in Go with a React frontend and Postgres database
 

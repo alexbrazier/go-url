@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/alexbrazier/go-url/api/config"
 	"github.com/labstack/echo"
 )
 
@@ -37,6 +38,16 @@ func (h *Handler) SearchSuggestions(c echo.Context) error {
 	result = append(result, suggestions)
 
 	return c.JSON(http.StatusOK, result)
+}
+
+// Opensearch renders opensearch.xml page to tell the browser where to
+// access search urls
+func (h *Handler) Opensearch(c echo.Context) error {
+	appConfig := config.GetConfig()
+	data := map[string]interface{}{
+		"domain": appConfig.AppURI,
+	}
+	return c.Render(http.StatusOK, "opensearch.xml", data)
 }
 
 // Popular finds URLs with the most views
