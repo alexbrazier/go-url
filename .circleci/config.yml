@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  docker: circleci/docker@0.2.0
+
 executors:
   default:
     working_directory: /go/src/github.com/alexbrazier/go-url
@@ -37,14 +40,13 @@ jobs:
           paths:
             - ~/.cache
       - persist_to_workspace:
-          root: ~/
+          root: ~/.cache
           paths:
-            - ./.cache/Cypress
+            - ./Cypress
       - persist_to_workspace:
           root: /go/src/github.com/alexbrazier
           paths:
             - ./go-url
-            - ./.cache/Cypress
 
   lint:
     executor: default
@@ -66,7 +68,7 @@ jobs:
       - attach_workspace:
           at: /go/src/github.com/alexbrazier
       - attach_workspace:
-          at: ~/
+          at: ~/.cache
       - setup_remote_docker
       - run:
           name: E2E frontend background
@@ -103,8 +105,40 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t go-url .
-
+            docker build -t alexbrazier/go-url .
+      - run:
+          name: Save Docker image
+          command: |
+            mkdir -p ~/docker
+            docker save alexbrazier/go-url > ~/docker/go-url.tar
+      - persist_to_workspace:
+          root: ~/docker
+          paths:
+            - ./
+  deploy:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: ~/docker
+      - setup_remote_docker
+      - run:
+          name: Load Docker image
+          command: |
+            docker load < ~/docker/go-url.tar
+      - docker/check
+      - run:
+          name: Deploy
+          command: |
+            docker push alexbrazier/go-url
+            version=$(cat VERSION | tr -d "\n")
+            exists=$(curl --silent -f -lSL https://index.docker.io/v1/repositories/alexbrazier/go-url/tags/$version > /dev/null)
+            if $exists; then
+              echo "Not publishing new version tag"
+            else
+              echo "Publishing tag $version"
+              docker tag alexbrazier/go-url alexbrazier/go-url:$version
+              docker push alexbrazier/go-url:$version
+            fi
 
 workflows:
   version: 2
@@ -120,3 +154,13 @@ workflows:
       - e2e-test:
           requires:
             - setup
+      - deploy:
+          requires:
+            - lint
+            - build
+            - e2e-test
+          filters:
+            branches:
+              only:
+                - master
+                - /release\/.*/
