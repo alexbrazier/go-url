@@ -94,6 +94,17 @@ jobs:
           name: 'Run E2E tests'
           command: cd frontend && yarn wait && yarn test:e2e --record --key $CYPRESS_KEY
 
+  build:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: /go/src/github.com/alexbrazier
+      - setup_remote_docker
+      - run:
+          name: Build Docker image
+          command: |
+            docker build -t go-url .
+
 
 workflows:
   version: 2
@@ -101,6 +112,9 @@ workflows:
     jobs:
       - setup
       - lint:
+          requires:
+            - setup
+      - build:
           requires:
             - setup
       - e2e-test:

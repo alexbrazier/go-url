@@ -1,7 +1,7 @@
 ############################
 # Build api
 ############################
-FROM golang:1.11.10-alpine3.8 AS apibuilder
+FROM golang:1.11.10-alpine3.9 AS apibuilder
 RUN apk update && apk add --no-cache git dep
 COPY api $GOPATH/src/github.com/alexbrazier/go-url/api
 WORKDIR $GOPATH/src/github.com/alexbrazier/go-url/api
@@ -15,7 +15,7 @@ RUN go build -o /go/bin/server
 ############################
 # Build frontend
 ############################
-FROM node:10.14.0-alpine AS frontendbuilder
+FROM node:10.15.3-alpine AS frontendbuilder
 
 COPY frontend /app
 WORKDIR /app
@@ -26,7 +26,7 @@ RUN yarn --frozen-lockfile && \
 ############################
 # Build actual image
 ############################
-FROM alpine:3.8
+FROM alpine:3.9
 # Need to get updated certificates to connect to Slack API
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 # Copy our static executable.
