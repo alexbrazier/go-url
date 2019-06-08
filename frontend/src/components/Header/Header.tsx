@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
       setName(name);
     }
   }, []);
-  const classes = useStyles();
+  const classes = useStyles({});
 
   return (
     <AppBar position="static">

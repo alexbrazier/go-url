@@ -23,7 +23,7 @@ const Home: React.FC<HomeProps> = ({
 }) => {
   const [querySearchResults, setQuerySearchResults] = useState('');
   const [popular, setPopular] = useState();
-  const classes = useStyles();
+  const classes = useStyles({});
 
   useEffect(() => {
     axios.get('/api/popular').then(({ data }) => setPopular(data));

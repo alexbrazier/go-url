@@ -29,7 +29,7 @@ interface SnackbarContentWrapperProps {
 const SnackbarContentWrapper: React.FC<SnackbarContentWrapperProps> = props => {
   const { className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
-  const classes = useStyles();
+  const classes = useStyles(props);
 
   return (
     <SnackbarContent

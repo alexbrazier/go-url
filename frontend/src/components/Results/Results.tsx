@@ -27,7 +27,7 @@ interface ResultsProps {
 const Results: React.FC<ResultsProps> = ({ data, title }) => {
   const [selected, setSelected] = useState<IResult | null>(null);
   const clearSelected = useCallback(() => setSelected(null), []);
-  const classes = useStyles();
+  const classes = useStyles({});
   return (
     <div>
       {selected && (
