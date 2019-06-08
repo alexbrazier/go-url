@@ -27,7 +27,7 @@ jobs:
             - yarn-packages-v1-
       - run:
           name: Install Frontend Dependencies
-          command: cd /go/src/github.com/alexbrazier/go-url/frontend && yarn install --frozen-lockfile --network-timeout 600000
+          command: cd /go/src/github.com/alexbrazier/go-url/frontend && yarn install --frozen-lockfile
       - run:
           name: Install API Dependencies
           command: cd /go/src/github.com/alexbrazier/go-url/api && dep ensure

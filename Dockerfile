@@ -15,12 +15,12 @@ RUN go build -o /go/bin/server
 ############################
 # Build frontend
 ############################
-FROM node:10.15.3-alpine AS frontendbuilder
+FROM node:10.16.0-alpine AS frontendbuilder
 
 COPY frontend /app
 WORKDIR /app
 
-RUN yarn --frozen-lockfile && \
+RUN yarn --frozen-lockfile --network-timeout 600000 && \
     yarn build
 
 ############################
