@@ -9,7 +9,7 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({ onSearch }) => {
   const [query, setQuery] = useState('');
-  const classes = useStyles();
+  const classes = useStyles({});
   return (
     <div className={classes.search}>
       <div className={classes.searchIcon}>
