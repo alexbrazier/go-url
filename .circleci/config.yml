@@ -27,7 +27,7 @@ jobs:
             - yarn-packages-v1-
       - run:
           name: Install Frontend Dependencies
-          command: cd /go/src/github.com/alexbrazier/go-url/frontend && yarn install --frozen-lockfile
+          command: cd /go/src/github.com/alexbrazier/go-url/frontend && yarn install --frozen-lockfile --network-timeout 600000
       - run:
           name: Install API Dependencies
           command: cd /go/src/github.com/alexbrazier/go-url/api && dep ensure
@@ -91,7 +91,7 @@ jobs:
             done
             echo Failed waiting for Postgres && exit 1
       - run:
-          name: 'Run E2E tests'
+          name: Run E2E tests
           command: cd frontend && yarn wait && yarn test:e2e --record --key $CYPRESS_KEY
 
   build:
@@ -104,7 +104,6 @@ jobs:
           name: Build Docker image
           command: |
             docker build -t go-url .
-
 
 workflows:
   version: 2
