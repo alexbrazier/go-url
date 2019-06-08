@@ -38,20 +38,8 @@ const Modal: React.FC<ModalProps> = ({
 
   useEffect(() => {
     if (!query) return;
-    axios({
-      method: edit ? 'put' : 'post',
-      url: `/${query.urlKey}`,
-      data: { url: query.url },
-    })
-      .then(({ data }) => {
-        displayFlashSuccess(
-          `Successfully set ${data.key} to ${data.url || data.alias}`,
-        );
-        onClose();
-      })
-      .catch(err =>
-        displayFlashError(err.response.data.message || err.response.data),
-      );
+    displayFlashSuccess(`Successfully set ${query.urlKey} to ${query.url}`);
+    onClose();
   }, [query, displayFlashSuccess, displayFlashError, onClose, edit]);
   return (
     <Dialog open onClose={onClose} data-e2e="modal">

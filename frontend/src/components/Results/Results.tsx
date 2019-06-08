@@ -63,14 +63,14 @@ const Results: React.FC<ResultsProps> = ({ data, title }) => {
                         <a
                           key={alias}
                           className={classes.url}
-                          href={`/${alias}`}
+                          href={data.find(d => d.key === alias).url}
                         >
                           {alias}
                           <LaunchIcon className={classes.launchIcon} />
                         </a>
                       ))
                     ) : (
-                      <a className={classes.url} href={`/${r.key}`}>
+                      <a className={classes.url} href={`${r.url}`}>
                         {r.url}
                         <LaunchIcon className={classes.launchIcon} />
                       </a>

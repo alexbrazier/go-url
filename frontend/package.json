@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "author": "alexbrazier",
+  "homepage": "https://alexbrazier.github.io/go-url",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -15,7 +16,9 @@
     "lint": "eslint src",
     "wait": "yarn wait:api",
     "wait:api": "wait-on http-get://localhost:1323/health",
-    "wait:frontend": "wait-on http-get://localhost:3000/go"
+    "wait:frontend": "wait-on http-get://localhost:3000/go",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -r git@github.com:alexbrazier/go-url.git -d build"
   },
   "dependencies": {
     "@material-ui/core": "^4.0.2",
@@ -57,6 +60,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
     "faker": "^4.1.0",
+    "gh-pages": "^2.0.1",
     "prettier": "^1.18.2",
     "ts-loader": "^6.0.2",
     "typescript": "^3.5.1",

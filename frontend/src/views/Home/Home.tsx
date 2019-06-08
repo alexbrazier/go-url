@@ -21,12 +21,12 @@ const Home: React.FC<HomeProps> = ({
   location,
   displayFlashError,
 }) => {
-  const [querySearchResults, setQuerySearchResults] = useState('');
+  const [querySearchResults, setQuerySearchResults] = useState();
   const [popular, setPopular] = useState();
   const classes = useStyles({});
 
   useEffect(() => {
-    axios.get('/api/popular').then(({ data }) => setPopular(data));
+    import('../../mocks/data.json').then(data => setPopular(data.default));
   }, []);
 
   useEffect(() => {
@@ -40,9 +40,13 @@ const Home: React.FC<HomeProps> = ({
   useEffect(() => {
     const query = match.params.query;
     if (query) {
-      axios
-        .get('/api/search', { params: { q: query } })
-        .then(({ data }) => setQuerySearchResults(data));
+      import('../../mocks/data.json')
+        .then(data =>
+          data.default.filter(
+            res => res.key.includes(query) || res.url.includes(query),
+          ),
+        )
+        .then(data => setQuerySearchResults(data));
     }
   }, [match.params.query]);
 

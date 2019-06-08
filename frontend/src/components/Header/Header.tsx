@@ -21,22 +21,39 @@ const Header: React.FC<HeaderProps> = ({ onSearch }) => {
   const classes = useStyles({});
 
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <a className={classes.link} href="/go">
-          <Typography variant="h6" color="inherit">
-            Go
-          </Typography>
-        </a>
-        <a className={classes.link} href="/help">
-          Help
-        </a>
-        <div className={classes.grow} />
-        <Search onSearch={onSearch} />
+    <>
+      <AppBar
+        position="static"
+        style={{
+          backgroundColor: '#fcf8e3',
+          color: '#8a6d3b',
+          textAlign: 'center',
+          fontWeight: 'bold',
+          padding: 10,
+        }}
+      >
+        This is a static demo app, so nothing can be added or edited.
+      </AppBar>
+      <AppBar position="static">
+        <Toolbar>
+          <a className={classes.link} href="#">
+            <Typography variant="h6" color="inherit">
+              Go
+            </Typography>
+          </a>
+          <a
+            className={classes.link}
+            href="https://github.com/alexbrazier/go-url"
+          >
+            Help
+          </a>
+          <div className={classes.grow} />
+          <Search onSearch={onSearch} />
 
-        {name && <span className={classes.name}>{name}</span>}
-      </Toolbar>
-    </AppBar>
+          {name && <span className={classes.name}>{name}</span>}
+        </Toolbar>
+      </AppBar>
+    </>
   );
 };
 
