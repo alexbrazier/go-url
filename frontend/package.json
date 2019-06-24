@@ -58,7 +58,7 @@
     "eslint-plugin-react": "^7.13.0",
     "faker": "^4.1.0",
     "prettier": "^1.18.2",
-    "ts-loader": "^6.0.2",
+    "ts-loader": "^6.0.4",
     "typescript": "^3.5.1",
     "wait-on": "^3.2.0"
   },
