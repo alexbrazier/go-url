@@ -24,7 +24,6 @@ jobs:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-v1-{{ checksum "frontend/yarn.lock" }}
-            - yarn-packages-v1-
       - run:
           name: Install Frontend Dependencies
           command: cd /go/src/github.com/alexbrazier/go-url/frontend && yarn install --frozen-lockfile
@@ -44,7 +43,6 @@ jobs:
           root: /go/src/github.com/alexbrazier
           paths:
             - ./go-url
-            - ./.cache/Cypress
 
   lint:
     executor: default
