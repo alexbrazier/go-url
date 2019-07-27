@@ -7,15 +7,19 @@ Cypress.Commands.add('getHandle', e2eHandle => {
 Cypress.Commands.add('openAddModal', () => {
   cy.getHandle('add-button').click();
 
-  cy.getHandle('modal').contains('h6', 'Add new url');
+  cy.getHandle('modal').contains('Add new url');
 });
 
 Cypress.Commands.add(
   'enterUrlDetails',
   ({ key = faker.random.uuid(), url = faker.internet.url() } = {}) => {
-    cy.get('input#key').clear().type(key);
+    cy.get('input#key')
+      .clear()
+      .type(key);
 
-    cy.get('input#url').clear().type(url);
+    cy.get('input#url')
+      .clear()
+      .type(url);
   },
 );
 Cypress.Commands.add('submitModal', expectedAlert => {
@@ -46,5 +50,5 @@ Cypress.Commands.add('openEdit', key => {
   cy.getResult(key)
     .find('button')
     .click();
-  cy.get('h6').contains(`Edit ${key}`);
+  cy.getHandle('modal').contains(`Edit ${key}`);
 });
