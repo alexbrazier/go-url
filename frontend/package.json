@@ -18,9 +18,9 @@
     "wait:frontend": "wait-on http-get://localhost:3000/go"
   },
   "dependencies": {
-    "@material-ui/core": "^4.0.2",
-    "@material-ui/icons": "^4.0.1",
-    "@material-ui/styles": "^4.0.2",
+    "@material-ui/core": "^4.2.1",
+    "@material-ui/icons": "^4.2.1",
+    "@material-ui/styles": "^4.2.1",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "http-proxy-middleware": "^0.19.1",
@@ -30,37 +30,37 @@
     "qs": "^6.7.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-redux": "^7.0.3",
+    "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
     "recompose": "^0.30.0",
-    "redux": "^4.0.1",
-    "typeface-roboto": "^0.0.54"
+    "redux": "^4.0.4",
+    "typeface-roboto": "^0.0.75"
   },
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^4.1.0",
-    "@types/classnames": "^2.2.8",
+    "@types/classnames": "^2.2.9",
     "@types/faker": "^4.1.5",
     "@types/js-cookie": "^2.2.2",
     "@types/qs": "^6.5.3",
-    "@types/react": "^16.8.19",
-    "@types/react-dom": "^16.8.4",
-    "@types/react-redux": "^7.0.9",
-    "@types/react-router-dom": "^4.3.3",
+    "@types/react": "^16.8.23",
+    "@types/react-dom": "^16.8.5",
+    "@types/react-redux": "^7.1.1",
+    "@types/react-router-dom": "^4.3.4",
     "@types/recompose": "^0.30.6",
-    "babel-eslint": "^10.0.1",
-    "cypress": "^3.3.1",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-plugin-cypress": "^2.2.1",
-    "eslint-plugin-import": "^2.17.3",
-    "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.13.0",
+    "babel-eslint": "^10.0.2",
+    "cypress": "^3.4.0",
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^17.1.1",
+    "eslint-plugin-cypress": "^2.6.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
     "faker": "^4.1.0",
     "prettier": "^1.18.2",
-    "ts-loader": "^6.0.2",
-    "typescript": "^3.5.1",
-    "wait-on": "^3.2.0"
+    "ts-loader": "^6.0.4",
+    "typescript": "^3.5.3",
+    "wait-on": "^3.3.0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -70,5 +70,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "resolutions": {
+    "cypress/lodash": "4.17.15"
+  }
 }
