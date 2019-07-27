@@ -3,7 +3,7 @@
 [![Cypress Dashboard](https://img.shields.io/badge/cypress-dashboard-brightgreen.svg)](https://dashboard.cypress.io/#/projects/7dct13/runs)
 [![dependencies](https://img.shields.io/david/alexbrazier/go-url.svg?path=frontend)](https://david-dm.org/alexbrazier/go-url?path=frontend)
 
-A simple URL shortener written in Go with a React frontend and Postgres database
+A simple URL shortener written in Go with a React frontend and Postgres database.
 
 # Features
 
@@ -18,17 +18,32 @@ A simple URL shortener written in Go with a React frontend and Postgres database
 - Slack `/` command integration
 - Slackbot integration
 
+![Demo](.github/go-demo.gif)
+
 # Getting Started
 
-Install Docker and Docker Compose, and run:
+The recommended way to test and deploy is using Docker. You will need to run both the go-url app, and the Postgres DB.
+
+**Start Postgres**
+```sh
+docker run -d -P --name db -e POSTGRES_PASSWORD=password -e POSTGRES_DB=go postgres:11.3-alpine
+```
+
+**Start App**
+```sh
+docker run -p 1323:1323 -e HOSTS=localhost -e APP_URI=http://localhost:1323 --link db alexbrazier/go-url
+```
+
+Alteratively use the docker-compose file and run:
 
 ```sh
 docker-compose up
 ```
 
+## Development
+
 Open http://localhost:8080/go
 
-## Development
 
 Run Postgres manually or with Docker
 
@@ -66,10 +81,10 @@ POSTGRES_PASS=password HOSTS=localhost APP_URI=http://localhost:3000 go run serv
 | `PORT`                 |          | 1323           |                              | Port the app will run on                                                                               |
 | `DEBUG`                |          | false          |                              | Enable more logging                                                                                    |
 | `JSON_LOGS`            |          | false          |                              | Use JSON logs where possible                                                                           |
-| `POSTGRES_ADDR`        |          | localhost:5432 |                              | Postgres db address                                                                                    |
+| `POSTGRES_ADDR`        |          | db:5432        |                              | Postgres db address                                                                                    |
 | `POSTGRES_DATABASE`    |          | go             |                              | Postgres db name                                                                                       |
 | `POSTGRES_USER`        |          | postgres       |                              | Postgres user                                                                                          |
-| `POSTGRES_PASS`        | yes      |                |                              | Postgres password                                                                                      |
+| `POSTGRES_PASS`        |          | password       |                              | Postgres password                                                                                      |
 | `SLACK_TOKEN`          |          |                | xoxb-xxxxxxxxx-xxxxxxxx-xxxx | Slack OAuth token to enable slackbot                                                                   |
 | `SLACK_SIGNING_SECRET` |          |                | xxxxxxxxxxx                  | Slack signing secret to enable Slack `/go` command                                                     |
 | `ENABLE_AUTH`          |          | false          |                              | Enable Azure auth or not - if enabled, all other fields must be filled in                              |
@@ -79,7 +94,7 @@ POSTGRES_PASS=password HOSTS=localhost APP_URI=http://localhost:3000 go run serv
 | `SESSION_TOKEN`        |          |                |                              | Secret session token to store the user sessions                                                        |
 
 
-## TODO
+## FAQ
 
-- Currently does not work in load balancer if running Slackbot
-  - If load balancing is required, then you could run a single instance with Slackbot enabled, then the rest without.
+#### Slackbot is posting multiple replies messages to a single message
+When enabled, the Slackbot will be running on every node in a load balanced system. Either disable load balancing, or run a separate instance just for the Slackbot.
