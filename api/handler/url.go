@@ -32,7 +32,8 @@ func (h *Handler) getSetDifference(keys []string, found []*model.URL) []string {
 // Url is the handler function for finding a url
 // It will redirect the user to the desired url if one exists
 func (h *Handler) Url(c echo.Context) (err error) {
-	key := strings.ToLower(c.Param("key"))
+	key := c.Request().URL.Path[1:]
+	fmt.Println(key)
 	keys := strings.Split(key, ",")
 
 	u, err := urlModel.GetUrlsFromKeys(keys)

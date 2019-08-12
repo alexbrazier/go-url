@@ -46,7 +46,7 @@ func Init(e *echo.Echo) {
 
 	// Setup routes
 	e.GET("/opensearch.xml", h.Opensearch)
-	e.GET("/:key", h.Url)
+	e.GET("/*", h.Url)
 	e.POST("/:key", h.CreateUrl)
 	e.PUT("/:key", h.UpdateUrl)
 

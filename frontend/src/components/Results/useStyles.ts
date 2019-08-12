@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme: Theme) => ({
       maxWidth: 100,
     },
   },
+  urlReplace: {
+    color: '#4c4c4c',
+    fontWeight: 700,
+  },
 }));
 
 export default useStyles;
