@@ -16,7 +16,7 @@ type Specification struct {
 	ADClientID         string   `envconfig:"AD_CLIENT_ID"`
 	ADClientSecret     string   `envconfig:"AD_CLIENT_SECRET"`
 	SessionToken       string   `envconfig:"SESSION_TOKEN"`
-	PostgresAddr       string   `envconfig:"POSTGRES_ADDR" default:"db:5432"`
+	PostgresAddr       string   `envconfig:"POSTGRES_ADDR" default:"localhost:5432"`
 	PostgresDatabase   string   `envconfig:"POSTGRES_DATABASE" default:"go"`
 	PostgresUser       string   `envconfig:"POSTGRES_USER" default:"postgres"`
 	PostgresPass       string   `envconfig:"POSTGRES_PASS" default:"password"`
