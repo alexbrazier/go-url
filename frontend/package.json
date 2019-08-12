@@ -18,21 +18,21 @@
     "wait:frontend": "wait-on http-get://localhost:3000/go"
   },
   "dependencies": {
-    "@material-ui/core": "^4.2.1",
+    "@material-ui/core": "^4.3.2",
     "@material-ui/icons": "^4.2.1",
-    "@material-ui/styles": "^4.2.1",
+    "@material-ui/styles": "^4.3.0",
     "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "http-proxy-middleware": "^0.19.1",
-    "js-cookie": "^2.2.0",
+    "js-cookie": "^2.2.1",
     "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
     "qs": "^6.7.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-redux": "^7.1.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "3.1.0",
     "recompose": "^0.30.0",
     "redux": "^4.0.4",
     "typeface-roboto": "^0.0.75"
@@ -43,16 +43,16 @@
     "@types/faker": "^4.1.5",
     "@types/js-cookie": "^2.2.2",
     "@types/qs": "^6.5.3",
-    "@types/react": "^16.8.23",
+    "@types/react": "^16.9.1",
     "@types/react-dom": "^16.8.5",
     "@types/react-redux": "^7.1.1",
     "@types/react-router-dom": "^4.3.4",
     "@types/recompose": "^0.30.6",
     "babel-eslint": "^10.0.2",
-    "cypress": "^3.4.0",
+    "cypress": "^3.4.1",
     "eslint": "^6.1.0",
-    "eslint-config-airbnb": "^17.1.1",
-    "eslint-plugin-cypress": "^2.6.0",
+    "eslint-config-airbnb": "^18.0.0",
+    "eslint-plugin-cypress": "^2.6.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
@@ -70,8 +70,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "resolutions": {
-    "cypress/lodash": "4.17.15"
-  }
+  ]
 }
