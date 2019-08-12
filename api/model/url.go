@@ -65,8 +65,6 @@ func (u *URL) GetUrlsFromKeys(keys []string) ([]*URL, error) {
 		params[actualKey] = remaining
 		actualKeys = append(actualKeys, actualKey)
 	}
-	fmt.Println(actualKeys)
-	fmt.Println(params)
 	err := db.GetDB().Model(&urls).WhereIn("key in (?)", pg.In(actualKeys)).Select()
 	if err != nil {
 		return nil, err
@@ -77,11 +75,7 @@ func (u *URL) GetUrlsFromKeys(keys []string) ([]*URL, error) {
 		}
 		if url.URL != "" {
 			for i, param := range params[url.Key] {
-				fmt.Println(url.URL)
-
 				url.URL = strings.ReplaceAll(url.URL, fmt.Sprintf("{{$%d}}", i+1), param)
-				fmt.Println(url.URL)
-				fmt.Println(fmt.Sprintf("{{$%d}}", i+1))
 			}
 		} else {
 			for i, alias := range url.Alias {
