@@ -22,7 +22,10 @@ func remove(s []string, r string) []string {
 }
 
 func (h *Handler) getSetDifference(keys []string, found []*model.URL) []string {
-	newKeys := keys
+	var newKeys []string
+	for _, key := range keys {
+		newKeys = append(newKeys, strings.Split(key, "/")[0])
+	}
 	for _, item := range found {
 		newKeys = remove(newKeys, item.Key)
 	}
