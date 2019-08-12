@@ -1,7 +1,7 @@
 ############################
 # Build api
 ############################
-FROM golang:1.12.5-alpine3.9 AS apibuilder
+FROM golang:1.12.7-alpine3.10 AS apibuilder
 RUN apk update && apk add --no-cache git dep
 COPY api $GOPATH/src/github.com/alexbrazier/go-url/api
 WORKDIR $GOPATH/src/github.com/alexbrazier/go-url/api
@@ -26,12 +26,12 @@ RUN yarn --frozen-lockfile --network-timeout 600000 && \
 ############################
 # Build actual image
 ############################
-FROM alpine:3.9
+FROM alpine:3.10
 # Need to get updated certificates to connect to Slack API
-RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
+RUN apk update && apk add dumb-init ca-certificates && rm -rf /var/cache/apk/*
 # Copy our static executable.
 COPY --from=apibuilder /go/bin/server /go/bin/server
 COPY --from=frontendbuilder /app/build /go/bin/public
 WORKDIR /go/bin
-# Run the hello binary.
-ENTRYPOINT ["/go/bin/server"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["/go/bin/server"]

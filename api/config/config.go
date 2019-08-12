@@ -19,7 +19,7 @@ type Specification struct {
 	PostgresAddr       string   `envconfig:"POSTGRES_ADDR" default:"localhost:5432"`
 	PostgresDatabase   string   `envconfig:"POSTGRES_DATABASE" default:"go"`
 	PostgresUser       string   `envconfig:"POSTGRES_USER" default:"postgres"`
-	PostgresPass       string   `envconfig:"POSTGRES_PASS" required:"true"`
+	PostgresPass       string   `envconfig:"POSTGRES_PASS" default:"password"`
 	Hosts              []string `required:"true"`
 	BlockedHosts       []string `envconfig:"BLOCKED_HOSTS"`
 	AppURI             string   `envconfig:"APP_URI" required:"true"`
