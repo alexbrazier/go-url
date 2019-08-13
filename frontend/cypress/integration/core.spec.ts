@@ -50,4 +50,44 @@ context('Core', () => {
       .eq(2)
       .should('have.text', '1');
   });
+
+  it('should redirect to correct url when match found', done => {
+    const key = faker.random.uuid();
+    const url = 'https://github.com/test';
+    cy.addUrl({ key, url });
+
+    cy.request(`/${key}`).then((res: any) => {
+      expect(res.redirects).length.greaterThan(0);
+      expect(res.redirects[0]).to.equal(`307: ${url}`);
+      done();
+    });
+  });
+
+  it('should redirect to correct url when match found with variables', done => {
+    const key = faker.random.uuid();
+    const url = 'https://github.com/{{$1}}/{{$2}}';
+    cy.addUrl({ key, url });
+
+    cy.request(`/${key}/alexbrazier/go-url`).then((res: any) => {
+      expect(res.redirects).length.greaterThan(0);
+      expect(res.redirects[0]).to.equal(
+        `307: https://github.com/alexbrazier/go-url`,
+      );
+      done();
+    });
+  });
+
+  it('should redirect to correct url when match found with variables in different order', done => {
+    const key = faker.random.uuid();
+    const url = 'https://github.com/{{$2}}/{{$1}}';
+    cy.addUrl({ key, url });
+
+    cy.request(`/${key}/go-url/alexbrazier`).then((res: any) => {
+      expect(res.redirects).length.greaterThan(0);
+      expect(res.redirects[0]).to.equal(
+        `307: https://github.com/alexbrazier/go-url`,
+      );
+      done();
+    });
+  });
 });

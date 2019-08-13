@@ -32,9 +32,11 @@ const Results: React.FC<ResultsProps> = ({ data, title }) => {
   const getFormattedUrl = (url: string) => {
     const regex = /({{\$\d+}})/g;
     const parts = url.split(regex);
-    return parts.map(part =>
+    return parts.map((part, i) =>
       part.match(regex) ? (
-        <span className={classes.urlReplace}>{part}</span>
+        <span key={i} className={classes.urlReplace}>
+          {part}
+        </span>
       ) : (
         part
       ),

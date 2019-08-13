@@ -19,7 +19,7 @@ Cypress.Commands.add(
 
     cy.get('input#url')
       .clear()
-      .type(url);
+      .type(url, { parseSpecialCharSequences: false });
   },
 );
 Cypress.Commands.add('submitModal', expectedAlert => {

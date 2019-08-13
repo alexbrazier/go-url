@@ -2,7 +2,7 @@
 
 interface IKeyUrl {
   key?: string;
-  url: string;
+  url?: string;
 }
 declare namespace Cypress {
   interface Chainable<Subject> {
