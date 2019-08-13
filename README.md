@@ -12,6 +12,7 @@ A simple URL shortener written in Go with a React frontend and Postgres database
 - Alias a key to point to another short url
 - Open multiple pages at once by separating keys with a comma
 - Alias a key to point to multiple other keys
+- Use variables in URLs
 - Opensearch integration to provide suggestions directly to browser
 - Frontend to view most popular searches and search to find existing links
 - Frontend to allow anyone to add and edit links

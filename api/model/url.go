@@ -2,6 +2,7 @@ package model
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/alexbrazier/go-url/api/db"
 	"github.com/go-pg/pg"
@@ -56,8 +57,33 @@ func (u *URL) IncrementViewCount(keys []string) error {
 // GetUrlsFromKeys returns all the db records that match the keys
 func (u *URL) GetUrlsFromKeys(keys []string) ([]*URL, error) {
 	urls := []*URL{}
-	err := db.GetDB().Model(&urls).WhereIn("key in (?)", pg.In(keys)).Select()
-	return urls, err
+	params := make(map[string][]string)
+	actualKeys := make([]string, len(keys))
+	for _, key := range keys {
+		split := strings.Split(key, "/")
+		actualKey, remaining := strings.ToLower(split[0]), split[1:]
+		params[actualKey] = remaining
+		actualKeys = append(actualKeys, actualKey)
+	}
+	err := db.GetDB().Model(&urls).WhereIn("key in (?)", pg.In(actualKeys)).Select()
+	if err != nil {
+		return nil, err
+	}
+	for _, url := range urls {
+		if len(params[url.Key]) == 0 {
+			continue
+		}
+		if url.URL != "" {
+			for i, param := range params[url.Key] {
+				url.URL = strings.ReplaceAll(url.URL, fmt.Sprintf("{{$%d}}", i+1), param)
+			}
+		} else {
+			for i, alias := range url.Alias {
+				url.Alias[i] = fmt.Sprintf("%s/%s", alias, strings.Join(params[url.Key], "/"))
+			}
+		}
+	}
+	return urls, nil
 }
 
 // Search returns all the db records that match the keys

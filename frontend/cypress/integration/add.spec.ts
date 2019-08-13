@@ -29,6 +29,22 @@ context('Add', () => {
     cy.submitModal('Successfully set');
   });
 
+  it('should not allow key with invalid characters', () => {
+    cy.openAddModal();
+
+    cy.enterUrlDetails({ key: 'test$hello' });
+
+    cy.submitModal('The key provided is not valid');
+  });
+
+  it('should allow url with params included', () => {
+    cy.openAddModal();
+
+    cy.enterUrlDetails({ url: `${faker.internet.url()}/{{$1}}/test` });
+
+    cy.submitModal('Successfully set');
+  });
+
   it('should allow valid alias', () => {
     cy.openAddModal();
 

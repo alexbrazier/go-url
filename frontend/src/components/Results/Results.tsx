@@ -28,6 +28,20 @@ const Results: React.FC<ResultsProps> = ({ data, title }) => {
   const [selected, setSelected] = useState<IResult | null>(null);
   const clearSelected = useCallback(() => setSelected(null), []);
   const classes = useStyles({});
+
+  const getFormattedUrl = (url: string) => {
+    const regex = /({{\$\d+}})/g;
+    const parts = url.split(regex);
+    return parts.map((part, i) =>
+      part.match(regex) ? (
+        <span key={i} className={classes.urlReplace}>
+          {part}
+        </span>
+      ) : (
+        part
+      ),
+    );
+  };
   return (
     <div>
       {selected && (
@@ -71,7 +85,7 @@ const Results: React.FC<ResultsProps> = ({ data, title }) => {
                       ))
                     ) : (
                       <a className={classes.url} href={`/${r.key}`}>
-                        {r.url}
+                        {getFormattedUrl(r.url)}
                         <LaunchIcon className={classes.launchIcon} />
                       </a>
                     )}

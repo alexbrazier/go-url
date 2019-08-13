@@ -22,7 +22,10 @@ func remove(s []string, r string) []string {
 }
 
 func (h *Handler) getSetDifference(keys []string, found []*model.URL) []string {
-	newKeys := keys
+	var newKeys []string
+	for _, key := range keys {
+		newKeys = append(newKeys, strings.Split(key, "/")[0])
+	}
 	for _, item := range found {
 		newKeys = remove(newKeys, item.Key)
 	}
@@ -32,7 +35,7 @@ func (h *Handler) getSetDifference(keys []string, found []*model.URL) []string {
 // Url is the handler function for finding a url
 // It will redirect the user to the desired url if one exists
 func (h *Handler) Url(c echo.Context) (err error) {
-	key := strings.ToLower(c.Param("key"))
+	key := c.Request().URL.Path[1:]
 	keys := strings.Split(key, ",")
 
 	u, err := urlModel.GetUrlsFromKeys(keys)
