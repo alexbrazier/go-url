@@ -93,6 +93,7 @@ POSTGRES_PASS=password HOSTS=localhost APP_URI=http://localhost:3000 go run serv
 | `POSTGRES_PASS`        |          | password       |                              | Postgres password                                                                                      |
 | `SLACK_TOKEN`          |          |                | xoxb-xxxxxxxxx-xxxxxxxx-xxxx | Slack OAuth token to enable slackbot                                                                   |
 | `SLACK_SIGNING_SECRET` |          |                | xxxxxxxxxxx                  | Slack signing secret to enable Slack `/go` command                                                     |
+| `SLACK_TEAM_ID`        |          |                | Txxxxxxxx                    | Slack team id to restrict slash command responses to single team                                       |
 | `ENABLE_AUTH`          |          | false          |                              | Enable Azure auth or not - if enabled, all other fields must be filled in                              |
 | `AD_TENANT_ID`         |          |                |                              | Azure AD tenant ID                                                                                     |
 | `AD_CLIENT_ID`         |          |                |                              | Azure AD client ID                                                                                     |

@@ -25,6 +25,7 @@ type Specification struct {
 	AppURI             string   `envconfig:"APP_URI" required:"true"`
 	SlackToken         string   `envconfig:"SLACK_TOKEN"`
 	SlackSigningSecret string   `envconfig:"SLACK_SIGNING_SECRET"`
+	SlackTeamID        string   `envconfig:"SLACK_TEAM_ID"`
 }
 
 // Auth config
@@ -48,6 +49,7 @@ type Database struct {
 type Slack struct {
 	Token         string
 	SigningSecret string
+	TeamID        string
 }
 
 // Config definition
@@ -93,6 +95,7 @@ func Init() {
 	config.Slack = Slack{
 		Token:         spec.SlackToken,
 		SigningSecret: spec.SlackSigningSecret,
+		TeamID:        spec.SlackTeamID,
 	}
 
 	config.BlockedHosts = append(spec.BlockedHosts, spec.Hosts...)
