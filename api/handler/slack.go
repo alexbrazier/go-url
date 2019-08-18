@@ -69,6 +69,19 @@ func verifySignedSecret(v *SlackSecretsVerifier) bool {
 	return false
 }
 
+// Optionally only allow requests from specified slack team
+func verifySlackTeam(payload *SlackPayload) error {
+	appConfig := config.GetConfig()
+	teamID := appConfig.Slack.TeamID
+	if teamID != "" && teamID != payload.TeamID {
+		err := fmt.Sprintf("TeamID: %s does not match required TeamID: %s - Blocking", payload.TeamID, teamID)
+		log.Printf(err)
+		return errors.New(err)
+	}
+	return nil
+}
+
+// verify request has been signed by slack
 func verifySlackRequest(r *http.Request) error {
 	buf, err := ioutil.ReadAll(r.Body)
 	body := ioutil.NopCloser(bytes.NewBuffer(buf))
@@ -106,6 +119,10 @@ func (h *Handler) SlackCommand(c echo.Context) error {
 	if err := c.Bind(payload); err != nil {
 		response.Text = "An error occurred while processing your request"
 		return c.JSON(http.StatusOK, response)
+	}
+
+	if err := verifySlackTeam(payload); err != nil {
+		return c.JSON(http.StatusUnauthorized, "Unauthorized")
 	}
 
 	key := payload.Text
