@@ -1,7 +1,6 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -9,10 +8,12 @@ import (
 	"github.com/labstack/echo"
 )
 
-func ipAllowed(allowedIPs []string, ip string) bool {
+func ipAllowed(allowedIPs, ips []string) bool {
 	for _, allowedIP := range allowedIPs {
-		if ip == allowedIP {
-			return true
+		for _, ip := range ips {
+			if strings.TrimSpace(ip) == allowedIP {
+				return true
+			}
 		}
 	}
 	return false
@@ -26,22 +27,21 @@ func ipWhitelisted(forwardedFor, remoteAddr string) bool {
 		return false
 	}
 
-	if appConfig.Auth.AllowForwardedFor {
-		forwardedFor := forwardedFor
-		fmt.Println(forwardedFor)
-		if forwardedFor != "" {
-			// Only the last ip in the X-Forwarded-For can be trusted
-			ips := strings.Split(forwardedFor, ",")
-			ip := strings.TrimSpace(ips[len(ips)-1])
-			if ipAllowed(allowedIPs, ip) {
-				return true
-			}
+	if appConfig.Auth.AllowForwardedFor && forwardedFor != "" {
+		ips := strings.Split(forwardedFor, ",")
+		pos := len(ips) - appConfig.Auth.ForwardedForTrustLevel
+		if pos < 0 {
+			pos = 0
+		}
+		trustedIps := ips[pos:]
+		if ipAllowed(allowedIPs, trustedIps) {
+			return true
 		}
 	}
 
 	remoteIP := strings.Split(remoteAddr, ":")[0]
 
-	if ipAllowed(allowedIPs, remoteIP) {
+	if ipAllowed(allowedIPs, []string{remoteIP}) {
 		return true
 	}
 	return false
