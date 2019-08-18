@@ -26,15 +26,19 @@ type Specification struct {
 	SlackToken         string   `envconfig:"SLACK_TOKEN"`
 	SlackSigningSecret string   `envconfig:"SLACK_SIGNING_SECRET"`
 	SlackTeamID        string   `envconfig:"SLACK_TEAM_ID"`
+	AllowedIPs         []string `envconfig:"ALLOWED_IPS"`
+	AllowForwardedFor  bool     `envconfig:"ALLOW_FORWARDED_FOR"`
 }
 
 // Auth config
 type Auth struct {
-	Enabled        bool
-	ADTenantID     string
-	ADClientID     string
-	ADClientSecret string
-	SessionToken   string
+	Enabled           bool
+	ADTenantID        string
+	ADClientID        string
+	ADClientSecret    string
+	SessionToken      string
+	AllowedIPs        []string
+	AllowForwardedFor bool
 }
 
 // Database config
@@ -78,11 +82,13 @@ func Init() {
 	config.Port = spec.Port
 	config.JSONLogs = spec.JSONLogs
 	config.Auth = Auth{
-		Enabled:        spec.EnableAuth,
-		ADTenantID:     spec.ADTenantID,
-		ADClientID:     spec.ADClientID,
-		ADClientSecret: spec.ADClientSecret,
-		SessionToken:   spec.SessionToken,
+		Enabled:           spec.EnableAuth,
+		ADTenantID:        spec.ADTenantID,
+		ADClientID:        spec.ADClientID,
+		ADClientSecret:    spec.ADClientSecret,
+		SessionToken:      spec.SessionToken,
+		AllowedIPs:        spec.AllowedIPs,
+		AllowForwardedFor: spec.AllowForwardedFor,
 	}
 	config.Database = Database{
 		Addr:     spec.PostgresAddr,
