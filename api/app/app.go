@@ -25,6 +25,8 @@ func Init(e *echo.Echo) {
 		h.AuthInit(e)
 	}
 
+	e.Use(h.IPRestrict)
+
 	// Serve public files at the /go route
 	g := e.Group("/go")
 	g.Use(middleware.StaticWithConfig(middleware.StaticConfig{

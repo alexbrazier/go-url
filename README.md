@@ -99,6 +99,8 @@ POSTGRES_PASS=password HOSTS=localhost APP_URI=http://localhost:3000 go run serv
 | `AD_CLIENT_ID`         |          |                |                              | Azure AD client ID                                                                                     |
 | `AD_CLIENT_SECRET`     |          |                |                              | Azure AD client secret                                                                                 |
 | `SESSION_TOKEN`        |          |                |                              | Secret session token to store the user sessions                                                        |
+| `ALLOWED_IPS`          |          |                | 110.1.10.2,1.1.22.1          | IP addresses that are always allowed access, even with auth enabled                                    |
+| `ALLOW_FORWARDED_FOR`  |          | false          |                              | Retrieve origin IP from X-Forwarded-For header. Only enable if source is trusted, e.g. via Cloudfront  |
 
 ## FAQ
 

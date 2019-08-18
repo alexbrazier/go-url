@@ -62,41 +62,17 @@ func (h *Handler) AuthInit(e *echo.Echo) {
 	gob.Register(&User{})
 	gob.Register(&oauth2.Token{})
 	e.GET("/callback", h.callbackHandler)
-	e.Use(h.auth)
 }
 
 func (h *Handler) auth(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		appConfig := config.GetConfig()
 		session, _ := store.Get(c.Request(), "session")
-		path := c.Request().URL.Path
 
-		if path == "/callback" || path == "/health" || session.Values["user"] != nil {
-			fmt.Println("skipping auth")
-			if strings.HasPrefix(c.Request().URL.Path, "/go") {
-				existingCookie, err := c.Cookie("user")
-				if err != nil {
-					fmt.Println("error getting cookie")
-					return fmt.Errorf("Error reading user cookie %v", err)
-				}
-				if existingCookie.Value != "" {
-					val := session.Values["user"]
-					var user = &User{}
-					user, ok := val.(*User)
-					if !ok {
-						// Handle the case that it's not an expected type
-						fmt.Println("error getting user")
-					}
-					cookie := new(http.Cookie)
-					cookie.Name = "user"
-					cookie.Value = user.DisplayName
-					cookie.Path = "/go"
-					c.SetCookie(cookie)
-				}
-			}
+		if session.Values["user"] != nil {
 			return next(c)
 		}
-		fmt.Println("not skip auth")
+		fmt.Println("Redirecting to auth")
 
 		endpointURL := fmt.Sprintf("https://login.microsoftonline.com/%s/oauth2/v2.0", appConfig.Auth.ADTenantID)
 		oauthConfig = &oauth2.Config{
@@ -151,6 +127,9 @@ func (h *Handler) callbackHandler(c echo.Context) error {
 	}
 
 	user, err := getUserDetails(token.AccessToken)
+	if err != nil {
+		return fmt.Errorf("error getting user details: %v", err)
+	}
 
 	session.Values["token"] = &token
 	session.Values["user"] = &user
