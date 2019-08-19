@@ -34,13 +34,9 @@ func sessionState(session *sessions.Session) string {
 }
 
 func getRedirectUrl(c echo.Context) string {
-	host := c.Request().Host
-	c.IsTLS()
-	base := "https://"
-	if !c.IsTLS() {
-		base = "http://"
-	}
-	return fmt.Sprintf("%s%s/callback", base, host)
+	appConfig := config.GetConfig()
+	uri := appConfig.AppURI
+	return fmt.Sprintf("%s/callback", uri)
 }
 
 // AuthInit initialize authentication
