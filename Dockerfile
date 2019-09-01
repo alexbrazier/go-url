@@ -1,7 +1,7 @@
 ############################
 # Build api
 ############################
-FROM golang:1.12.7-alpine3.10 AS apibuilder
+FROM golang:1.12.9-alpine3.10 AS apibuilder
 RUN apk update && apk add --no-cache git dep
 COPY api $GOPATH/src/github.com/alexbrazier/go-url/api
 WORKDIR $GOPATH/src/github.com/alexbrazier/go-url/api
