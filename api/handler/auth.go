@@ -39,6 +39,18 @@ func getRedirectUrl(c echo.Context) string {
 	return fmt.Sprintf("%s/callback", uri)
 }
 
+func getOriginalUrl(c echo.Context) string {
+	session, _ := store.Get(c.Request(), "session")
+
+	if redirectPath := session.Values["redirect"]; redirectPath != nil {
+		if path, ok := redirectPath.(string); ok {
+			return path
+		}
+	}
+
+	return "/"
+}
+
 // AuthInit initialize authentication
 func (h *Handler) AuthInit(e *echo.Echo) {
 	appConfig := config.GetConfig()
@@ -67,6 +79,11 @@ func (h *Handler) auth(next echo.HandlerFunc) echo.HandlerFunc {
 
 		if session.Values["user"] != nil {
 			return next(c)
+		}
+
+		session.Values["redirect"] = c.Request().URL.Path
+		if err := sessions.Save(c.Request(), c.Response()); err != nil {
+			fmt.Printf("error saving redirect session: %v", err)
 		}
 		fmt.Println("Redirecting to auth")
 
@@ -132,7 +149,7 @@ func (h *Handler) callbackHandler(c echo.Context) error {
 	if err := sessions.Save(c.Request(), c.Response()); err != nil {
 		return fmt.Errorf("error saving session: %v", err)
 	}
-	return c.Redirect(http.StatusTemporaryRedirect, "/")
+	return c.Redirect(http.StatusTemporaryRedirect, getOriginalUrl(c))
 }
 
 func getUserDetails(token string) (*User, error) {
