@@ -22,7 +22,7 @@ export type Variant = 'success' | 'warning' | 'error' | 'info';
 interface SnackbarContentWrapperProps {
   className?: string;
   message: React.ReactNode;
-  onClose: (e: any, reason: string) => void;
+  onClose: (...args: any) => void;
   variant: Variant;
 }
 
@@ -46,7 +46,6 @@ const SnackbarContentWrapper: React.FC<SnackbarContentWrapperProps> = props => {
           key="close"
           aria-label="Close"
           color="inherit"
-          // @ts-ignore
           onClick={onClose}
         >
           <CloseIcon className={classes.icon} />
