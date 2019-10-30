@@ -4,12 +4,12 @@ executors:
   default:
     working_directory: /go/src/github.com/alexbrazier/go-url
     docker:
-      - image: circleci/golang:1.12-node
+      - image: circleci/golang:1.13-node
 
   browsers:
     working_directory: /go/src/github.com/alexbrazier/go-url
     docker:
-      - image: circleci/golang:1.12-node-browsers
+      - image: circleci/golang:1.13-node-browsers
       - image: circleci/postgres:9.6.2-alpine
         environment:
           POSTGRES_USER: postgres
@@ -56,6 +56,16 @@ jobs:
           name: ESLint
           command: |
             cd frontend && yarn lint && echo -e "\033[0;32mESLint passed"
+
+  unit-test:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: /go/src/github.com/alexbrazier
+      - run:
+          name: Run unit tests
+          command: |
+            cd api && go test ./...
 
   e2e-test:
     executor: browsers
@@ -112,6 +122,9 @@ workflows:
           requires:
             - setup
       - build:
+          requires:
+            - setup
+      - unit-test:
           requires:
             - setup
       - e2e-test:

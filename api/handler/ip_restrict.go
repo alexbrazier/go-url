@@ -6,12 +6,16 @@ import (
 
 	"github.com/alexbrazier/go-url/api/config"
 	"github.com/labstack/echo"
+	"net"
 )
 
 func ipAllowed(allowedIPs, ips []string) bool {
 	for _, allowedIP := range allowedIPs {
+		_, ipNet, err := net.ParseCIDR(allowedIP)
+		isCIDR := err == nil
 		for _, ip := range ips {
-			if strings.TrimSpace(ip) == allowedIP {
+			trimmedIp := strings.TrimSpace(ip)
+			if trimmedIp == allowedIP || (isCIDR && ipNet.Contains(net.ParseIP(trimmedIp))) {
 				return true
 			}
 		}
