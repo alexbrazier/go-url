@@ -14,8 +14,8 @@ func TestIpAllowed(t *testing.T) {
 		{[]string{"10.1.1.1", "10.1.1.2"}, []string{"10.1.1.2"}, true}, // multiple allowedIPs
 		{[]string{"10.1.1.1/32"}, []string{"10.1.1.1"}, true},          // allowed CIDR
 		{[]string{"10.1.1.1/32"}, []string{"10.1.1.0"}, false},         // disallowed CIDR
-		{[]string{"10.1.1.1/28"}, []string{"10.1.1.0"}, false},         // first matching ip CIDR
-		{[]string{"10.1.1.1/28"}, []string{"10.1.1.15"}, false},        // last matching ip CIDR
+		{[]string{"10.1.1.1/28"}, []string{"10.1.1.0"}, true},          // first matching ip CIDR
+		{[]string{"10.1.1.1/28"}, []string{"10.1.1.15"}, true},         // last matching ip CIDR
 		{[]string{"10.1.1.1/28"}, []string{"10.1.1.16"}, false},        // first non matching matching ip CIDR
 		{[]string{"10.1.1.1/28"}, []string{"10.1.0.255"}, false},       // last non matching matching ip CIDR
 	}
