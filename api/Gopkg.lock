@@ -18,6 +18,14 @@
   version = "v3.2.0"
 
 [[projects]]
+  digest = "1:677e79698319e9718eb5fa13d55f0fd125f57b121db489ed8375f2e476cba4f4"
+  name = "github.com/getsentry/sentry-go"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "6e30a9909361d339adf28d4211947ef408cf7726"
+  version = "v0.3.0"
+
+[[projects]]
   digest = "1:0a2260bcfa15237979ef496f03fb6af215c247ad998881a4d039992228876ae3"
   name = "github.com/go-pg/pg"
   packages = [
@@ -33,20 +41,12 @@
   version = "v6.15.1"
 
 [[projects]]
-  digest = "1:97df918963298c287643883209a2c3f642e6593379f97ab400c2a2e219ab647d"
+  digest = "1:573ca21d3669500ff845bdebee890eb7fc7f0f50c59f2132f2a0c6b03d85086a"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   pruneopts = "UT"
-  revision = "aa810b61a9c79d51363740d207bb46cf8e620ed5"
-  version = "v1.2.0"
-
-[[projects]]
-  digest = "1:c79fb010be38a59d657c48c6ba1d003a8aa651fa56b579d959d74573b7dff8e1"
-  name = "github.com/gorilla/context"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "08b5f424b9271eedf6f9f0ce86cb9396ed337a42"
-  version = "v1.1.1"
+  revision = "6c65a5562fc06764971b7c5d05c76c75e84bdbf7"
+  version = "v1.3.2"
 
 [[projects]]
   digest = "1:e72d1ebb8d395cf9f346fd9cbc652e5ae222dd85e0ac842dc57f175abed6d195"
@@ -57,50 +57,50 @@
   version = "v1.1.1"
 
 [[projects]]
-  digest = "1:e5bf52fd66a2e984b57b4c0f2c4ee024ed749a19886246240629998dc0cf31ce"
+  digest = "1:172c862eabc72e90f461bcef223c49869628bec6d989386dfb03281ae3222148"
   name = "github.com/gorilla/sessions"
   packages = ["."]
   pruneopts = "UT"
-  revision = "f57b7e2d29c6211d16ffa52a0998272f75799030"
-  version = "v1.1.3"
+  revision = "4355a998706e83fe1d71c31b07af94e34f68d74a"
+  version = "v1.2.0"
 
 [[projects]]
-  digest = "1:7b5c6e2eeaa9ae5907c391a91c132abfd5c9e8a784a341b5625e750c67e6825d"
+  digest = "1:e62657cca9badaa308d86e7716083e4c5933bb78e30a17743fc67f50be26f6f4"
   name = "github.com/gorilla/websocket"
   packages = ["."]
   pruneopts = "UT"
-  revision = "66b9c49e59c6c48f0ffce28c2d8b8a5678502c6d"
-  version = "v1.4.0"
+  revision = "c3e18be99d19e6b3e8f1559eea2c161a665c4b6b"
+  version = "v1.4.1"
 
 [[projects]]
-  branch = "master"
-  digest = "1:fd97437fbb6b7dce04132cf06775bd258cce305c44add58eb55ca86c6c325160"
+  digest = "1:01ed62f8f4f574d8aff1d88caee113700a2b44c42351943fa73cc1808f736a50"
   name = "github.com/jinzhu/inflection"
   packages = ["."]
   pruneopts = "UT"
-  revision = "04140366298a54a039076d798123ffa108fff46c"
+  revision = "f5c5f50e6090ae76a29240b61ae2a90dd810112e"
+  version = "v1.0.0"
 
 [[projects]]
-  digest = "1:edbef42561faa44c19129b68d1e109fbc1647f63239250391eadc8d0e7c9f669"
+  digest = "1:fd9bea48bbc5bba66d9891c72af7255fbebecdff845c37c679406174ece5ca1b"
   name = "github.com/kelseyhightower/envconfig"
   packages = ["."]
   pruneopts = "UT"
-  revision = "f611eb38b3875cc3bd991ca91c51d06446afa14c"
-  version = "v1.3.0"
+  revision = "0b417c4ec4a8a82eecc22a1459a504aa55163d61"
+  version = "v1.4.0"
 
 [[projects]]
-  digest = "1:73c5062c19c602b4d279b581b0ee3ffe43f61bfc37e91885b89190154bb5e909"
+  digest = "1:efd601ad1d1189884f37ed075fadb5bbd17f1f5acf5862827247c6da56d125ba"
   name = "github.com/labstack/echo"
   packages = [
     ".",
     "middleware",
   ]
   pruneopts = "UT"
-  revision = "c7eb8da9ec73e78c4f38413f3f835e0cd52c7d72"
-  version = "v3.3.8"
+  revision = "38772c686c76b501f94bd6cd5b77f5842e93b559"
+  version = "v3.3.10"
 
 [[projects]]
-  digest = "1:764bce605f1c70823a567ac3205a03e6b7f375ca747d8820fded0b0abddda802"
+  digest = "1:6e15357cae900fa1a8015c7fc9efdb406f72b644549a3422f3f1b7f465836a84"
   name = "github.com/labstack/gommon"
   packages = [
     "bytes",
@@ -109,32 +109,32 @@
     "random",
   ]
   pruneopts = "UT"
-  revision = "7fd9f68ece0bcb1a905fac8f1549f0083f71c51b"
-  version = "v0.2.8"
+  revision = "ab0bfd9a5eba33a8c364bf3390d809ed23c31f97"
+  version = "v0.2.9"
 
 [[projects]]
-  digest = "1:c658e84ad3916da105a761660dcaeb01e63416c8ec7bc62256a9b411a05fcd67"
+  digest = "1:4a29eeb25603debe8f2098a9902c4d3851034cf70d33be428826e86e8c30a1b0"
   name = "github.com/mattn/go-colorable"
   packages = ["."]
   pruneopts = "UT"
-  revision = "167de6bfdfba052fa6b2d3664c8f5272e23c9072"
-  version = "v0.0.9"
+  revision = "98ec13f34aabf44cc914c65a1cfb7b9bc815aef1"
+  version = "v0.1.4"
 
 [[projects]]
-  digest = "1:0981502f9816113c9c8c4ac301583841855c8cf4da8c72f696b3ebedf6d0e4e5"
+  digest = "1:d62282425ffb75047679d7e2c3b980eea7f82c05ef5fb9142ee617ebac6e7432"
   name = "github.com/mattn/go-isatty"
   packages = ["."]
   pruneopts = "UT"
-  revision = "6ca4dbf54d38eea1a992b3c722a76a5d1c4cb25c"
-  version = "v0.0.4"
+  revision = "88ba11cfdc67c7588b30042edf244b2875f892b6"
+  version = "v0.0.10"
 
 [[projects]]
-  digest = "1:2487a7d6c9623edd9d79edada3a1e5c14b076e540ce0266321827cdd3a4837bd"
+  digest = "1:7b2c74b47cc729b32c863dec627743fbd147aad6938458e861b88fb93ec80ea8"
   name = "github.com/nlopes/slack"
   packages = ["slackutilsx"]
   pruneopts = "UT"
-  revision = "b9033a72a20bf84563485e86a2adbea4bf265804"
-  version = "v0.4.0"
+  revision = "1af34b6bda3d43878255fff7bd2884ea0c23295e"
+  version = "v0.6.0"
 
 [[projects]]
   digest = "1:808cdddf087fb64baeae67b8dfaee2069034d9704923a3cb8bd96a995421a625"
@@ -161,16 +161,16 @@
   version = "v1.0.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:268b8bce0064e8c057d7b913605459f9a26dcab864c0886a56d196540fbf003f"
+  digest = "1:d2b6739022f7bc284b94fc553ddd2ff790de7b0fc0b37206e8bff80481a1d7aa"
   name = "github.com/valyala/fasttemplate"
   packages = ["."]
   pruneopts = "UT"
-  revision = "dcecefd839c4193db0d35b88ec65b4c12d360ab0"
+  revision = "8fcc7a99b5795b7c3e95172237cf93282fc339a9"
+  version = "v1.1.0"
 
 [[projects]]
   branch = "master"
-  digest = "1:5d0d5714f6082a5f7f12d313037390d06f557d71255fda0133855298c3b14b07"
+  digest = "1:9df3bbda9c7768d189dfb3317e56c4a0eeccd0f443b94899dcb4681c7b53ee53"
   name = "golang.org/x/crypto"
   packages = [
     "acme",
@@ -178,40 +178,66 @@
     "pbkdf2",
   ]
   pruneopts = "UT"
-  revision = "eb0de9b17e854e9b1ccd9963efafc79862359959"
+  revision = "8986dd9e96cf0a6f74da406c005ba3df38527c04"
 
 [[projects]]
   branch = "master"
-  digest = "1:f8b491a7c25030a895a0e579742d07136e6958e77ef2d46e769db8eec4e58fcd"
+  digest = "1:ea553e44f44f438b5c1d3de7563218d20fa9a45ac6b36ea3a9f918a32b67161f"
   name = "golang.org/x/net"
   packages = [
     "context",
     "context/ctxhttp",
+    "idna",
   ]
   pruneopts = "UT"
-  revision = "351d144fa1fc0bd934e2408202be0c29f25e35a0"
+  revision = "fe3aa8a4527195a6057b3fad46619d7d090e99b5"
 
 [[projects]]
   branch = "master"
-  digest = "1:7bea7ba08178336c2c82ba215c8e101fe23fd2dc809dd38d4141640442149c2d"
+  digest = "1:8d1c112fb1679fa097e9a9255a786ee47383fa2549a3da71bcb1334a693ebcfe"
   name = "golang.org/x/oauth2"
   packages = [
     ".",
     "internal",
   ]
   pruneopts = "UT"
-  revision = "28207608b83849a028d4f12e46533a6b6894ecaf"
+  revision = "0f29369cfe4552d0e4bcddc57cc75f4d7e672a33"
 
 [[projects]]
   branch = "master"
-  digest = "1:8775d8a768d9e65e8b659172804aac5db1fc8d563ba766470a6c2698c57c61a7"
+  digest = "1:999c8e6b10ddb08bc4ea3a56d4e838194c4884eac6ecf90a9aa98ed8475fdf37"
   name = "golang.org/x/sys"
   packages = ["unix"]
   pruneopts = "UT"
-  revision = "4ed8d59d0b35e1e29334a206d1b3f38b1e5dfb31"
+  revision = "f43be2a4598cf3a47be9f94f0c28197ed9eae611"
 
 [[projects]]
-  digest = "1:08206298775e5b462e6c0333f4471b44e63f1a70e42952b6ede4ecc9572281eb"
+  digest = "1:8d8faad6b12a3a4c819a3f9618cb6ee1fa1cfc33253abeeea8b55336721e3405"
+  name = "golang.org/x/text"
+  packages = [
+    "collate",
+    "collate/build",
+    "internal/colltab",
+    "internal/gen",
+    "internal/language",
+    "internal/language/compact",
+    "internal/tag",
+    "internal/triegen",
+    "internal/ucd",
+    "language",
+    "secure/bidirule",
+    "transform",
+    "unicode/bidi",
+    "unicode/cldr",
+    "unicode/norm",
+    "unicode/rangetable",
+  ]
+  pruneopts = "UT"
+  revision = "342b2e1fbaa52c93f31447ad2c6abc048c63e475"
+  version = "v0.3.2"
+
+[[projects]]
+  digest = "1:e0a1881f9e0564bebdeac98c75e59f07acdde6ed3a5396e0e613eaad31194866"
   name = "google.golang.org/appengine"
   packages = [
     "internal",
@@ -223,8 +249,8 @@
     "urlfetch",
   ]
   pruneopts = "UT"
-  revision = "4a4468ece617fc8205e99368fa2200e9d1fad421"
-  version = "v1.3.0"
+  revision = "971852bfffca25b069c31162ae8f247a3dba083b"
+  version = "v1.6.5"
 
 [[projects]]
   digest = "1:999d566ad1ae4303c456af5a155f7b42401cca4fd33552567ed9dd997b107a08"
@@ -239,6 +265,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/alexbrazier/slack",
+    "github.com/getsentry/sentry-go",
     "github.com/go-pg/pg",
     "github.com/go-pg/pg/orm",
     "github.com/gorilla/sessions",

@@ -29,6 +29,7 @@ type Specification struct {
 	AllowedIPs             []string `envconfig:"ALLOWED_IPS"`
 	AllowForwardedFor      bool     `envconfig:"ALLOW_FORWARDED_FOR"`
 	ForwardedForTrustLevel int      `envconfig:"FORWARDED_FOR_TRUST_LEVEL" default:"1"`
+	SentryDSN              string   `envconfig:"SENTRY_API_DSN"`
 }
 
 // Auth config
@@ -68,6 +69,7 @@ type Config struct {
 	AppURI       string
 	BlockedHosts []string
 	Slack        Slack
+	SentryDSN    string
 }
 
 func validateConfig(c Config) {
@@ -112,6 +114,8 @@ func Init() {
 		SigningSecret: spec.SlackSigningSecret,
 		TeamID:        spec.SlackTeamID,
 	}
+
+	config.SentryDSN = spec.SentryDSN
 
 	config.BlockedHosts = append(spec.BlockedHosts, spec.Hosts...)
 
