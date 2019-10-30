@@ -124,6 +124,9 @@ workflows:
       - build:
           requires:
             - setup
+      - unit-test:
+          requires:
+            - setup
       - e2e-test:
           requires:
             - setup
