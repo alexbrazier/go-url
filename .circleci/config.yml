@@ -57,6 +57,16 @@ jobs:
           command: |
             cd frontend && yarn lint && echo -e "\033[0;32mESLint passed"
 
+  unit-test:
+    executor: default
+    steps:
+      - attach_workspace:
+          at: /go/src/github.com/alexbrazier
+      - run:
+          name: Run unit tests
+          command: |
+            cd api && go test ./...
+
   e2e-test:
     executor: browsers
     parallelism: 1
