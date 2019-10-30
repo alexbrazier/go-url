@@ -33,5 +33,6 @@ RUN apk update && apk add dumb-init ca-certificates && rm -rf /var/cache/apk/*
 COPY --from=apibuilder /go/bin/server /go/bin/server
 COPY --from=frontendbuilder /app/build /go/bin/public
 WORKDIR /go/bin
+COPY entrypoint.sh .
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["/go/bin/server"]
+CMD ["entrypoint.sh"]
