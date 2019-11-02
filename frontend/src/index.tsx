@@ -5,9 +5,15 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import Routes from './routes';
 import store from './redux';
+import { init as initSentry } from '@sentry/browser';
+import { SENTRY_DSN } from './config';
 import 'typeface-roboto';
 import './index.css';
 // import * as serviceWorker from './serviceWorker';
+
+if (SENTRY_DSN) {
+  initSentry({ dsn: SENTRY_DSN });
+}
 
 const theme = createMuiTheme();
 

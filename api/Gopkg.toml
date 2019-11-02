@@ -59,3 +59,7 @@
 [[constraint]]
   name = "github.com/patrickmn/go-cache"
   version = "2.1.0"
+
+[[constraint]]
+  name = "github.com/getsentry/sentry-go"
+  version = "0.3.0"
