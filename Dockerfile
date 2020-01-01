@@ -26,7 +26,7 @@ RUN yarn --frozen-lockfile --network-timeout 600000 && \
 ############################
 # Build actual image
 ############################
-FROM alpine:3.10
+FROM alpine:3.11.2
 # Need to get updated certificates to connect to Slack API
 RUN apk update && apk add bash dumb-init ca-certificates && rm -rf /var/cache/apk/*
 # Copy our static executable.
