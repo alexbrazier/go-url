@@ -71,10 +71,4 @@ const mapDispatch = {
   displayFlashError,
 };
 
-export default compose(
-  connect(
-    mapState,
-    mapDispatch,
-  ),
-  withRouter,
-)(Home);
+export default compose(connect(mapState, mapDispatch), withRouter)(Home);
