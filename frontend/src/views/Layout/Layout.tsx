@@ -61,7 +61,4 @@ const Layout: React.FC<LayoutProps> = ({
 };
 
 const mapState = ({ flash }) => ({ flash });
-export default compose(
-  connect(mapState),
-  withRouter,
-)(Layout);
+export default compose(connect(mapState), withRouter)(Layout);

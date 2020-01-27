@@ -37,7 +37,4 @@ const mapDispatch = {
   clearFlash,
 };
 
-export default connect(
-  null,
-  mapDispatch,
-)(Alert);
+export default connect(null, mapDispatch)(Alert);
