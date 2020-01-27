@@ -15,7 +15,7 @@ import {
 import useStyles from './useStyles';
 
 interface ModalProps {
-  edit: Boolean;
+  edit?: Boolean;
   urlKey?: string;
   url?: string;
   onClose: () => void;
