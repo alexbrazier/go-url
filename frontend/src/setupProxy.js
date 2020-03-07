@@ -1,18 +1,15 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const excludedTypes = ['.js', '.css', '.json', '.ico', '.map', 'png', 'svg'];
+const filter = pathname =>
+  !pathname.startsWith('/go') &&
+  !excludedTypes.some(type => pathname.endsWith(type));
+
 module.exports = function setupProxy(app) {
-  app.use('/', (req, res, next) => {
-    if (
-      req.path.startsWith('/go') ||
-      excludedTypes.some(type => req.path.endsWith(type))
-    ) {
-      return next();
-    }
-    return createProxyMiddleware({ target: 'http://localhost:1323' })(
-      req,
-      res,
-      next,
-    );
-  });
+  app.use(
+    '/',
+    createProxyMiddleware(filter, {
+      target: 'http://localhost:1323',
+    }),
+  );
 };
