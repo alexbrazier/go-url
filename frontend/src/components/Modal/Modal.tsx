@@ -33,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   const [urlKey, setKey] = useState(initialKey);
   const [url, setUrl] = useState(initialUrl);
-  const [query, submit] = useState();
+  const [query, submit] = useState<{ urlKey: string; url: string }>();
   const classes = useStyles({});
 
   useEffect(() => {
