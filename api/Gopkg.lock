@@ -18,12 +18,12 @@
   version = "v3.2.0"
 
 [[projects]]
-  digest = "1:677e79698319e9718eb5fa13d55f0fd125f57b121db489ed8375f2e476cba4f4"
+  digest = "1:9fde49eaa3ee34e80f2ce31bd3ed0695ec048321dfe02c60a46c22e5b8e3968e"
   name = "github.com/getsentry/sentry-go"
   packages = ["."]
   pruneopts = "UT"
-  revision = "6e30a9909361d339adf28d4211947ef408cf7726"
-  version = "v0.3.0"
+  revision = "93b68f59e483f3eede43c3212220a9f6689f8812"
+  version = "v0.5.1"
 
 [[projects]]
   digest = "1:0a2260bcfa15237979ef496f03fb6af215c247ad998881a4d039992228876ae3"
@@ -41,12 +41,12 @@
   version = "v6.15.1"
 
 [[projects]]
-  digest = "1:573ca21d3669500ff845bdebee890eb7fc7f0f50c59f2132f2a0c6b03d85086a"
+  digest = "1:d1e35b720b5f5156502ffdd174000c81295919293735342da78582e4dc7a8bcd"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   pruneopts = "UT"
-  revision = "6c65a5562fc06764971b7c5d05c76c75e84bdbf7"
-  version = "v1.3.2"
+  revision = "5d5b4c10bd43f85e63bd9e4a3fa9b1ea2ef88af2"
+  version = "v1.3.4"
 
 [[projects]]
   digest = "1:e72d1ebb8d395cf9f346fd9cbc652e5ae222dd85e0ac842dc57f175abed6d195"
@@ -100,7 +100,7 @@
   version = "v3.3.10"
 
 [[projects]]
-  digest = "1:6e15357cae900fa1a8015c7fc9efdb406f72b644549a3422f3f1b7f465836a84"
+  digest = "1:e8e65826d60fd82637fb9df06ecd651191b599f4a8f72b86362012f288778320"
   name = "github.com/labstack/gommon"
   packages = [
     "bytes",
@@ -109,24 +109,24 @@
     "random",
   ]
   pruneopts = "UT"
-  revision = "ab0bfd9a5eba33a8c364bf3390d809ed23c31f97"
-  version = "v0.2.9"
+  revision = "4919956f6fb227b548f004da27c7c6b20fba499f"
+  version = "v0.3.0"
 
 [[projects]]
-  digest = "1:4a29eeb25603debe8f2098a9902c4d3851034cf70d33be428826e86e8c30a1b0"
+  digest = "1:0109cf4321a15313ec895f42e723e1f76121c6975ea006abfa20012272ec0937"
   name = "github.com/mattn/go-colorable"
   packages = ["."]
   pruneopts = "UT"
-  revision = "98ec13f34aabf44cc914c65a1cfb7b9bc815aef1"
-  version = "v0.1.4"
+  revision = "68e95eba382c972aafde02ead2cd2426a8a92480"
+  version = "v0.1.6"
 
 [[projects]]
-  digest = "1:d62282425ffb75047679d7e2c3b980eea7f82c05ef5fb9142ee617ebac6e7432"
+  digest = "1:0c58d31abe2a2ccb429c559b6292e7df89dcda675456fecc282fa90aa08273eb"
   name = "github.com/mattn/go-isatty"
   packages = ["."]
   pruneopts = "UT"
-  revision = "88ba11cfdc67c7588b30042edf244b2875f892b6"
-  version = "v0.0.10"
+  revision = "7b513a986450394f7bbf1476909911b3aa3a55ce"
+  version = "v0.0.12"
 
 [[projects]]
   digest = "1:7b2c74b47cc729b32c863dec627743fbd147aad6938458e861b88fb93ec80ea8"
@@ -170,7 +170,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:9df3bbda9c7768d189dfb3317e56c4a0eeccd0f443b94899dcb4681c7b53ee53"
+  digest = "1:9f1c97be535e523c94d491d7b44ce1a0af5a74a1479dfc96229299f26d3acfc5"
   name = "golang.org/x/crypto"
   packages = [
     "acme",
@@ -178,11 +178,11 @@
     "pbkdf2",
   ]
   pruneopts = "UT"
-  revision = "8986dd9e96cf0a6f74da406c005ba3df38527c04"
+  revision = "78000ba7a073cafc0278790f6bce552a0f25850e"
 
 [[projects]]
   branch = "master"
-  digest = "1:ea553e44f44f438b5c1d3de7563218d20fa9a45ac6b36ea3a9f918a32b67161f"
+  digest = "1:cb7d43fed0e67c92fbf3885e349a349369925da4c154fb3d78d91e4a5633c7a1"
   name = "golang.org/x/net"
   packages = [
     "context",
@@ -190,26 +190,26 @@
     "idna",
   ]
   pruneopts = "UT"
-  revision = "fe3aa8a4527195a6057b3fad46619d7d090e99b5"
+  revision = "244492dfa37ae2ce87222fd06250a03160745faa"
 
 [[projects]]
   branch = "master"
-  digest = "1:8d1c112fb1679fa097e9a9255a786ee47383fa2549a3da71bcb1334a693ebcfe"
+  digest = "1:911b45b658f5fab1a26259e2fd1085ab296f9d3e46117311d25f8dae51efe720"
   name = "golang.org/x/oauth2"
   packages = [
     ".",
     "internal",
   ]
   pruneopts = "UT"
-  revision = "0f29369cfe4552d0e4bcddc57cc75f4d7e672a33"
+  revision = "bf48bf16ab8d622ce64ec6ce98d2c98f916b6303"
 
 [[projects]]
   branch = "master"
-  digest = "1:999c8e6b10ddb08bc4ea3a56d4e838194c4884eac6ecf90a9aa98ed8475fdf37"
+  digest = "1:8d59aa6f03198132e0ca3bf998677f9698e1e27fc67976c85d85086ac3496530"
   name = "golang.org/x/sys"
   packages = ["unix"]
   pruneopts = "UT"
-  revision = "f43be2a4598cf3a47be9f94f0c28197ed9eae611"
+  revision = "5c8b2ff67527cb88b770f693cebf3799036d8bc0"
 
 [[projects]]
   digest = "1:8d8faad6b12a3a4c819a3f9618cb6ee1fa1cfc33253abeeea8b55336721e3405"
