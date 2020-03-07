@@ -1,4 +1,4 @@
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const excludedTypes = ['.js', '.css', '.json', '.ico', '.map', 'png', 'svg'];
 module.exports = function setupProxy(app) {
@@ -9,6 +9,10 @@ module.exports = function setupProxy(app) {
     ) {
       return next();
     }
-    return proxy({ target: 'http://localhost:1323' })(req, res, next);
+    return createProxyMiddleware({ target: 'http://localhost:1323' })(
+      req,
+      res,
+      next,
+    );
   });
 };

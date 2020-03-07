@@ -25,7 +25,7 @@ const Layout: React.FC<LayoutProps> = ({
   location,
 }) => {
   const [addOpen, setAddOpen] = useState(false);
-  const [query, onSearch] = useState();
+  const [query, onSearch] = useState<string>();
   const classes = useStyles({});
   const hideAdd = useCallback(() => setAddOpen(false), []);
   // Pre-populate field if not found
