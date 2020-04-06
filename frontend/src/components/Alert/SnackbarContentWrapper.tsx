@@ -26,7 +26,9 @@ interface SnackbarContentWrapperProps {
   variant: Variant;
 }
 
-const SnackbarContentWrapper: React.FC<SnackbarContentWrapperProps> = props => {
+const SnackbarContentWrapper: React.FC<SnackbarContentWrapperProps> = (
+  props,
+) => {
   const { className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
   const classes = useStyles(props);
