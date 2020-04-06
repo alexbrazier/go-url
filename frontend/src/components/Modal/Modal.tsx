@@ -49,7 +49,7 @@ const Modal: React.FC<ModalProps> = ({
         );
         onClose();
       })
-      .catch(err =>
+      .catch((err) =>
         displayFlashError(err.response.data.message || err.response.data),
       );
   }, [query, displayFlashSuccess, displayFlashError, onClose, edit]);
@@ -70,7 +70,7 @@ const Modal: React.FC<ModalProps> = ({
             className={classes.textField}
             fullWidth
             autoComplete="off"
-            onChange={e => setKey(e.target.value)}
+            onChange={(e) => setKey(e.target.value)}
             value={urlKey}
           />
         )}
@@ -81,7 +81,7 @@ const Modal: React.FC<ModalProps> = ({
           className={classes.textField}
           fullWidth
           autoComplete="off"
-          onChange={e => setUrl(e.target.value)}
+          onChange={(e) => setUrl(e.target.value)}
           value={url}
         />
       </DialogContent>

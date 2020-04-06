@@ -68,12 +68,12 @@ const Results: React.FC<ResultsProps> = ({ data, title }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map(r => (
+              {data.map((r) => (
                 <TableRow key={r.key} className={classes.tableRow}>
                   <TableCell>{r.key}</TableCell>
                   <TableCell className={classes.urlCell}>
                     {r.alias && r.alias.length ? (
-                      r.alias.map(alias => (
+                      r.alias.map((alias) => (
                         <a
                           key={alias}
                           className={classes.url}

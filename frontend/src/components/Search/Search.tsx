@@ -17,7 +17,7 @@ const Search: React.FC<SearchProps> = ({ onSearch }) => {
       </div>
       <InputBase
         placeholder="Search…"
-        onChange={e => setQuery(e.target.value)}
+        onChange={(e) => setQuery(e.target.value)}
         value={query}
         onKeyPress={({ key }) => key === 'Enter' && onSearch(query)}
         classes={{
