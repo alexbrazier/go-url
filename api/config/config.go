@@ -12,6 +12,8 @@ type Specification struct {
 	JSONLogs               bool     `envconfig:"JSON_LOGS"`
 	Port                   int      `default:"1323"`
 	EnableAuth             bool     `envconfig:"ENABLE_AUTH"`
+	AuthExpirySeconds      int      `envconfig:"AUTH_EXPIRY_SECONDS" default:"2592000"`
+	SecureCookies          bool     `envconfig:"SECURE_COOKIES" default:"true"`
 	ADTenantID             string   `envconfig:"AD_TENANT_ID"`
 	ADClientID             string   `envconfig:"AD_CLIENT_ID"`
 	ADClientSecret         string   `envconfig:"AD_CLIENT_SECRET"`
@@ -42,6 +44,8 @@ type Auth struct {
 	AllowedIPs             []string
 	AllowForwardedFor      bool
 	ForwardedForTrustLevel int
+	MaxAge                 int
+	SecureCookies          bool
 }
 
 // Database config
@@ -100,6 +104,8 @@ func Init() {
 		AllowedIPs:             spec.AllowedIPs,
 		AllowForwardedFor:      spec.AllowForwardedFor,
 		ForwardedForTrustLevel: spec.ForwardedForTrustLevel,
+		MaxAge:                 spec.AuthExpirySeconds,
+		SecureCookies:          spec.SecureCookies,
 	}
 	config.Database = Database{
 		Addr:     spec.PostgresAddr,
