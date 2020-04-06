@@ -65,10 +65,20 @@ func (h *Handler) AuthInit(e *echo.Echo) {
 	// Create file system store with no size limit
 	fsStore := sessions.NewFilesystemStore("", sessionStoreKeyPairs...)
 	fsStore.MaxLength(0)
+
+	fsStore.Options = &sessions.Options{
+		Path:     "/",
+		MaxAge:   appConfig.Auth.MaxAge,
+		HttpOnly: true,
+		Secure:   appConfig.Auth.SecureCookies,
+		SameSite: http.SameSiteStrictMode,
+	}
+
 	store = fsStore
 
 	gob.Register(&User{})
 	gob.Register(&oauth2.Token{})
+
 	e.GET("/callback", h.callbackHandler)
 }
 
