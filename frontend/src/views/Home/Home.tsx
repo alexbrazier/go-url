@@ -1,29 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import qs from 'qs';
-import { compose } from 'recompose';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useRouteMatch, useLocation } from 'react-router-dom';
 import Results from '../../components/Results';
 import { displayFlashError } from '../../redux/flash/actions';
 import useStyles from './useStyles';
 
-interface HomeProps extends RouteComponentProps<{ query: string }> {
+interface HomeProps {
   displayFlashError: (message: string) => void;
   search: {
     results?: any;
   };
 }
 
-const Home: React.FC<HomeProps> = ({
-  search,
-  match,
-  location,
-  displayFlashError,
-}) => {
+const Home: React.FC<HomeProps> = ({ search, displayFlashError }) => {
   const [querySearchResults, setQuerySearchResults] = useState('');
   const [popular, setPopular] = useState();
   const classes = useStyles({});
+  const match = useRouteMatch<{ query: string }>();
+  const location = useLocation();
 
   useEffect(() => {
     axios.get('/api/popular').then(({ data }) => setPopular(data));
@@ -71,4 +67,4 @@ const mapDispatch = {
   displayFlashError,
 };
 
-export default compose(connect(mapState, mapDispatch), withRouter)(Home);
+export default connect(mapState, mapDispatch)(Home);
