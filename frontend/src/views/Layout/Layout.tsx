@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { compose } from 'recompose';
 import { connect } from 'react-redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -11,23 +10,20 @@ import Alert from '../../components/Alert';
 import { Variant } from '../../components/Alert/SnackbarContentWrapper';
 import useStyles from './useStyles';
 
-interface LayoutProps extends RouteComponentProps {
+interface LayoutProps {
   flash: {
     message: string;
     variant: Variant;
   };
 }
 
-const Layout: React.FC<LayoutProps> = ({
-  children,
-  history,
-  flash,
-  location,
-}) => {
+const Layout: React.FC<LayoutProps> = ({ children, flash }) => {
   const [addOpen, setAddOpen] = useState(false);
   const [query, onSearch] = useState<string>();
   const classes = useStyles({});
   const hideAdd = useCallback(() => setAddOpen(false), []);
+  const history = useHistory();
+  const location = useLocation();
   // Pre-populate field if not found
   const urlQuery =
     location.search.includes('message=') && location.pathname.slice(1);
@@ -61,4 +57,4 @@ const Layout: React.FC<LayoutProps> = ({
 };
 
 const mapState = ({ flash }) => ({ flash });
-export default compose(connect(mapState), withRouter)(Layout);
+export default connect(mapState)(Layout);
