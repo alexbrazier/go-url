@@ -71,7 +71,7 @@ func (h *Handler) AuthInit(e *echo.Echo) {
 		MaxAge:   appConfig.Auth.MaxAge,
 		HttpOnly: true,
 		Secure:   appConfig.Auth.SecureCookies,
-		SameSite: http.SameSiteStrictMode,
+		SameSite: http.SameSiteLaxMode,
 	}
 
 	store = fsStore
