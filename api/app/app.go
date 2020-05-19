@@ -102,7 +102,8 @@ func setupTemplates(e *echo.Echo) {
 		</script></head><body></body></html>
 	`))
 	templates["opensearch.xml"] = template.Must(template.New("opensearch.xml").Parse(
-		`<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+		`<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
 	<ShortName>Go</ShortName>
 	<Description>Search Go</Description>
 	<InputEncoding>UTF-8</InputEncoding>
