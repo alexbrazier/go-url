@@ -132,7 +132,7 @@ func (h *Handler) SlackCommand(c echo.Context) error {
 	}
 	appURI := config.GetConfig().AppURI
 	url, err := urlModel.Find(key)
-	if err != nil {
+	if err != nil || url == nil {
 		response.Text = fmt.Sprintf("The URL key you provided was not found. Why not add it? %s/go/%s", appURI, key)
 		return c.JSON(http.StatusOK, response)
 	}
