@@ -29,7 +29,7 @@ const Home: React.FC<HomeProps> = ({ search, displayFlashError }) => {
     const search = location.search;
     const { message } = qs.parse(search.slice(1));
     if (message) {
-      displayFlashError(message);
+      displayFlashError(message as string);
     }
   }, [location.search, displayFlashError]);
 
