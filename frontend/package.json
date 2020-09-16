@@ -12,9 +12,7 @@
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}?\"",
     "prettier:check": "prettier --list-different \"src/**/*.{js,jsx,ts,tsx}?\"",
     "lint": "eslint src",
-    "wait": "yarn wait:api",
-    "wait:api": "wait-on http-get://localhost:1323/health",
-    "wait:frontend": "wait-on http-get://localhost:3000/go"
+    "wait": "yarn wait-on http-get://localhost:1323/health http-get://localhost:3000/go"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
