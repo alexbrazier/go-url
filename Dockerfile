@@ -1,7 +1,7 @@
 ############################
 # Build api
 ############################
-FROM golang:1.15.0-alpine3.12 AS apibuilder
+FROM golang:1.15.3-alpine3.12 AS apibuilder
 RUN apk update && apk add --no-cache git dep
 COPY api $GOPATH/src/github.com/alexbrazier/go-url/api
 WORKDIR $GOPATH/src/github.com/alexbrazier/go-url/api
@@ -15,7 +15,7 @@ RUN go build -o /go/bin/server
 ############################
 # Build frontend
 ############################
-FROM node:12.18.3-alpine AS frontendbuilder
+FROM node:14.15.1-alpine AS frontendbuilder
 
 COPY frontend /app
 WORKDIR /app
