@@ -23,7 +23,7 @@ jobs:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-v2-{{ checksum "frontend/yarn.lock" }}
+            - yarn-packages-v1-{{ checksum "frontend/yarn.lock" }}
       - run:
           name: Install Frontend Dependencies
           command: cd /go/src/github.com/alexbrazier/go-url/frontend && yarn install --frozen-lockfile
@@ -32,7 +32,7 @@ jobs:
           command: cd /go/src/github.com/alexbrazier/go-url/api && dep ensure
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-v2-{{ checksum "frontend/yarn.lock" }}
+          key: yarn-packages-v1-{{ checksum "frontend/yarn.lock" }}
           paths:
             - ~/.cache
       - persist_to_workspace:
@@ -75,7 +75,8 @@ jobs:
           at: /go/src/github.com/alexbrazier
       - attach_workspace:
           at: ~/
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
           name: E2E frontend background
           command: cd frontend && yarn start
@@ -107,7 +108,8 @@ jobs:
     steps:
       - attach_workspace:
           at: /go/src/github.com/alexbrazier
-      - setup_remote_docker
+      - setup_remote_docker:
+          version: 19.03.13
       - run:
           name: Build Docker image
           command: |
