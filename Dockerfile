@@ -15,7 +15,7 @@ RUN go build -o /go/bin/server
 ############################
 # Build frontend
 ############################
-FROM node:12.18.3-alpine AS frontendbuilder
+FROM node:15.3.0-alpine AS frontendbuilder
 
 COPY frontend /app
 WORKDIR /app
