@@ -81,6 +81,17 @@
   version = "v1.0.0"
 
 [[projects]]
+  digest = "1:1f4b55d7c57681ad91b7ce3ac7c8e7b139e6dd2f477c5f87e6a7749d298645dc"
+  name = "github.com/joho/godotenv"
+  packages = [
+    ".",
+    "autoload",
+  ]
+  pruneopts = "UT"
+  revision = "23d116af351c84513e1946b527c88823e476be13"
+  version = "v1.3.0"
+
+[[projects]]
   digest = "1:fd9bea48bbc5bba66d9891c72af7255fbebecdff845c37c679406174ece5ca1b"
   name = "github.com/kelseyhightower/envconfig"
   packages = ["."]
@@ -113,6 +124,35 @@
   version = "v0.3.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:7d1e61431801e39213baadd9d56760f5dcc8b5b3358e2419e66a7dbb39b91714"
+  name = "github.com/lestrrat-go/iter"
+  packages = [
+    "arrayiter",
+    "mapiter",
+  ]
+  pruneopts = "UT"
+  revision = "fc176954191104b7be24e78f6707f665ecf149b8"
+
+[[projects]]
+  digest = "1:9561ae4d97e6fca1b5e58b0e3ff2f289c15e802400aac682a2ef4e58d104306b"
+  name = "github.com/lestrrat-go/jwx"
+  packages = [
+    "internal/base64",
+    "internal/iter",
+    "internal/option",
+    "internal/pool",
+    "jwa",
+    "jwk",
+    "jws",
+    "jws/sign",
+    "jws/verify",
+  ]
+  pruneopts = "UT"
+  revision = "5aeabd78da3bab07a0ae04d299575f967590380e"
+  version = "v1.0.5"
+
+[[projects]]
   digest = "1:0109cf4321a15313ec895f42e723e1f76121c6975ea006abfa20012272ec0937"
   name = "github.com/mattn/go-colorable"
   packages = ["."]
@@ -135,6 +175,21 @@
   pruneopts = "UT"
   revision = "1af34b6bda3d43878255fff7bd2884ea0c23295e"
   version = "v0.6.0"
+
+[[projects]]
+  digest = "1:3b3c60e731c133e774a25ba9c64b4ddd03ad278739ba0fbbc2e69616fe75edc6"
+  name = "github.com/okta/okta-jwt-verifier-golang"
+  packages = [
+    ".",
+    "adaptors",
+    "adaptors/lestrratGoJwx",
+    "discovery",
+    "discovery/oidc",
+    "errors",
+  ]
+  pruneopts = "UT"
+  revision = "6a9e44fa762203760404ed185bcd215d59732785"
+  version = "v1.0.0"
 
 [[projects]]
   digest = "1:808cdddf087fb64baeae67b8dfaee2069034d9704923a3cb8bd96a995421a625"
@@ -269,10 +324,12 @@
     "github.com/go-pg/pg",
     "github.com/go-pg/pg/orm",
     "github.com/gorilla/sessions",
+    "github.com/joho/godotenv/autoload",
     "github.com/kelseyhightower/envconfig",
     "github.com/labstack/echo",
     "github.com/labstack/echo/middleware",
     "github.com/labstack/gommon/log",
+    "github.com/okta/okta-jwt-verifier-golang",
     "github.com/patrickmn/go-cache",
     "golang.org/x/oauth2",
   ]

@@ -7,6 +7,7 @@ import (
 	"github.com/alexbrazier/go-url/api/config"
 	"github.com/alexbrazier/go-url/api/db"
 	"github.com/getsentry/sentry-go"
+	_ "github.com/joho/godotenv/autoload"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
