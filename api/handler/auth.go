@@ -25,6 +25,8 @@ func oktaEnabled() bool {
 func (h *Handler) AuthInit(e *echo.Echo) {
 	authClient := &auth.AuthClient{}
 
+	authClient.AuthInit(e)
+
 	if azureEnabled() {
 		authClient.AzureAuthInit(e)
 	} else if oktaEnabled() {

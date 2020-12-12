@@ -6,7 +6,6 @@ import (
 	"encoding/gob"
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
@@ -16,8 +15,6 @@ import (
 	"github.com/labstack/echo"
 	"golang.org/x/oauth2"
 )
-
-var store sessions.Store
 
 var oauthConfig *oauth2.Config
 
@@ -39,43 +36,8 @@ func getRedirectUrl(c echo.Context) string {
 	return fmt.Sprintf("%s/callback", uri)
 }
 
-func getOriginalUrl(c echo.Context) string {
-	session, _ := store.Get(c.Request(), "session")
-
-	if redirectPath := session.Values["redirect"]; redirectPath != nil {
-		if path, ok := redirectPath.(string); ok {
-			return path
-		}
-	}
-
-	return "/"
-}
-
-// AuthInit initialize authentication
+// AzureAuthInit initialize authentication
 func (h *AuthClient) AzureAuthInit(e *echo.Echo) {
-	appConfig := config.GetConfig()
-	if appConfig.Auth.SessionToken == "" || appConfig.Auth.ADClientID == "" ||
-		appConfig.Auth.ADTenantID == "" || appConfig.Auth.ADClientSecret == "" {
-		log.Fatal("you must provide a session token, and all ad config when using auth")
-	}
-	var sessionStoreKeyPairs = [][]byte{
-		[]byte(appConfig.Auth.SessionToken),
-		nil,
-	}
-	// Create file system store with no size limit
-	fsStore := sessions.NewFilesystemStore("", sessionStoreKeyPairs...)
-	fsStore.MaxLength(0)
-
-	fsStore.Options = &sessions.Options{
-		Path:     "/",
-		MaxAge:   appConfig.Auth.MaxAge,
-		HttpOnly: true,
-		Secure:   appConfig.Auth.SecureCookies,
-		SameSite: http.SameSiteLaxMode,
-	}
-
-	store = fsStore
-
 	gob.Register(&User{})
 	gob.Register(&oauth2.Token{})
 
@@ -86,7 +48,7 @@ func (h *AuthClient) AzureAuth(next echo.HandlerFunc, c echo.Context) error {
 	appConfig := config.GetConfig()
 	session, _ := store.Get(c.Request(), "session")
 
-	if session.Values["user"] != nil {
+	if session.Values["azure_user"] != nil {
 		return next(c)
 	}
 
@@ -152,12 +114,12 @@ func (h *AuthClient) callbackHandler(c echo.Context) error {
 		return fmt.Errorf("error getting user details: %v", err)
 	}
 
-	session.Values["token"] = &token
-	session.Values["user"] = &user
+	session.Values["azure_token"] = &token
+	session.Values["azure_user"] = &user
 	if err := sessions.Save(c.Request(), c.Response()); err != nil {
 		return fmt.Errorf("error saving session: %v", err)
 	}
-	return c.Redirect(http.StatusTemporaryRedirect, getOriginalUrl(c))
+	return c.Redirect(http.StatusTemporaryRedirect, h.getOriginalURL(c))
 }
 
 func getUserDetails(token string) (*User, error) {

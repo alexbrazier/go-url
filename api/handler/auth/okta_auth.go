@@ -10,26 +10,12 @@ import (
 	"net/http"
 
 	"github.com/alexbrazier/go-url/api/config"
-	"github.com/gorilla/sessions"
 	"github.com/labstack/echo"
 	verifier "github.com/okta/okta-jwt-verifier-golang"
 )
 
-var sessionStore = sessions.NewCookieStore([]byte("okta-session"))
-var state = "ApplicationState"
-var nonce = "NonceNotSetYet"
-
-// func getOriginalUrl(c echo.Context) string {
-// 	session, _ := store.Get(c.Request(), "session")
-
-// 	if redirectPath := session.Values["redirect"]; redirectPath != nil {
-// 		if path, ok := redirectPath.(string); ok {
-// 			return path
-// 		}
-// 	}
-
-// 	return "/"
-// }
+// var sessionStore = sessions.NewCookieStore([]byte("okta-session"))
+var state = "main"
 
 func getOktaRedirectUrl() string {
 	appConfig := config.GetConfig()
@@ -48,7 +34,7 @@ func generateNonce() (string, error) {
 }
 
 func isOktaAuthenticated(r *http.Request) bool {
-	session, err := sessionStore.Get(r, "okta-session")
+	session, err := store.Get(r, "session")
 
 	if err != nil || session.Values["id_token"] == nil || session.Values["id_token"] == "" {
 		return false
@@ -59,43 +45,27 @@ func isOktaAuthenticated(r *http.Request) bool {
 
 // OktaAuthInit initialize authentication
 func (h *AuthClient) OktaAuthInit(e *echo.Echo) {
-	fmt.Println("authinit")
-
-	// appConfig := config.GetConfig()
-	// var sessionStoreKeyPairs = [][]byte{
-	// 	[]byte(appConfig.Auth.SessionToken),
-	// 	nil,
-	// }
-	// // Create file system store with no size limit
-	// fsStore := sessions.NewFilesystemStore("", sessionStoreKeyPairs...)
-	// fsStore.MaxLength(0)
-
-	// fsStore.Options = &sessions.Options{
-	// 	Path:     "/",
-	// 	MaxAge:   appConfig.Auth.MaxAge,
-	// 	HttpOnly: true,
-	// 	Secure:   appConfig.Auth.SecureCookies,
-	// 	SameSite: http.SameSiteLaxMode,
-	// }
-
-	// store = fsStore
-
-	// gob.Register(&User{})
-	// gob.Register(&oauth2.Token{})
-
 	e.GET("/okta/callback", h.oktaCallbackHandler)
 }
 
 // OktaAuth ...
 func (h *AuthClient) OktaAuth(next echo.HandlerFunc, c echo.Context) error {
-	fmt.Println("hello")
-
 	if isOktaAuthenticated(c.Request()) {
 		return next(c)
 	}
 
+	session := h.getSessionStore(c)
+
 	appConfig := config.GetConfig()
-	nonce, _ = generateNonce()
+	nonce, _ := generateNonce()
+
+	session.Values["redirect"] = c.Request().URL.Path
+	session.Values["nonce"] = nonce
+
+	if err := h.saveSessionStore(c); err != nil {
+		return err
+	}
+
 	var redirectPath string
 
 	q := c.Request().URL.Query()
@@ -113,8 +83,6 @@ func (h *AuthClient) OktaAuth(next echo.HandlerFunc, c echo.Context) error {
 }
 
 func (h *AuthClient) oktaCallbackHandler(c echo.Context) error {
-	fmt.Println("in callback")
-
 	code := c.QueryParam("code")
 
 	if c.QueryParam("state") != state || code == "" {
@@ -122,26 +90,19 @@ func (h *AuthClient) oktaCallbackHandler(c echo.Context) error {
 	}
 
 	exchange := exchangeCode(code, c.Request())
+	session := h.getSessionStore(c)
+	nonce := session.Values["nonce"]
 
-	fmt.Println("after exchange")
-
-	session, err := sessionStore.Get(c.Request(), "okta-session")
-	if err != nil {
-		return &echo.HTTPError{Code: http.StatusInternalServerError, Message: "Error"}
+	if nonce == nil {
+		return &echo.HTTPError{Code: http.StatusInternalServerError, Message: "Invalid nonce"}
 	}
 
-	fmt.Println(exchange.IDToken)
-
-	_, verificationError := verifyToken(exchange.IDToken)
-
-	fmt.Println("after verify")
+	_, verificationError := verifyToken(exchange.IDToken, nonce.(string))
 
 	if verificationError != nil {
 		fmt.Println(verificationError)
 		return &echo.HTTPError{Code: http.StatusInternalServerError, Message: "Error"}
 	}
-
-	fmt.Println("after error")
 
 	if verificationError == nil {
 		session.Values["id_token"] = exchange.IDToken
@@ -150,10 +111,7 @@ func (h *AuthClient) oktaCallbackHandler(c echo.Context) error {
 		session.Save(c.Request(), c.Response())
 	}
 
-	fmt.Print("LOGIN SUCCESS")
-
-	// TODO get original url
-	return c.Redirect(http.StatusTemporaryRedirect, "/")
+	return c.Redirect(http.StatusTemporaryRedirect, h.getOriginalURL(c))
 }
 
 func exchangeCode(code string, r *http.Request) Exchange {
@@ -184,12 +142,10 @@ func exchangeCode(code string, r *http.Request) Exchange {
 	var exchange Exchange
 	json.Unmarshal(body, &exchange)
 
-	fmt.Println(exchange)
-
 	return exchange
 }
 
-func verifyToken(t string) (*verifier.Jwt, error) {
+func verifyToken(t, nonce string) (*verifier.Jwt, error) {
 	appConfig := config.GetConfig()
 
 	tv := map[string]string{}
