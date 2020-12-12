@@ -6,4 +6,4 @@ yarn-error.log*
 /.env
 *.old
 /data
-
+/api/.env

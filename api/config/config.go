@@ -32,6 +32,9 @@ type Specification struct {
 	AllowForwardedFor      bool     `envconfig:"ALLOW_FORWARDED_FOR"`
 	ForwardedForTrustLevel int      `envconfig:"FORWARDED_FOR_TRUST_LEVEL" default:"1"`
 	SentryDSN              string   `envconfig:"SENTRY_API_DSN"`
+	OktaClientID           string   `envconfig:"OKTA_CLIENT_ID"`
+	OktaClientSecret       string   `envconfig:"OKTA_CLIENT_SECRET"`
+	OktaIssuer             string   `envconfig:"OKTA_ISSUER"`
 }
 
 // Auth config
@@ -46,6 +49,9 @@ type Auth struct {
 	ForwardedForTrustLevel int
 	MaxAge                 int
 	SecureCookies          bool
+	OktaClientID           string
+	OktaClientSecret       string
+	OktaIssuer             string
 }
 
 // Database config
@@ -106,6 +112,9 @@ func Init() {
 		ForwardedForTrustLevel: spec.ForwardedForTrustLevel,
 		MaxAge:                 spec.AuthExpirySeconds,
 		SecureCookies:          spec.SecureCookies,
+		OktaClientID:           spec.OktaClientID,
+		OktaClientSecret:       spec.OktaClientSecret,
+		OktaIssuer:             spec.OktaIssuer,
 	}
 	config.Database = Database{
 		Addr:     spec.PostgresAddr,

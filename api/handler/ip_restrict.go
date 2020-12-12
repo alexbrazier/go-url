@@ -4,9 +4,10 @@ import (
 	"net/http"
 	"strings"
 
+	"net"
+
 	"github.com/alexbrazier/go-url/api/config"
 	"github.com/labstack/echo"
-	"net"
 )
 
 func ipAllowed(allowedIPs, ips []string) bool {
@@ -52,7 +53,7 @@ func ipWhitelisted(forwardedFor, remoteAddr string) bool {
 }
 
 func whitelistedRoute(e echo.Context) bool {
-	whitelist := []string{"/health", "/callback", "/api/slack"}
+	whitelist := []string{"/health", "/callback", "/okta/callback", "/api/slack"}
 	for _, item := range whitelist {
 		if item == e.Request().URL.Path {
 			return true
