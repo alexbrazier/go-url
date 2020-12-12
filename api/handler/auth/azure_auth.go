@@ -53,9 +53,7 @@ func (h *AuthClient) AzureAuth(next echo.HandlerFunc, c echo.Context) error {
 	}
 
 	session.Values["redirect"] = c.Request().URL.Path
-	if err := sessions.Save(c.Request(), c.Response()); err != nil {
-		fmt.Printf("error saving redirect session: %v", err)
-	}
+	h.saveSessionStore(c)
 	fmt.Println("Redirecting to auth")
 
 	endpointURL := fmt.Sprintf("https://login.microsoftonline.com/%s/oauth2/v2.0", appConfig.Auth.ADTenantID)
@@ -116,9 +114,7 @@ func (h *AuthClient) callbackHandler(c echo.Context) error {
 
 	session.Values["azure_token"] = &token
 	session.Values["azure_user"] = &user
-	if err := sessions.Save(c.Request(), c.Response()); err != nil {
-		return fmt.Errorf("error saving session: %v", err)
-	}
+	h.saveSessionStore(c)
 	return c.Redirect(http.StatusTemporaryRedirect, h.getOriginalURL(c))
 }
 
