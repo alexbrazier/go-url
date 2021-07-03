@@ -126,16 +126,17 @@ func (h *Handler) SlackCommand(c echo.Context) error {
 	}
 
 	key := payload.Text
-	if ValidateKey(key) == false {
+	if ValidateKeyPath(key) == false {
 		response.Text = "The URL key you provided is an invalid format. You can only provide one key at a time, e.g. `/go help`"
 		return c.JSON(http.StatusOK, response)
 	}
 	appURI := config.GetConfig().AppURI
-	url, err := urlModel.Find(key)
-	if err != nil || url == nil {
+	urls, err := urlModel.GetUrlsFromKeys([]string{key})
+	if err != nil || len(urls) == 0 {
 		response.Text = fmt.Sprintf("The URL key you provided was not found. Why not add it? %s/go/%s", appURI, key)
 		return c.JSON(http.StatusOK, response)
 	}
+	url := urls[0]
 	response.Text = fmt.Sprintf("%s/%s", appURI, key)
 	if url.URL == "" {
 		aliasURLs := make([]string, len(url.Alias))
