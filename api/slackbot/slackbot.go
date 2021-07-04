@@ -22,7 +22,7 @@ type SlackBot struct {
 }
 
 func (s *SlackBot) getKeyFromText(text string) string {
-	r, _ := regexp.Compile("\\bgo ([\\w-]+)\\b")
+	r, _ := regexp.Compile("\\bgo ([\\w-\\/]+)\\b")
 
 	matches := r.FindStringSubmatch(text)
 
@@ -78,12 +78,12 @@ func (s *SlackBot) Init() {
 				}
 				// Edit message if previous one exists
 				if oldKey != "" {
-					url, err := urlModel.Find(oldKey)
+					urls, err := urlModel.GetUrlsFromKeys([]string{oldKey})
 					if err != nil {
 						fmt.Printf("An error occurred while finding old key %v", err)
 						break
 					}
-					if url != nil {
+					if len(urls) > 0 {
 						edited = true
 					}
 				}
@@ -98,28 +98,29 @@ func (s *SlackBot) Init() {
 				break
 			}
 
-			url, err := urlModel.Find(key)
+			urls, err := urlModel.GetUrlsFromKeys([]string{key})
 			if err != nil {
 				fmt.Printf("An error occurred while finding key %v", err)
 				break
 			}
-			if url == nil {
+			if len(urls) == 0 {
 				if ev.PreviousMessage != nil {
 					s.deleteMessage(ev.Channel, ev.PreviousMessage.Timestamp)
 				}
 				break
 			}
+			url := urls[0]
 			appURI := appConfig.AppURI
 
 			extraText := url.URL
 			if url.URL == "" {
-				urls, err := urlModel.GetUrlsFromKeys(url.Alias)
+				aliasUrls, err := urlModel.GetUrlsFromKeys(url.Alias)
 				if err != nil {
 					fmt.Println("Error while processing slackbot aliases")
 					break
 				}
-				urlStrings := make([]string, len(urls))
-				for i, url := range urls {
+				urlStrings := make([]string, len(aliasUrls))
+				for i, url := range aliasUrls {
 					urlStrings[i] = url.URL
 				}
 				extraText = strings.Join(urlStrings, "\n")
