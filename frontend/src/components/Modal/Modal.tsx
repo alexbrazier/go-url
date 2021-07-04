@@ -55,48 +55,56 @@ const Modal: React.FC<ModalProps> = ({
   }, [query, displayFlashSuccess, displayFlashError, onClose, edit]);
   return (
     <Dialog open onClose={onClose} data-e2e="modal">
-      <DialogTitle>{edit ? `Edit ${urlKey}` : 'Add new url'}</DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          {edit
-            ? `You are editing the link for "${urlKey}". Please remember that this will change the url for everyone, so only do so if the url is wrong.`
-            : 'Enter key and url to add new link'}
-        </DialogContentText>
-        {!edit && (
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          submit({ urlKey, url });
+        }}
+      >
+        <DialogTitle>{edit ? `Edit ${urlKey}` : 'Add new url'}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {edit
+              ? `You are editing the link for "${urlKey}". Please remember that this will change the url for everyone, so only do so if the url is wrong.`
+              : 'Enter key and url to add new link'}
+          </DialogContentText>
+          {!edit && (
+            <TextField
+              id="key"
+              label="Key"
+              type="text"
+              className={classes.textField}
+              fullWidth
+              autoComplete="off"
+              onChange={(e) => setKey(e.target.value)}
+              value={urlKey}
+            />
+          )}
           <TextField
-            id="key"
-            label="Key"
+            id="url"
+            label="Url"
             type="text"
             className={classes.textField}
             fullWidth
             autoComplete="off"
-            onChange={(e) => setKey(e.target.value)}
-            value={urlKey}
+            onChange={(e) => setUrl(e.target.value)}
+            value={url}
           />
-        )}
-        <TextField
-          id="url"
-          label="Url"
-          type="text"
-          className={classes.textField}
-          fullWidth
-          autoComplete="off"
-          onChange={(e) => setUrl(e.target.value)}
-          value={url}
-        />
-      </DialogContent>
-      <DialogActions className={classes.actions}>
-        <Button onClick={onClose} color="secondary" data-e2e="cancel">
-          Cancel
-        </Button>
-        <Button
-          onClick={() => submit({ urlKey, url })}
-          color="primary"
-          data-e2e="submit"
-        >
-          {edit ? 'Update' : 'Add'}
-        </Button>
-      </DialogActions>
+        </DialogContent>
+        <DialogActions className={classes.actions}>
+          <Button
+            onClick={onClose}
+            color="secondary"
+            data-e2e="cancel"
+            type="button"
+          >
+            Cancel
+          </Button>
+          <Button type="submit" color="primary" data-e2e="submit">
+            {edit ? 'Update' : 'Add'}
+          </Button>
+        </DialogActions>
+      </form>
     </Dialog>
   );
 };
