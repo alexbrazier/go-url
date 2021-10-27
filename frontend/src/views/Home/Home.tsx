@@ -22,7 +22,7 @@ const Home: React.FC<HomeProps> = ({ search, displayFlashError }) => {
   const location = useLocation();
 
   useEffect(() => {
-    axios.get('/api/popular').then(({ data }) => setPopular(data));
+    axios.get<any>('/api/popular').then(({ data }) => setPopular(data));
   }, []);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ const Home: React.FC<HomeProps> = ({ search, displayFlashError }) => {
     const query = match.params.query;
     if (query) {
       axios
-        .get('/api/search', { params: { q: query } })
+        .get<any>('/api/search', { params: { q: query } })
         .then(({ data }) => setQuerySearchResults(data));
     }
   }, [match.params.query]);
