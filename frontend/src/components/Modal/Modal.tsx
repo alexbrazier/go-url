@@ -43,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({
       url: `/${query.urlKey}`,
       data: { url: query.url },
     })
-      .then(({ data }) => {
+      .then(({ data }: any) => {
         displayFlashSuccess(
           `Successfully set ${data.key} to ${data.url || data.alias}`,
         );
