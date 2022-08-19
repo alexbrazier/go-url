@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
 import { faker } from '@faker-js/faker';
+import { getKey } from '../support/utils';
 
 context('Core', () => {
   beforeEach(() => {
@@ -15,7 +16,7 @@ context('Core', () => {
   });
 
   it('should redirect to app if not found', () => {
-    const key = faker.random.word().toLowerCase();
+    const key = getKey();
     const url = faker.internet.url();
     cy.visit(`/${key}`);
     cy.getHandle('alert').contains('was not found');
@@ -28,7 +29,7 @@ context('Core', () => {
   });
 
   it('should increase count when clicking on link', () => {
-    const key = faker.random.word().toLowerCase();
+    const key = getKey();
     const url = faker.internet.url();
 
     cy.addUrl({ key, url });
@@ -46,7 +47,7 @@ context('Core', () => {
   });
 
   it('should redirect to correct url when match found', (done) => {
-    const key = faker.random.word().toLowerCase();
+    const key = getKey();
     const url = 'https://github.com/test';
     cy.addUrl({ key, url });
 
@@ -58,7 +59,7 @@ context('Core', () => {
   });
 
   it('should redirect to correct url when match found with variables', (done) => {
-    const key = faker.random.word().toLowerCase();
+    const key = getKey();
     const url = 'https://github.com/{{$1}}/{{$2}}';
     cy.addUrl({ key, url });
 
@@ -72,7 +73,7 @@ context('Core', () => {
   });
 
   it('should redirect to correct url when match found with variables in different order', (done) => {
-    const key = faker.random.word().toLowerCase();
+    const key = getKey();
     const url = 'https://github.com/{{$2}}/{{$1}}';
     cy.addUrl({ key, url });
 
