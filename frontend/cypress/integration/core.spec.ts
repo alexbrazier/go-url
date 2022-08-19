@@ -1,5 +1,5 @@
 /// <reference types="Cypress" />
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 context('Core', () => {
   beforeEach(() => {
@@ -33,25 +33,19 @@ context('Core', () => {
 
     cy.addUrl({ key, url });
     // Check count is 0
-    cy.getResult(key)
-      .find('td')
-      .eq(2)
-      .should('have.text', '0');
+    cy.getResult(key).find('td').eq(2).should('have.text', '0');
     cy.getResult(key)
       .contains(url)
-      .then($a => {
+      .then(($a) => {
         const href = $a.prop('href');
         cy.request({ url: href, followRedirect: false });
       });
 
     cy.visit('/');
-    cy.getResult(key)
-      .find('td')
-      .eq(2)
-      .should('have.text', '1');
+    cy.getResult(key).find('td').eq(2).should('have.text', '1');
   });
 
-  it('should redirect to correct url when match found', done => {
+  it('should redirect to correct url when match found', (done) => {
     const key = faker.random.uuid();
     const url = 'https://github.com/test';
     cy.addUrl({ key, url });
@@ -63,7 +57,7 @@ context('Core', () => {
     });
   });
 
-  it('should redirect to correct url when match found with variables', done => {
+  it('should redirect to correct url when match found with variables', (done) => {
     const key = faker.random.uuid();
     const url = 'https://github.com/{{$1}}/{{$2}}';
     cy.addUrl({ key, url });
@@ -77,7 +71,7 @@ context('Core', () => {
     });
   });
 
-  it('should redirect to correct url when match found with variables in different order', done => {
+  it('should redirect to correct url when match found with variables in different order', (done) => {
     const key = faker.random.uuid();
     const url = 'https://github.com/{{$2}}/{{$1}}';
     cy.addUrl({ key, url });

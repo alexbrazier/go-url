@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 
 context('Add', () => {
   beforeEach(() => {
