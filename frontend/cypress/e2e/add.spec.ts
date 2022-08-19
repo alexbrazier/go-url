@@ -10,7 +10,7 @@ context('Add', () => {
   it('should open modal when add button clicked and not allow invalid urls', () => {
     cy.openAddModal();
 
-    cy.enterUrlDetails({ url: faker.random.uuid() });
+    cy.enterUrlDetails({ url: faker.random.word().toLowerCase() });
 
     cy.submitModal('provided are invalid');
   });
@@ -48,7 +48,7 @@ context('Add', () => {
   it('should allow valid alias', () => {
     cy.openAddModal();
 
-    const key = faker.random.uuid();
+    const key = faker.random.word().toLowerCase();
 
     cy.enterUrlDetails({ key });
 
@@ -56,7 +56,7 @@ context('Add', () => {
 
     // Should allow alias to be set
     cy.openAddModal();
-    const key2 = faker.random.uuid();
+    const key2 = faker.random.word().toLowerCase();
     cy.enterUrlDetails({ key: key2, url: key });
 
     cy.submitModal('Successfully set');

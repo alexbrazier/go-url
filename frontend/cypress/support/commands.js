@@ -10,14 +10,13 @@ Cypress.Commands.add('openAddModal', () => {
   cy.getHandle('modal').contains('Add new url');
 });
 
-Cypress.Commands.add(
-  'enterUrlDetails',
-  ({ key = faker.random.uuid(), url = faker.internet.url() } = {}) => {
-    cy.get('input#key').clear().type(key);
+Cypress.Commands.add('enterUrlDetails', ({ key = faker.random
+    .word()
+    .toLowerCase(), url = faker.internet.url() } = {}) => {
+  cy.get('input#key').clear().type(key);
 
-    cy.get('input#url').clear().type(url, { parseSpecialCharSequences: false });
-  },
-);
+  cy.get('input#url').clear().type(url, { parseSpecialCharSequences: false });
+});
 Cypress.Commands.add('submitModal', (expectedAlert) => {
   cy.getHandle('submit').click();
 
