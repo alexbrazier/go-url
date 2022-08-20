@@ -1,5 +1,6 @@
 /// <reference types="Cypress" />
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
+import { getKey } from '../support/utils';
 
 context('Core', () => {
   beforeEach(() => {
@@ -15,7 +16,7 @@ context('Core', () => {
   });
 
   it('should redirect to app if not found', () => {
-    const key = faker.random.uuid();
+    const key = getKey();
     const url = faker.internet.url();
     cy.visit(`/${key}`);
     cy.getHandle('alert').contains('was not found');
@@ -28,31 +29,25 @@ context('Core', () => {
   });
 
   it('should increase count when clicking on link', () => {
-    const key = faker.random.uuid();
+    const key = getKey();
     const url = faker.internet.url();
 
     cy.addUrl({ key, url });
     // Check count is 0
-    cy.getResult(key)
-      .find('td')
-      .eq(2)
-      .should('have.text', '0');
+    cy.getResult(key).find('td').eq(2).should('have.text', '0');
     cy.getResult(key)
       .contains(url)
-      .then($a => {
+      .then(($a) => {
         const href = $a.prop('href');
         cy.request({ url: href, followRedirect: false });
       });
 
     cy.visit('/');
-    cy.getResult(key)
-      .find('td')
-      .eq(2)
-      .should('have.text', '1');
+    cy.getResult(key).find('td').eq(2).should('have.text', '1');
   });
 
-  it('should redirect to correct url when match found', done => {
-    const key = faker.random.uuid();
+  it('should redirect to correct url when match found', (done) => {
+    const key = getKey();
     const url = 'https://github.com/test';
     cy.addUrl({ key, url });
 
@@ -63,8 +58,8 @@ context('Core', () => {
     });
   });
 
-  it('should redirect to correct url when match found with variables', done => {
-    const key = faker.random.uuid();
+  it('should redirect to correct url when match found with variables', (done) => {
+    const key = getKey();
     const url = 'https://github.com/{{$1}}/{{$2}}';
     cy.addUrl({ key, url });
 
@@ -77,8 +72,8 @@ context('Core', () => {
     });
   });
 
-  it('should redirect to correct url when match found with variables in different order', done => {
-    const key = faker.random.uuid();
+  it('should redirect to correct url when match found with variables in different order', (done) => {
+    const key = getKey();
     const url = 'https://github.com/{{$2}}/{{$1}}';
     cy.addUrl({ key, url });
 

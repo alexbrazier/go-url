@@ -1,6 +1,7 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
+import { getKey } from './utils';
 
-Cypress.Commands.add('getHandle', e2eHandle => {
+Cypress.Commands.add('getHandle', (e2eHandle) => {
   return cy.get(`[data-e2e="${e2eHandle}"]`);
 });
 
@@ -12,17 +13,13 @@ Cypress.Commands.add('openAddModal', () => {
 
 Cypress.Commands.add(
   'enterUrlDetails',
-  ({ key = faker.random.uuid(), url = faker.internet.url() } = {}) => {
-    cy.get('input#key')
-      .clear()
-      .type(key);
+  ({ key = getKey(), url = faker.internet.url() } = {}) => {
+    cy.get('input#key').clear().type(key);
 
-    cy.get('input#url')
-      .clear()
-      .type(url, { parseSpecialCharSequences: false });
+    cy.get('input#url').clear().type(url, { parseSpecialCharSequences: false });
   },
 );
-Cypress.Commands.add('submitModal', expectedAlert => {
+Cypress.Commands.add('submitModal', (expectedAlert) => {
   cy.getHandle('submit').click();
 
   if (expectedAlert) {
@@ -38,17 +35,12 @@ Cypress.Commands.add('addUrl', ({ key, url } = {}) => {
   cy.submitModal('Successfully set');
 });
 
-Cypress.Commands.add('getResult', key => {
+Cypress.Commands.add('getResult', (key) => {
   cy.visit(`/go/${key}`);
-  return cy
-    .getHandle('Search Results')
-    .contains('td', key)
-    .parent();
+  return cy.getHandle('Search Results').contains('td', key).parent();
 });
 
-Cypress.Commands.add('openEdit', key => {
-  cy.getResult(key)
-    .find('button')
-    .click();
+Cypress.Commands.add('openEdit', (key) => {
+  cy.getResult(key).find('button').click();
   cy.getHandle('modal').contains(`Edit ${key}`);
 });
