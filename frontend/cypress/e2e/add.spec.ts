@@ -1,6 +1,7 @@
 /// <reference types="Cypress" />
 
 import { faker } from '@faker-js/faker';
+import { getKey } from '../support/utils';
 
 context('Add', () => {
   beforeEach(() => {
@@ -10,7 +11,7 @@ context('Add', () => {
   it('should open modal when add button clicked and not allow invalid urls', () => {
     cy.openAddModal();
 
-    cy.enterUrlDetails({ url: faker.random.word().toLowerCase() });
+    cy.enterUrlDetails({ url: getKey() });
 
     cy.submitModal('provided are invalid');
   });
@@ -48,7 +49,7 @@ context('Add', () => {
   it('should allow valid alias', () => {
     cy.openAddModal();
 
-    const key = faker.random.word().toLowerCase();
+    const key = getKey();
 
     cy.enterUrlDetails({ key });
 
@@ -56,7 +57,7 @@ context('Add', () => {
 
     // Should allow alias to be set
     cy.openAddModal();
-    const key2 = faker.random.word().toLowerCase();
+    const key2 = getKey();
     cy.enterUrlDetails({ key: key2, url: key });
 
     cy.submitModal('Successfully set');
