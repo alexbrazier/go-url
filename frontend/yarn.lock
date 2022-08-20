@@ -2218,13 +2218,6 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/recompose@^0.30.9":
-  version "0.30.10"
-  resolved "https://registry.yarnpkg.com/@types/recompose/-/recompose-0.30.10.tgz#b6ab1743c279f463f2b62ccb90b82433dcea63c5"
-  integrity sha512-oF1ulwi5Tz7L9jZE870CCyD6n/nvCLNaGMp/oMEnm4gd7doc67rSHtypM6MFDiI6BKjTXoR87CwhET5JJInDFQ==
-  dependencies:
-    "@types/react" "*"
-
 "@types/resolve@1.17.1":
   version "1.17.1"
   resolved "https://registry.yarnpkg.com/@types/resolve/-/resolve-1.17.1.tgz#3afd6ad8967c77e4376c598a82ddd58f46ec45d6"
