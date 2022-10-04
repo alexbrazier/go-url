@@ -119,7 +119,14 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t go-url .
+            docker build -t alexbrazier/go-url .
+      - run:
+          name: Push Docker image
+          command: |
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
+              echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_LOGIN" --password-stdin
+              docker push alexbrazier/go-url
+            fi
 
 workflows:
   version: 2
