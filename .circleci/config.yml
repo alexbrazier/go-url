@@ -103,10 +103,10 @@ jobs:
           name: Run E2E tests
           command: |
             cd frontend && yarn wait;
-            if [ "$CYPRESS_KEY2" == "" ]; then
+            if [ "$CYPRESS_KEY" == "" ]; then
               yarn test:e2e
             else
-              yarn test:e2e --record --key $CYPRESS_KEY2
+              yarn test:e2e --record --key $CYPRESS_KEY
             fi
 
   build:
