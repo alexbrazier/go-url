@@ -12,7 +12,10 @@ import (
 	cache "github.com/patrickmn/go-cache"
 )
 
-var urlModel = &model.URL{}
+var (
+	urlModel             = &model.URL{}
+	getKeyFromTextRegexp = regexp.MustCompile("\\bgo ([\\w-\\/]+)\\b")
+)
 
 // SlackBot .
 type SlackBot struct {
@@ -22,9 +25,7 @@ type SlackBot struct {
 }
 
 func (s *SlackBot) getKeyFromText(text string) string {
-	r, _ := regexp.Compile("\\bgo ([\\w-\\/]+)\\b")
-
-	matches := r.FindStringSubmatch(text)
+	matches := getKeyFromTextRegexp.FindStringSubmatch(text)
 
 	if len(matches) != 2 {
 		return ""

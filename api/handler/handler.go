@@ -9,16 +9,18 @@ import (
 // Handler ...
 type Handler struct{}
 
-var urlModel = &model.URL{}
+var (
+	urlModel              = &model.URL{}
+	validateKeyRegexp     = regexp.MustCompile("^[\\w-]+$")
+	validateKeyPathRegexp = regexp.MustCompile("^[\\w-\\/]+$")
+)
 
 // ValidateKey validates a key against the required format
 func ValidateKey(key string) bool {
-	r, _ := regexp.Compile("^[\\w-]+$")
-	return r.MatchString(key)
+	return validateKeyRegexp.MatchString(key)
 }
 
 // ValidateKeyPath validates a key with optional parameters
 func ValidateKeyPath(key string) bool {
-	r, _ := regexp.Compile("^[\\w-\\/]+$")
-	return r.MatchString(key)
+	return validateKeyPathRegexp.MatchString(key)
 }
