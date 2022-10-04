@@ -101,7 +101,13 @@ jobs:
             echo Failed waiting for Postgres && exit 1
       - run:
           name: Run E2E tests
-          command: cd frontend && yarn wait && yarn test:e2e --record --key $CYPRESS_KEY
+          command: |
+            cd frontend && yarn wait;
+            if [ "$CYPRESS_KEY" == "" ]; then
+              yarn test:e2e
+            else
+              yarn test:e2e --record --key $CYPRESS_KEY
+            fi
 
   build:
     executor: default
@@ -113,7 +119,14 @@ jobs:
       - run:
           name: Build Docker image
           command: |
-            docker build -t go-url .
+            docker build -t alexbrazier/go-url .
+      - run:
+          name: Push Docker image
+          command: |
+            if [ "$CIRCLE_BRANCH" == "master" ]; then
+              echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_LOGIN" --password-stdin
+              docker push alexbrazier/go-url
+            fi
 
 workflows:
   version: 2
